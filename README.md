@@ -20,6 +20,10 @@ npm ci
 npm run gather
 ```
 
+Those five source checkouts and Node.js are needed only to regenerate or check
+the snapshot. Building and profiling the committed corpus requires only this
+repository, Lean, and the sibling Velvet and Loom checkouts described below.
+
 Only their Lean artifacts are consumed. The TypeScript here implements the
 reproducible copy/concatenation step; application TypeScript is neither copied
 nor compiled. Source paths and repositories are declared in
@@ -62,6 +66,31 @@ lake build CorpusColorWheel
 lake env lean Corpus/Core/binarySearch.lean
 ```
 
+## Profile a case
+
+Lean's ordinary profiler prints elaboration and type-checking time by
+declaration:
+
+```sh
+lake env lean --profile Corpus/Core/binarySearch.lean
+```
+
+For a nested trace suitable for loading in Firefox Profiler, write Lean's
+structured profiler output beneath the ignored `results/` directory:
+
+```sh
+mkdir -p results
+lake env lean \
+  -Dtrace.profiler=true \
+  -Dtrace.profiler.threshold=1 \
+  -Dtrace.profiler.output=results/binarySearch.json \
+  Corpus/Core/binarySearch.lean
+```
+
+Run `lake build` first so dependency compilation and solver setup are outside
+the measurement. The resulting time is for the complete combined module—types,
+specifications, method elaboration, and proofs—not proof time alone.
+
 To test another engine without editing `lakefile.lean`, put path entries for
 `Velvet` and `Loom` in `.lake/package-overrides.json`, or pass an equivalent
 file with Lake's `--packages` option. A path entry has this form (paths are
@@ -97,3 +126,7 @@ relative to this repository):
 source components, hashes, imports, and Git provenance. Generated artifacts
 are committed so a Velvet developer can clone the corpus and inspect its Lean
 without installing LemmaScript's TypeScript compiler.
+
+The corpus preserves source warnings and proof status. In particular,
+ColorWheel currently contains the upstream admitted `adjustColorCommutes`
+theorem; gathering does not remove or repair it.
