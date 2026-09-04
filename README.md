@@ -42,10 +42,12 @@ rules.
 ## Build and inspect cases
 
 The checked-in Lake setup uses the sibling `../velvet` and `../loom` checkouts
-as its reference engine. At present that is the known-good LemmaScript stack:
-concatenation removes the custom cross-module obligation-persistence
-requirement, but some cases still exercise the `for ... in ...` and bounded
-range-loop changes.
+as its reference engine. These checkouts come from the `lemma` branches of
+[`namin/velvet`](https://github.com/namin/velvet/tree/lemma) and
+[`namin/loom`](https://github.com/namin/loom/tree/lemma). At present this is the
+known-good LemmaScript stack: concatenation removes the custom cross-module
+obligation-persistence requirement, but some cases still exercise the
+`for ... in ...` and bounded range-loop changes.
 
 The reference build validated while creating this snapshot used Velvet
 `5d6085bda021e1f967ed2f4d19c0a6e2d23a8f38` and Loom
