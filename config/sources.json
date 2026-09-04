@@ -1,0 +1,88 @@
+{
+  "schemaVersion": 1,
+  "parentDir": "..",
+  "sources": [
+    {
+      "id": "lemmascript",
+      "repo": "midspiral/LemmaScript",
+      "checkout": "LemmaScript",
+      "branch": "main",
+      "license": "MIT",
+      "licenseFile": "LICENSE",
+      "support": ["LemmaScript.lean", "LemmaScript"],
+      "groups": [
+        {
+          "id": "core",
+          "module": "Core",
+          "roots": ["examples"]
+        }
+      ]
+    },
+    {
+      "id": "clear-split",
+      "repo": "midspiral/clear-split-lemmascript",
+      "checkout": "clear-split-lemmascript",
+      "branch": "main",
+      "license": "MIT",
+      "licenseFile": "LICENSE",
+      "groups": [
+        {
+          "id": "clear-split",
+          "module": "ClearSplit",
+          "roots": ["src/logic"]
+        }
+      ]
+    },
+    {
+      "id": "colorwheel",
+      "repo": "midspiral/colorwheel-lemmascript",
+      "checkout": "colorwheel-lemmascript",
+      "branch": "main",
+      "license": "MIT",
+      "licenseFile": "LICENSE",
+      "groups": [
+        {
+          "id": "colorwheel",
+          "module": "ColorWheel",
+          "roots": ["src"]
+        }
+      ]
+    },
+    {
+      "id": "node-casbin",
+      "repo": "midspiral/node-casbin-lemmascript",
+      "checkout": "node-casbin-lemmascript",
+      "branch": "lemmascript",
+      "license": "Apache-2.0",
+      "licenseFile": "LICENSE",
+      "groups": [
+        {
+          "id": "node-casbin",
+          "module": "NodeCasbin",
+          "roots": ["src/effect", "src/util", "src/model"]
+        }
+      ]
+    },
+    {
+      "id": "pi",
+      "repo": "midspiral/pi-lemmascript",
+      "checkout": "pi-lemmascript",
+      "branch": "lemmascript",
+      "license": "MIT",
+      "licenseFile": "LICENSE",
+      "groups": [
+        {
+          "id": "pi",
+          "module": "Pi",
+          "roots": [
+            "packages/coding-agent/src/utils",
+            "packages/agent/src/harness/compaction",
+            "packages/coding-agent/src/core/compaction",
+            "packages/coding-agent/src/core/tools"
+          ]
+        }
+      ]
+    }
+  ]
+}
+

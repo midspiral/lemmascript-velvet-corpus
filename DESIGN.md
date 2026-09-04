@@ -483,6 +483,7 @@ CorpusClearSplit
 CorpusColorWheel
 CorpusNodeCasbin
 CorpusPi
+CompatibilityTests
 ```
 
 Each corpus library uses a module-prefix glob such as:
@@ -500,6 +501,11 @@ lake build CorpusColorWheel
 lake build CorpusNodeCasbin
 ```
 
+`CompatibilityTests` contains a small handwritten check that a Velvet
+obligation created in one anonymous section remains available to a
+`prove_correct` command in the next. This directly tests the scoping assumption
+used when combining components.
+
 The repository pins one Lean toolchain, initially Lean 4.24.0, and commits
 `lake-manifest.json`. Because corpus files directly import Mathlib, the root
 package should declare and pin Mathlib rather than depend accidentally on it
@@ -512,11 +518,14 @@ not copied.
 
 ### Velvet and Loom are variables, not corpus contents
 
-The corpus does not vendor Velvet or Loom. Its default Lake configuration pins
-an exact known-good pair so a fresh checkout has a reproducible reference
-build. A developer can override either package with a local checkout without
-editing committed files; the harness should implement this with Lake package
-overrides and a temporary JSON file.
+The corpus does not vendor Velvet or Loom. Its initial Lake configuration uses
+the sibling development checkouts so a Velvet developer can measure an edited
+working tree immediately. The README records the exact pair used for the
+reference validation. A developer can substitute either package without
+editing committed files through Lake package overrides and a temporary JSON
+file. Once Velvet's package declaration has a portable Loom dependency, the
+default manifest can become an exact Git pin while retaining these local
+overrides.
 
 Combining each logical unit removes the need for the custom Velvet change that
 persists obligations across imported `.def.lean` and `.proof.lean` modules. It

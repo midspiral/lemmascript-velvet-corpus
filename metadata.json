@@ -1,0 +1,2230 @@
+{
+  "schemaVersion": 1,
+  "generator": "npm run gather",
+  "leanToolchain": "leanprover/lean4:v4.24.0",
+  "counts": {
+    "sources": 5,
+    "supportFiles": 5,
+    "cases": 45,
+    "components": 122,
+    "proofCases": 35,
+    "propertyCases": 1,
+    "elaborationCases": 9,
+    "proveCorrectCommands": 158
+  },
+  "sources": [
+    {
+      "id": "clear-split",
+      "repository": "midspiral/clear-split-lemmascript",
+      "checkout": "clear-split-lemmascript",
+      "expectedBranch": "main",
+      "observedBranch": "main",
+      "head": "f77276c8f2b10d47450e145ad8a81e39d2b11680",
+      "relevantDirty": false,
+      "branchMatches": true,
+      "license": {
+        "spdx": "MIT",
+        "source": {
+          "path": "LICENSE",
+          "sha256": "e4456cd4e761f46143818b7d1910d284943523c7d22c889161a20f8697843b0c",
+          "bytes": 1066,
+          "lines": 21
+        },
+        "output": {
+          "path": "LICENSES/clear-split.txt",
+          "sha256": "e4456cd4e761f46143818b7d1910d284943523c7d22c889161a20f8697843b0c",
+          "bytes": 1066,
+          "lines": 21
+        }
+      }
+    },
+    {
+      "id": "colorwheel",
+      "repository": "midspiral/colorwheel-lemmascript",
+      "checkout": "colorwheel-lemmascript",
+      "expectedBranch": "main",
+      "observedBranch": "main",
+      "head": "a532b1d41e3b50f62cfd80871a0e5180c1c7e14d",
+      "relevantDirty": false,
+      "branchMatches": true,
+      "license": {
+        "spdx": "MIT",
+        "source": {
+          "path": "LICENSE",
+          "sha256": "e4456cd4e761f46143818b7d1910d284943523c7d22c889161a20f8697843b0c",
+          "bytes": 1066,
+          "lines": 21
+        },
+        "output": {
+          "path": "LICENSES/colorwheel.txt",
+          "sha256": "e4456cd4e761f46143818b7d1910d284943523c7d22c889161a20f8697843b0c",
+          "bytes": 1066,
+          "lines": 21
+        }
+      }
+    },
+    {
+      "id": "lemmascript",
+      "repository": "midspiral/LemmaScript",
+      "checkout": "LemmaScript",
+      "expectedBranch": "main",
+      "observedBranch": "main",
+      "head": "4bb2cea2ccfc47a36c7e7a0e804331bbdf042b3b",
+      "relevantDirty": false,
+      "branchMatches": true,
+      "license": {
+        "spdx": "MIT",
+        "source": {
+          "path": "LICENSE",
+          "sha256": "e4456cd4e761f46143818b7d1910d284943523c7d22c889161a20f8697843b0c",
+          "bytes": 1066,
+          "lines": 21
+        },
+        "output": {
+          "path": "LICENSES/lemmascript.txt",
+          "sha256": "e4456cd4e761f46143818b7d1910d284943523c7d22c889161a20f8697843b0c",
+          "bytes": 1066,
+          "lines": 21
+        }
+      }
+    },
+    {
+      "id": "node-casbin",
+      "repository": "midspiral/node-casbin-lemmascript",
+      "checkout": "node-casbin-lemmascript",
+      "expectedBranch": "lemmascript",
+      "observedBranch": "lemmascript",
+      "head": "2589b90572bf10e2e8067b349a3abe6956db52bb",
+      "relevantDirty": false,
+      "branchMatches": true,
+      "license": {
+        "spdx": "Apache-2.0",
+        "source": {
+          "path": "LICENSE",
+          "sha256": "c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4",
+          "bytes": 11357,
+          "lines": 201
+        },
+        "output": {
+          "path": "LICENSES/node-casbin.txt",
+          "sha256": "c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4",
+          "bytes": 11357,
+          "lines": 201
+        }
+      }
+    },
+    {
+      "id": "pi",
+      "repository": "midspiral/pi-lemmascript",
+      "checkout": "pi-lemmascript",
+      "expectedBranch": "lemmascript",
+      "observedBranch": "lemmascript",
+      "head": "efa29814f1d1b0ac167ecf95f04b3040eb195f9e",
+      "relevantDirty": false,
+      "branchMatches": true,
+      "license": {
+        "spdx": "MIT",
+        "source": {
+          "path": "LICENSE",
+          "sha256": "0457f5bcec3b3b211605dfb5d1a49042fd638f3686a410fe099c24a25af13c48",
+          "bytes": 1069,
+          "lines": 21
+        },
+        "output": {
+          "path": "LICENSES/pi.txt",
+          "sha256": "0457f5bcec3b3b211605dfb5d1a49042fd638f3686a410fe099c24a25af13c48",
+          "bytes": 1069,
+          "lines": 21
+        }
+      }
+    }
+  ],
+  "support": [
+    {
+      "sourceId": "lemmascript",
+      "source": {
+        "path": "LemmaScript.lean",
+        "sha256": "2b032ef07a9477ff753f6c77350ce1a00b2200785e927d69edfc31473ea264e1",
+        "bytes": 183,
+        "lines": 6
+      },
+      "output": {
+        "path": "LemmaScript.lean",
+        "sha256": "2b032ef07a9477ff753f6c77350ce1a00b2200785e927d69edfc31473ea264e1",
+        "bytes": 183,
+        "lines": 6
+      }
+    },
+    {
+      "sourceId": "lemmascript",
+      "source": {
+        "path": "LemmaScript/JSString.lean",
+        "sha256": "a6148fb07dcc802cc3a45e5d7bbaa03b6a3534039e5e0dc5f6fe8dac99648ee1",
+        "bytes": 1473,
+        "lines": 43
+      },
+      "output": {
+        "path": "LemmaScript/JSString.lean",
+        "sha256": "a6148fb07dcc802cc3a45e5d7bbaa03b6a3534039e5e0dc5f6fe8dac99648ee1",
+        "bytes": 1473,
+        "lines": 43
+      }
+    },
+    {
+      "sourceId": "lemmascript",
+      "source": {
+        "path": "LemmaScript/WPGenArrayM.lean",
+        "sha256": "f59ccb669be8ab8072f614bf3604abe6ebaba567f90ee642f5ded1fea1b58339",
+        "bytes": 9394,
+        "lines": 228
+      },
+      "output": {
+        "path": "LemmaScript/WPGenArrayM.lean",
+        "sha256": "f59ccb669be8ab8072f614bf3604abe6ebaba567f90ee642f5ded1fea1b58339",
+        "bytes": 9394,
+        "lines": 228
+      }
+    },
+    {
+      "sourceId": "lemmascript",
+      "source": {
+        "path": "LemmaScript/WPGenHashSet.lean",
+        "sha256": "b356df7f0ca3aa88469b0e167caa3d2f7c82db49370c34168ff569007c6ca7ff",
+        "bytes": 1504,
+        "lines": 44
+      },
+      "output": {
+        "path": "LemmaScript/WPGenHashSet.lean",
+        "sha256": "b356df7f0ca3aa88469b0e167caa3d2f7c82db49370c34168ff569007c6ca7ff",
+        "bytes": 1504,
+        "lines": 44
+      }
+    },
+    {
+      "sourceId": "lemmascript",
+      "source": {
+        "path": "LemmaScript/WPGenOption.lean",
+        "sha256": "e600722bd11ca03a8cf8e00b2e3ca755fa1b62a56e3610da5e2a77430ac71c8c",
+        "bytes": 1103,
+        "lines": 33
+      },
+      "output": {
+        "path": "LemmaScript/WPGenOption.lean",
+        "sha256": "e600722bd11ca03a8cf8e00b2e3ca755fa1b62a56e3610da5e2a77430ac71c8c",
+        "bytes": 1103,
+        "lines": 33
+      }
+    }
+  ],
+  "cases": [
+    {
+      "id": "clear-split/logic",
+      "unit": "logic",
+      "group": "clear-split",
+      "sourceId": "clear-split",
+      "module": "Corpus.ClearSplit.logic",
+      "kind": "proof",
+      "imports": [
+        "LemmaScript"
+      ],
+      "components": [
+        {
+          "role": "types",
+          "source": {
+            "path": "src/logic/logic.types.lean",
+            "sha256": "84d4332d90ea0f431c30cf6d2cff6172d72ffe55506534017ed77842a3ef9182",
+            "bytes": 4203,
+            "lines": 134
+          }
+        },
+        {
+          "role": "def",
+          "source": {
+            "path": "src/logic/logic.def.lean",
+            "sha256": "e01a24f2a83625ab69af80f08a1962dbf7f27b55998ac539441a2fd0b42a35eb",
+            "bytes": 4135,
+            "lines": 104
+          }
+        },
+        {
+          "role": "proof",
+          "source": {
+            "path": "src/logic/logic.proof.lean",
+            "sha256": "89a59018af346e7010eaa1b9261d13dd451f1b6553932750bbac4161178c0417",
+            "bytes": 27053,
+            "lines": 516
+          }
+        }
+      ],
+      "proveCorrectCommands": 4,
+      "output": {
+        "path": "Corpus/ClearSplit/logic.lean",
+        "sha256": "403e594c08c60f6d9d78c942b9cd46f30ae867075838c7db0655ee40c55c0313",
+        "bytes": 35992,
+        "lines": 776
+      }
+    },
+    {
+      "id": "colorwheel/colorwheel",
+      "unit": "colorwheel",
+      "group": "colorwheel",
+      "sourceId": "colorwheel",
+      "module": "Corpus.ColorWheel.colorwheel",
+      "kind": "properties",
+      "imports": [
+        "LemmaScript",
+        "Mathlib.Tactic"
+      ],
+      "components": [
+        {
+          "role": "types",
+          "source": {
+            "path": "src/colorwheel.types.lean",
+            "sha256": "9bb037b61cca81dbef2a0ba8aabd0924554e71a0b13a698fcea8bec0baa6f570",
+            "bytes": 15228,
+            "lines": 316
+          }
+        },
+        {
+          "role": "spec",
+          "source": {
+            "path": "src/colorwheel.spec.lean",
+            "sha256": "f14bdefbffe68f6a141c50b37b6e5ecfc428248dab30d58c08d302f92ae8ee3f",
+            "bytes": 1840,
+            "lines": 47
+          }
+        },
+        {
+          "role": "def",
+          "source": {
+            "path": "src/colorwheel.def.lean",
+            "sha256": "738a5f175c58940e4c11bfb5945dbe0bd78eb8224ed87a50cf5e75f2b88623e9",
+            "bytes": 5916,
+            "lines": 190
+          }
+        },
+        {
+          "role": "proof",
+          "source": {
+            "path": "src/colorwheel.proof.lean",
+            "sha256": "d49255ad83cdd373add67da6ef234cd52b6b7f702c04505c92441bd772db13ab",
+            "bytes": 5355,
+            "lines": 116
+          }
+        },
+        {
+          "role": "props",
+          "source": {
+            "path": "src/colorwheel.props.lean",
+            "sha256": "f0acf6961eb9bc006e6f2f879f17c8a5bc1ab026a9befe770d7d120f82eb11bc",
+            "bytes": 26714,
+            "lines": 461
+          }
+        }
+      ],
+      "proveCorrectCommands": 29,
+      "output": {
+        "path": "Corpus/ColorWheel/colorwheel.lean",
+        "sha256": "707e2da7cf54e8968360ca5c961d3d8006aecb7d3dc21922c76cc291ca21b6fe",
+        "bytes": 55936,
+        "lines": 1162
+      }
+    },
+    {
+      "id": "core/andChainStmt",
+      "unit": "andChainStmt",
+      "group": "core",
+      "sourceId": "lemmascript",
+      "module": "Corpus.Core.andChainStmt",
+      "kind": "elaboration",
+      "imports": [
+        "LemmaScript"
+      ],
+      "components": [
+        {
+          "role": "types",
+          "source": {
+            "path": "examples/andChainStmt.types.lean",
+            "sha256": "72aad5bbf8e1e39aae0204feb438d0852ad4a9ba94dbf317b1ea99c64715fef3",
+            "bytes": 419,
+            "lines": 26
+          }
+        },
+        {
+          "role": "def",
+          "source": {
+            "path": "examples/andChainStmt.def.lean",
+            "sha256": "0ea05ae749fc295136ce8ef7134a1a44c42b0d8dc83edda860a4bf857e5eab31",
+            "bytes": 1303,
+            "lines": 54
+          }
+        }
+      ],
+      "proveCorrectCommands": 0,
+      "output": {
+        "path": "Corpus/Core/andChainStmt.lean",
+        "sha256": "c6578e7053941709eda107b003418dc326bfb383600daa59731719f0d544fbec",
+        "bytes": 2111,
+        "lines": 97
+      }
+    },
+    {
+      "id": "core/arrayContains",
+      "unit": "arrayContains",
+      "group": "core",
+      "sourceId": "lemmascript",
+      "module": "Corpus.Core.arrayContains",
+      "kind": "proof",
+      "imports": [
+        "LemmaScript"
+      ],
+      "components": [
+        {
+          "role": "def",
+          "source": {
+            "path": "examples/arrayContains.def.lean",
+            "sha256": "39d47ace7abf4fd49ffbce88c15980e11f24eba0e7fd8bb59bcb5108efe0b29e",
+            "bytes": 807,
+            "lines": 24
+          }
+        },
+        {
+          "role": "proof",
+          "source": {
+            "path": "examples/arrayContains.proof.lean",
+            "sha256": "ae0d64b39be1df5f5426986b6013f36dfd48ac628c8daca7e055bc389092cc6c",
+            "bytes": 164,
+            "lines": 7
+          }
+        }
+      ],
+      "proveCorrectCommands": 1,
+      "output": {
+        "path": "Corpus/Core/arrayContains.lean",
+        "sha256": "391236b066e9aa59d38504419675e62ce7587ba5c43fc216358937c84e43b40d",
+        "bytes": 1367,
+        "lines": 48
+      }
+    },
+    {
+      "id": "core/arrayFind",
+      "unit": "arrayFind",
+      "group": "core",
+      "sourceId": "lemmascript",
+      "module": "Corpus.Core.arrayFind",
+      "kind": "elaboration",
+      "imports": [
+        "LemmaScript"
+      ],
+      "components": [
+        {
+          "role": "types",
+          "source": {
+            "path": "examples/arrayFind.types.lean",
+            "sha256": "591a9d087cbd425e8352add81ca4d09a190e42e0de02da0e23f0aba6dc39aff7",
+            "bytes": 618,
+            "lines": 28
+          }
+        },
+        {
+          "role": "def",
+          "source": {
+            "path": "examples/arrayFind.def.lean",
+            "sha256": "5a9cbbd8a4bd36fd495d38030cebd521a0b2b921758e9937666bfdda2c234f1a",
+            "bytes": 441,
+            "lines": 16
+          }
+        }
+      ],
+      "proveCorrectCommands": 0,
+      "output": {
+        "path": "Corpus/Core/arrayFind.lean",
+        "sha256": "dbcc8ad04b440ad5cc5547785a9f19c11c88a578532c890f0adff5da89c44670",
+        "bytes": 1433,
+        "lines": 61
+      }
+    },
+    {
+      "id": "core/arraySum",
+      "unit": "arraySum",
+      "group": "core",
+      "sourceId": "lemmascript",
+      "module": "Corpus.Core.arraySum",
+      "kind": "proof",
+      "imports": [
+        "Velvet.Syntax",
+        "Velvet.Std"
+      ],
+      "components": [
+        {
+          "role": "spec",
+          "source": {
+            "path": "examples/arraySum.spec.lean",
+            "sha256": "ffe0b2b9c3243486639b856239086ebd30e0e4af0db71e9bc5daeaeb965e854b",
+            "bytes": 453,
+            "lines": 13
+          }
+        },
+        {
+          "role": "def",
+          "source": {
+            "path": "examples/arraySum.def.lean",
+            "sha256": "792a52d9b3eab2a62ed9d4207b4abe181db0b51329093bff5ca21b45199444d5",
+            "bytes": 561,
+            "lines": 23
+          }
+        },
+        {
+          "role": "proof",
+          "source": {
+            "path": "examples/arraySum.proof.lean",
+            "sha256": "49e48c6ea767f85390f35d11b1449f6e59b0e17650c3ca00d0cf9276aab08a62",
+            "bytes": 154,
+            "lines": 7
+          }
+        }
+      ],
+      "proveCorrectCommands": 1,
+      "output": {
+        "path": "Corpus/Core/arraySum.lean",
+        "sha256": "fd6dcfd2f833bf0e1b54a8aeabac86f06605ea08e255b17f9e7b4a8c3ff1e211",
+        "bytes": 1671,
+        "lines": 65
+      }
+    },
+    {
+      "id": "core/binarySearch",
+      "unit": "binarySearch",
+      "group": "core",
+      "sourceId": "lemmascript",
+      "module": "Corpus.Core.binarySearch",
+      "kind": "proof",
+      "imports": [
+        "LemmaScript"
+      ],
+      "components": [
+        {
+          "role": "types",
+          "source": {
+            "path": "examples/binarySearch.types.lean",
+            "sha256": "222a08b85ab2b5aa93ab06703b20d15d3e7a81d6b7211400b03a62f0535fb899",
+            "bytes": 353,
+            "lines": 18
+          }
+        },
+        {
+          "role": "spec",
+          "source": {
+            "path": "examples/binarySearch.spec.lean",
+            "sha256": "083268576b23e8add9f80fedbbbd8c5a3d193c7194fc9c6fa2306b3f0900478b",
+            "bytes": 1320,
+            "lines": 31
+          }
+        },
+        {
+          "role": "def",
+          "source": {
+            "path": "examples/binarySearch.def.lean",
+            "sha256": "23d4c4356efd5b804f126a7ddc530138dab907205f7e6a53eb7b9ca5d1a3dee4",
+            "bytes": 1494,
+            "lines": 47
+          }
+        },
+        {
+          "role": "proof",
+          "source": {
+            "path": "examples/binarySearch.proof.lean",
+            "sha256": "d887f4e12d897a0e0af8581d915c87cd8ba90c562d7c6095ba059c6be5b8cd1d",
+            "bytes": 1075,
+            "lines": 28
+          }
+        }
+      ],
+      "proveCorrectCommands": 3,
+      "output": {
+        "path": "Corpus/Core/binarySearch.lean",
+        "sha256": "bb5d3119b1b83de540b8b111aa1392f8b3a6d7f9546f59c29ea7459d3b358a05",
+        "bytes": 4915,
+        "lines": 151
+      }
+    },
+    {
+      "id": "core/clamp",
+      "unit": "clamp",
+      "group": "core",
+      "sourceId": "lemmascript",
+      "module": "Corpus.Core.clamp",
+      "kind": "proof",
+      "imports": [
+        "LemmaScript"
+      ],
+      "components": [
+        {
+          "role": "def",
+          "source": {
+            "path": "examples/clamp.def.lean",
+            "sha256": "b9c7e6406cd839b57c49330866e2f5c5c2585dad9ef30d482dcc6d988146d949",
+            "bytes": 464,
+            "lines": 20
+          }
+        },
+        {
+          "role": "proof",
+          "source": {
+            "path": "examples/clamp.proof.lean",
+            "sha256": "c76cdc849a86a28844bf789a61821981f08e795ed41470db07ecf76ba5ae123f",
+            "bytes": 148,
+            "lines": 7
+          }
+        }
+      ],
+      "proveCorrectCommands": 1,
+      "output": {
+        "path": "Corpus/Core/clamp.lean",
+        "sha256": "697fd6fbd7a3681757316b27727f0f55cd4ef0eddecb7542c2863250933f4173",
+        "bytes": 968,
+        "lines": 44
+      }
+    },
+    {
+      "id": "core/clampAll",
+      "unit": "clampAll",
+      "group": "core",
+      "sourceId": "lemmascript",
+      "module": "Corpus.Core.clampAll",
+      "kind": "proof",
+      "imports": [
+        "LemmaScript"
+      ],
+      "components": [
+        {
+          "role": "def",
+          "source": {
+            "path": "examples/clampAll.def.lean",
+            "sha256": "6830531a3476a7edc1780c38ea803a06d0797203af32e946b7b8782fc158c6eb",
+            "bytes": 687,
+            "lines": 28
+          }
+        },
+        {
+          "role": "proof",
+          "source": {
+            "path": "examples/clampAll.proof.lean",
+            "sha256": "56ee71312c4c57f741d57c320b108eb8a8a4c1003672513d52e072e63119a860",
+            "bytes": 198,
+            "lines": 10
+          }
+        }
+      ],
+      "proveCorrectCommands": 2,
+      "output": {
+        "path": "Corpus/Core/clampAll.lean",
+        "sha256": "f8c086b6835886916ba54f52f118b370605da3c4637f392159f3c06f26f5de58",
+        "bytes": 1256,
+        "lines": 55
+      }
+    },
+    {
+      "id": "core/ctorName",
+      "unit": "ctorName",
+      "group": "core",
+      "sourceId": "lemmascript",
+      "module": "Corpus.Core.ctorName",
+      "kind": "elaboration",
+      "imports": [
+        "LemmaScript"
+      ],
+      "components": [
+        {
+          "role": "types",
+          "source": {
+            "path": "examples/ctorName.types.lean",
+            "sha256": "cdb27f7bbaec7a2bb7ae362f9b8c7354193d03219c9a713ea7e443913b3c28bd",
+            "bytes": 505,
+            "lines": 29
+          }
+        },
+        {
+          "role": "def",
+          "source": {
+            "path": "examples/ctorName.def.lean",
+            "sha256": "b048ff1bdf37e796be2296bafb3d26b5f647f034e7c8e3fb186b51f3d29bec6d",
+            "bytes": 467,
+            "lines": 21
+          }
+        }
+      ],
+      "proveCorrectCommands": 0,
+      "output": {
+        "path": "Corpus/Core/ctorName.lean",
+        "sha256": "8727eebc91d1ff9fbfd2b0672488b6d0c218ff25d37e873d8a3b6b205490a694",
+        "bytes": 1341,
+        "lines": 67
+      }
+    },
+    {
+      "id": "core/discriminantTrailing",
+      "unit": "discriminantTrailing",
+      "group": "core",
+      "sourceId": "lemmascript",
+      "module": "Corpus.Core.discriminantTrailing",
+      "kind": "proof",
+      "imports": [
+        "LemmaScript"
+      ],
+      "components": [
+        {
+          "role": "types",
+          "source": {
+            "path": "examples/discriminantTrailing.types.lean",
+            "sha256": "a11cee0a77f9e245c94b58dcb473039664d7af2c2314550dd740b9c13ccaa21c",
+            "bytes": 354,
+            "lines": 23
+          }
+        },
+        {
+          "role": "def",
+          "source": {
+            "path": "examples/discriminantTrailing.def.lean",
+            "sha256": "fc260a2e643030ab80073fc7266387683a9c04dc0c18d3c674da27d678ed9a1b",
+            "bytes": 576,
+            "lines": 22
+          }
+        },
+        {
+          "role": "proof",
+          "source": {
+            "path": "examples/discriminantTrailing.proof.lean",
+            "sha256": "04089d1f9fbf7221a003aa87c5c0c57e12b61771018da37f97b3e6d8dcd34756",
+            "bytes": 175,
+            "lines": 7
+          }
+        }
+      ],
+      "proveCorrectCommands": 1,
+      "output": {
+        "path": "Corpus/Core/discriminantTrailing.lean",
+        "sha256": "cd4dd100cd3fafaccd03f4e3f407f45009bf7cacac51974528341b2d612402ee",
+        "bytes": 1694,
+        "lines": 74
+      }
+    },
+    {
+      "id": "core/forContinue",
+      "unit": "forContinue",
+      "group": "core",
+      "sourceId": "lemmascript",
+      "module": "Corpus.Core.forContinue",
+      "kind": "proof",
+      "imports": [
+        "LemmaScript"
+      ],
+      "components": [
+        {
+          "role": "types",
+          "source": {
+            "path": "examples/forContinue.types.lean",
+            "sha256": "240c6abc2863173e12d68d451efd2ce01f1a7922cc1e8e70bb2444d429ac0663",
+            "bytes": 268,
+            "lines": 14
+          }
+        },
+        {
+          "role": "def",
+          "source": {
+            "path": "examples/forContinue.def.lean",
+            "sha256": "2d2e3946ea9066f59347df39ce351308dec17d075274574e026366f8efaf8995",
+            "bytes": 2993,
+            "lines": 121
+          }
+        },
+        {
+          "role": "proof",
+          "source": {
+            "path": "examples/forContinue.proof.lean",
+            "sha256": "c0281e447204d775b6546dae5c2bd206515dce46969a8397ee800526ff226ab5",
+            "bytes": 297,
+            "lines": 16
+          }
+        }
+      ],
+      "proveCorrectCommands": 4,
+      "output": {
+        "path": "Corpus/Core/forContinue.lean",
+        "sha256": "480343b7bf08ed86f5810f0f7b99b8018199d24713674af3d80d653d1054558c",
+        "bytes": 4084,
+        "lines": 173
+      }
+    },
+    {
+      "id": "core/hof",
+      "unit": "hof",
+      "group": "core",
+      "sourceId": "lemmascript",
+      "module": "Corpus.Core.hof",
+      "kind": "proof",
+      "imports": [
+        "LemmaScript"
+      ],
+      "components": [
+        {
+          "role": "types",
+          "source": {
+            "path": "examples/hof.types.lean",
+            "sha256": "e1bf387dcf15994303e9293af32134fbd613d59179c4de81dd6e7d2794d34dc9",
+            "bytes": 998,
+            "lines": 34
+          }
+        },
+        {
+          "role": "def",
+          "source": {
+            "path": "examples/hof.def.lean",
+            "sha256": "46696b1d91a22f82fb3a159aca1557d87aa51b5a87b39bf44de39346c454dd5d",
+            "bytes": 1017,
+            "lines": 31
+          }
+        },
+        {
+          "role": "proof",
+          "source": {
+            "path": "examples/hof.proof.lean",
+            "sha256": "8e1fd3b640ae2e2625eda5e643e4901b5754b0e8167d6a7bff005d31146d5ace",
+            "bytes": 173,
+            "lines": 7
+          }
+        }
+      ],
+      "proveCorrectCommands": 1,
+      "output": {
+        "path": "Corpus/Core/hof.lean",
+        "sha256": "e53bb3c0f65fa5696a64d541185c4c39263cf4ad2c9b51df3fe03728fc8fff5e",
+        "bytes": 2658,
+        "lines": 94
+      }
+    },
+    {
+      "id": "core/iff",
+      "unit": "iff",
+      "group": "core",
+      "sourceId": "lemmascript",
+      "module": "Corpus.Core.iff",
+      "kind": "proof",
+      "imports": [
+        "LemmaScript"
+      ],
+      "components": [
+        {
+          "role": "types",
+          "source": {
+            "path": "examples/iff.types.lean",
+            "sha256": "ecfce2562cdeeb245a74c474564ca52d6a7f3622a0552464fc8bc233f713fd77",
+            "bytes": 239,
+            "lines": 14
+          }
+        },
+        {
+          "role": "def",
+          "source": {
+            "path": "examples/iff.def.lean",
+            "sha256": "4b50b3585f7a8040762d4d6bed3d074b74455d02eb27ead88829f3dbf096db5c",
+            "bytes": 515,
+            "lines": 21
+          }
+        },
+        {
+          "role": "proof",
+          "source": {
+            "path": "examples/iff.proof.lean",
+            "sha256": "9590d693f70058b5eaaa4b0928a347016cc510bf58f29ade851e35d440de31e3",
+            "bytes": 373,
+            "lines": 14
+          }
+        }
+      ],
+      "proveCorrectCommands": 2,
+      "output": {
+        "path": "Corpus/Core/iff.lean",
+        "sha256": "3c3023fa7fffcaa3b7a5384ebc9660c28c1c718ff844fc9a0e1135cc496d877e",
+        "bytes": 1597,
+        "lines": 71
+      }
+    },
+    {
+      "id": "core/isSorted",
+      "unit": "isSorted",
+      "group": "core",
+      "sourceId": "lemmascript",
+      "module": "Corpus.Core.isSorted",
+      "kind": "proof",
+      "imports": [
+        "LemmaScript"
+      ],
+      "components": [
+        {
+          "role": "def",
+          "source": {
+            "path": "examples/isSorted.def.lean",
+            "sha256": "921595ffd34c78ac1bb8f081b62a2bc68e8e46a2047ff2a044b8227fdcf0a097",
+            "bytes": 938,
+            "lines": 28
+          }
+        },
+        {
+          "role": "proof",
+          "source": {
+            "path": "examples/isSorted.proof.lean",
+            "sha256": "cd277ec1513f5a7a43654525c6990bf9338ff552f69eddf02bee5a9722b00e01",
+            "bytes": 154,
+            "lines": 7
+          }
+        }
+      ],
+      "proveCorrectCommands": 1,
+      "output": {
+        "path": "Corpus/Core/isSorted.lean",
+        "sha256": "26c161372ba49669f5707c2e70d6e44323a3c9e30678c69d689ddf6c71e524d6",
+        "bytes": 1463,
+        "lines": 52
+      }
+    },
+    {
+      "id": "core/leftPad",
+      "unit": "leftPad",
+      "group": "core",
+      "sourceId": "lemmascript",
+      "module": "Corpus.Core.leftPad",
+      "kind": "proof",
+      "imports": [
+        "LemmaScript"
+      ],
+      "components": [
+        {
+          "role": "def",
+          "source": {
+            "path": "examples/leftPad.def.lean",
+            "sha256": "dd6b06333ad4fcd30ac015fc2e00251eecb30162adcdb0b96d1b2c04127ca2f1",
+            "bytes": 782,
+            "lines": 28
+          }
+        },
+        {
+          "role": "proof",
+          "source": {
+            "path": "examples/leftPad.proof.lean",
+            "sha256": "0297a498e36951dd93a1f5071cdbf4dde7feedcc71b556c0e81afbc36d37b11d",
+            "bytes": 498,
+            "lines": 13
+          }
+        }
+      ],
+      "proveCorrectCommands": 1,
+      "output": {
+        "path": "Corpus/Core/leftPad.lean",
+        "sha256": "319d24ef13b6ce9ea54adfb5450b2f32d4ca20fc590402cf2df0e028cb3dd077",
+        "bytes": 1646,
+        "lines": 58
+      }
+    },
+    {
+      "id": "core/linearSearch",
+      "unit": "linearSearch",
+      "group": "core",
+      "sourceId": "lemmascript",
+      "module": "Corpus.Core.linearSearch",
+      "kind": "proof",
+      "imports": [
+        "LemmaScript"
+      ],
+      "components": [
+        {
+          "role": "def",
+          "source": {
+            "path": "examples/linearSearch.def.lean",
+            "sha256": "e7ab45a9eefe8ecb2d3f197aa21201dcb3b028a14c8e9d0110bd42eb0f3e0f2c",
+            "bytes": 929,
+            "lines": 30
+          }
+        },
+        {
+          "role": "proof",
+          "source": {
+            "path": "examples/linearSearch.proof.lean",
+            "sha256": "ae7462d38f90ec4e6f8b037ab05622a721df350bedf32eec15c8284f590c681c",
+            "bytes": 162,
+            "lines": 7
+          }
+        }
+      ],
+      "proveCorrectCommands": 1,
+      "output": {
+        "path": "Corpus/Core/linearSearch.lean",
+        "sha256": "1d28d5e0cc040003db19e0e4591121d5881840a81923bbb020d30b00f24732b6",
+        "bytes": 1482,
+        "lines": 54
+      }
+    },
+    {
+      "id": "core/majority",
+      "unit": "majority",
+      "group": "core",
+      "sourceId": "lemmascript",
+      "module": "Corpus.Core.majority",
+      "kind": "proof",
+      "imports": [
+        "LemmaScript"
+      ],
+      "components": [
+        {
+          "role": "types",
+          "source": {
+            "path": "examples/majority.types.lean",
+            "sha256": "e5d5addde1a87ccc63ee0cbd6e4296d75203089aaf33154d7e12a8f5e8d7f2d8",
+            "bytes": 277,
+            "lines": 15
+          }
+        },
+        {
+          "role": "spec",
+          "source": {
+            "path": "examples/majority.spec.lean",
+            "sha256": "1f5a12b392e31831f67b5c8bf559ebccc242d3a89e2ab776e1b75b3e903f9ad3",
+            "bytes": 384,
+            "lines": 13
+          }
+        },
+        {
+          "role": "def",
+          "source": {
+            "path": "examples/majority.def.lean",
+            "sha256": "d861b259dfe96c14233ffb68caab513beda4229cf3fa665cf7b5d67427ce4df1",
+            "bytes": 1536,
+            "lines": 55
+          }
+        },
+        {
+          "role": "proof",
+          "source": {
+            "path": "examples/majority.proof.lean",
+            "sha256": "f6ce645ebbe22f37184f3f874bc6eb5ca4527d2d3556399dc751a8ddb376edcd",
+            "bytes": 324,
+            "lines": 14
+          }
+        }
+      ],
+      "proveCorrectCommands": 2,
+      "output": {
+        "path": "Corpus/Core/majority.lean",
+        "sha256": "79d29e7594c6493bcec67046c765b518d41d57c42b9c12673a638a80305131ce",
+        "bytes": 3133,
+        "lines": 123
+      }
+    },
+    {
+      "id": "core/maxElement",
+      "unit": "maxElement",
+      "group": "core",
+      "sourceId": "lemmascript",
+      "module": "Corpus.Core.maxElement",
+      "kind": "proof",
+      "imports": [
+        "LemmaScript"
+      ],
+      "components": [
+        {
+          "role": "def",
+          "source": {
+            "path": "examples/maxElement.def.lean",
+            "sha256": "b786907c15adffa06344da689967129b80c390fe419de82241489b5333be45f3",
+            "bytes": 761,
+            "lines": 27
+          }
+        },
+        {
+          "role": "proof",
+          "source": {
+            "path": "examples/maxElement.proof.lean",
+            "sha256": "b5b1c957a2a832f6acd2ed3582ea3e303ec812889c7366bc8e767094b8ae5f31",
+            "bytes": 158,
+            "lines": 7
+          }
+        }
+      ],
+      "proveCorrectCommands": 1,
+      "output": {
+        "path": "Corpus/Core/maxElement.lean",
+        "sha256": "2e635ae74553641b90fcac3bffa98bcb14e4aedf363c3246cdfff9de8a3f8f3e",
+        "bytes": 1300,
+        "lines": 51
+      }
+    },
+    {
+      "id": "core/nameClash",
+      "unit": "nameClash",
+      "group": "core",
+      "sourceId": "lemmascript",
+      "module": "Corpus.Core.nameClash",
+      "kind": "elaboration",
+      "imports": [
+        "LemmaScript"
+      ],
+      "components": [
+        {
+          "role": "types",
+          "source": {
+            "path": "examples/nameClash.types.lean",
+            "sha256": "94eaf8fdba735c53a1d60f818d91ca7b8cc27e2798ac66dfb4f82e379a00b61d",
+            "bytes": 1288,
+            "lines": 64
+          }
+        },
+        {
+          "role": "def",
+          "source": {
+            "path": "examples/nameClash.def.lean",
+            "sha256": "ff033e0a1d1d415486ff39c370f1c6445422177e56d7a52f1a4c0fe5bb097b83",
+            "bytes": 2729,
+            "lines": 109
+          }
+        }
+      ],
+      "proveCorrectCommands": 0,
+      "output": {
+        "path": "Corpus/Core/nameClash.lean",
+        "sha256": "0b7f810a7bab3e466212b832aa79f15f4c3628de0ea337e3812663b30a2265d2",
+        "bytes": 4391,
+        "lines": 190
+      }
+    },
+    {
+      "id": "core/nestedPush",
+      "unit": "nestedPush",
+      "group": "core",
+      "sourceId": "lemmascript",
+      "module": "Corpus.Core.nestedPush",
+      "kind": "proof",
+      "imports": [
+        "LemmaScript"
+      ],
+      "components": [
+        {
+          "role": "types",
+          "source": {
+            "path": "examples/nestedPush.types.lean",
+            "sha256": "77e9f46ed8dbb48e2b75b1c9fb9af075a21a2841d56b4954d0e587c3666760f5",
+            "bytes": 165,
+            "lines": 8
+          }
+        },
+        {
+          "role": "def",
+          "source": {
+            "path": "examples/nestedPush.def.lean",
+            "sha256": "f680bf13e06a7d9b91c5a5ac3a77f918912193f5668eeb387af992c199ec3374",
+            "bytes": 467,
+            "lines": 16
+          }
+        },
+        {
+          "role": "proof",
+          "source": {
+            "path": "examples/nestedPush.proof.lean",
+            "sha256": "28a78fe87b44d3f7a7760f630cb53d5c3a03b5e8d1651731a44cb2e2db975fe2",
+            "bytes": 156,
+            "lines": 7
+          }
+        }
+      ],
+      "proveCorrectCommands": 1,
+      "output": {
+        "path": "Corpus/Core/nestedPush.lean",
+        "sha256": "05c78dfd768ecedc31f4af5fc1f1d275758ebeafcc891f6abb694f044f1bad75",
+        "bytes": 1307,
+        "lines": 53
+      }
+    },
+    {
+      "id": "core/packet",
+      "unit": "packet",
+      "group": "core",
+      "sourceId": "lemmascript",
+      "module": "Corpus.Core.packet",
+      "kind": "proof",
+      "imports": [
+        "LemmaScript"
+      ],
+      "components": [
+        {
+          "role": "types",
+          "source": {
+            "path": "examples/packet.types.lean",
+            "sha256": "0235fb95043dba840d3198026264bf3cbba50cb59a9df249ce69d921268fbff1",
+            "bytes": 485,
+            "lines": 26
+          }
+        },
+        {
+          "role": "def",
+          "source": {
+            "path": "examples/packet.def.lean",
+            "sha256": "b4ab0b72e057d2b512d944c23acbcd242ecd035559abf69a1a2e78d12a37b19e",
+            "bytes": 532,
+            "lines": 15
+          }
+        },
+        {
+          "role": "proof",
+          "source": {
+            "path": "examples/packet.proof.lean",
+            "sha256": "06b565dd464b435e251f7ebc453f635b184cab4e671abaa27dc9ac863ea047b2",
+            "bytes": 172,
+            "lines": 7
+          }
+        }
+      ],
+      "proveCorrectCommands": 1,
+      "output": {
+        "path": "Corpus/Core/packet.lean",
+        "sha256": "9505c3ebfcaa1762f045caf98553fd2bb0418e878eefcbe118b394eb2561e5be",
+        "bytes": 1680,
+        "lines": 70
+      }
+    },
+    {
+      "id": "core/perm",
+      "unit": "perm",
+      "group": "core",
+      "sourceId": "lemmascript",
+      "module": "Corpus.Core.perm",
+      "kind": "proof",
+      "imports": [
+        "LemmaScript"
+      ],
+      "components": [
+        {
+          "role": "types",
+          "source": {
+            "path": "examples/perm.types.lean",
+            "sha256": "f80a9987803ca44aa617059cec921ade0a9307392bd238f0d365bbe5f554ebbc",
+            "bytes": 532,
+            "lines": 27
+          }
+        },
+        {
+          "role": "def",
+          "source": {
+            "path": "examples/perm.def.lean",
+            "sha256": "43b9e45ea80103a8825dd201b8eb0d7a3018304f38fada315d03922ebad19494",
+            "bytes": 1019,
+            "lines": 36
+          }
+        },
+        {
+          "role": "proof",
+          "source": {
+            "path": "examples/perm.proof.lean",
+            "sha256": "4f8298c4dbc6bb9f4aa8c98918efce66aab1e86907a8cd079654ac370c1b47b1",
+            "bytes": 2758,
+            "lines": 74
+          }
+        }
+      ],
+      "proveCorrectCommands": 5,
+      "output": {
+        "path": "Corpus/Core/perm.lean",
+        "sha256": "652463ae4b3e55a23073486bae394f108e8d6c01b2df988d86e46e2d217cec8c",
+        "bytes": 4786,
+        "lines": 159
+      }
+    },
+    {
+      "id": "core/postTags",
+      "unit": "postTags",
+      "group": "core",
+      "sourceId": "lemmascript",
+      "module": "Corpus.Core.postTags",
+      "kind": "elaboration",
+      "imports": [
+        "LemmaScript"
+      ],
+      "components": [
+        {
+          "role": "types",
+          "source": {
+            "path": "examples/postTags.types.lean",
+            "sha256": "c39fd165e9a37a476c81199ba875bf5ec8088b279d607711ebe1c32227f283c3",
+            "bytes": 776,
+            "lines": 33
+          }
+        },
+        {
+          "role": "def",
+          "source": {
+            "path": "examples/postTags.def.lean",
+            "sha256": "a8744f4fbf0ae9a482c6dcf45be62d981237c406daaf582d35896a2c2ce287fe",
+            "bytes": 798,
+            "lines": 25
+          }
+        }
+      ],
+      "proveCorrectCommands": 0,
+      "output": {
+        "path": "Corpus/Core/postTags.lean",
+        "sha256": "9fe3585266621b7096d5bef27d88037b6048b71f6e467d1cbefe6d3a175d2004",
+        "bytes": 1943,
+        "lines": 75
+      }
+    },
+    {
+      "id": "core/recordIndexByEnum",
+      "unit": "recordIndexByEnum",
+      "group": "core",
+      "sourceId": "lemmascript",
+      "module": "Corpus.Core.recordIndexByEnum",
+      "kind": "elaboration",
+      "imports": [
+        "LemmaScript"
+      ],
+      "components": [
+        {
+          "role": "types",
+          "source": {
+            "path": "examples/recordIndexByEnum.types.lean",
+            "sha256": "6133ec7e90fdec8f42c3b7569372692e6599fe52d4eefdac17f218570fa463ce",
+            "bytes": 807,
+            "lines": 46
+          }
+        },
+        {
+          "role": "def",
+          "source": {
+            "path": "examples/recordIndexByEnum.def.lean",
+            "sha256": "570e51b8d7b798b353f32b2768ac30357f02a67654e765e275a7d86b57cf6c2f",
+            "bytes": 696,
+            "lines": 23
+          }
+        }
+      ],
+      "proveCorrectCommands": 0,
+      "output": {
+        "path": "Corpus/Core/recordIndexByEnum.lean",
+        "sha256": "a483c1fad9eb54518529148a78f376440b3059206ad8ea2ec00631085b10dbad",
+        "bytes": 1917,
+        "lines": 86
+      }
+    },
+    {
+      "id": "core/setFromArray",
+      "unit": "setFromArray",
+      "group": "core",
+      "sourceId": "lemmascript",
+      "module": "Corpus.Core.setFromArray",
+      "kind": "proof",
+      "imports": [
+        "LemmaScript"
+      ],
+      "components": [
+        {
+          "role": "types",
+          "source": {
+            "path": "examples/setFromArray.types.lean",
+            "sha256": "9fb1625790c572da017df02fbbac963ae2a5f8e444673eae50148caed4f488c0",
+            "bytes": 310,
+            "lines": 16
+          }
+        },
+        {
+          "role": "def",
+          "source": {
+            "path": "examples/setFromArray.def.lean",
+            "sha256": "ba3743088b28d0699d0ceae3b2fa17d706a10db23066d034436b29eafbac4376",
+            "bytes": 465,
+            "lines": 17
+          }
+        },
+        {
+          "role": "proof",
+          "source": {
+            "path": "examples/setFromArray.proof.lean",
+            "sha256": "03798a8e1609cf7f92b1627663b9e36345a741629ee2ca0b571f73709b092fa1",
+            "bytes": 237,
+            "lines": 9
+          }
+        }
+      ],
+      "proveCorrectCommands": 1,
+      "output": {
+        "path": "Corpus/Core/setFromArray.lean",
+        "sha256": "edde07827131eece65515bd8e316364b54b413362faf7999630164ad8279a745",
+        "bytes": 1545,
+        "lines": 64
+      }
+    },
+    {
+      "id": "core/spec",
+      "unit": "spec",
+      "group": "core",
+      "sourceId": "lemmascript",
+      "module": "Corpus.Core.spec",
+      "kind": "proof",
+      "imports": [
+        "LemmaScript",
+        "LemmaScript.JSString"
+      ],
+      "components": [
+        {
+          "role": "types",
+          "source": {
+            "path": "examples/spec.types.lean",
+            "sha256": "d38cc532d8b02a00c6665b3ad8cce79689c1d69b7de6bcabc4d2a212a770d090",
+            "bytes": 6833,
+            "lines": 304
+          }
+        },
+        {
+          "role": "def",
+          "source": {
+            "path": "examples/spec.def.lean",
+            "sha256": "1dc9b4037530f9a07d2917efc239db62fa1587975cd20172f65daf73353159b6",
+            "bytes": 13699,
+            "lines": 380
+          }
+        },
+        {
+          "role": "proof",
+          "source": {
+            "path": "examples/spec.proof.lean",
+            "sha256": "195e43364d0c92138d654e8edd11ca4764fa0c9562a9192a725f509e5db054ff",
+            "bytes": 4054,
+            "lines": 171
+          }
+        }
+      ],
+      "proveCorrectCommands": 51,
+      "output": {
+        "path": "Corpus/Core/spec.lean",
+        "sha256": "ded7d46f6ef0f934520e45039fbe80fd04accb81a708891081d068c720d1f8b3",
+        "bytes": 25063,
+        "lines": 877
+      }
+    },
+    {
+      "id": "core/spreadMerge",
+      "unit": "spreadMerge",
+      "group": "core",
+      "sourceId": "lemmascript",
+      "module": "Corpus.Core.spreadMerge",
+      "kind": "elaboration",
+      "imports": [
+        "LemmaScript"
+      ],
+      "components": [
+        {
+          "role": "types",
+          "source": {
+            "path": "examples/spreadMerge.types.lean",
+            "sha256": "4497a83cc81d2e23570b019c90b63773e0f595909fed556e03e60decfa2ed283",
+            "bytes": 948,
+            "lines": 34
+          }
+        },
+        {
+          "role": "def",
+          "source": {
+            "path": "examples/spreadMerge.def.lean",
+            "sha256": "230513cad4f6003f0e461f1376328b467c8798ad258a15d4f5c78656834a79b2",
+            "bytes": 1525,
+            "lines": 34
+          }
+        }
+      ],
+      "proveCorrectCommands": 0,
+      "output": {
+        "path": "Corpus/Core/spreadMerge.lean",
+        "sha256": "7ab116f76c577a3e557ea58e9411f9524222edc151c1b70e28503ad7115755a1",
+        "bytes": 2857,
+        "lines": 85
+      }
+    },
+    {
+      "id": "core/swap",
+      "unit": "swap",
+      "group": "core",
+      "sourceId": "lemmascript",
+      "module": "Corpus.Core.swap",
+      "kind": "elaboration",
+      "imports": [
+        "LemmaScript"
+      ],
+      "components": [
+        {
+          "role": "def",
+          "source": {
+            "path": "examples/swap.def.lean",
+            "sha256": "673c498c4c39c01a58533000d68f1473c957b25339056e0b4bfb341e849b8b4f",
+            "bytes": 563,
+            "lines": 21
+          }
+        }
+      ],
+      "proveCorrectCommands": 0,
+      "output": {
+        "path": "Corpus/Core/swap.lean",
+        "sha256": "71ec01a0104bb9c1a9d60fa38cbb1e8c012a21073aa9ea62f79eda91b98828a7",
+        "bytes": 786,
+        "lines": 33
+      }
+    },
+    {
+      "id": "core/switchEnumField",
+      "unit": "switchEnumField",
+      "group": "core",
+      "sourceId": "lemmascript",
+      "module": "Corpus.Core.switchEnumField",
+      "kind": "proof",
+      "imports": [
+        "LemmaScript"
+      ],
+      "components": [
+        {
+          "role": "types",
+          "source": {
+            "path": "examples/switchEnumField.types.lean",
+            "sha256": "9434931935adbacd41befdf341903b9e384a1df46ac365a690f7a9ae864f3a86",
+            "bytes": 412,
+            "lines": 28
+          }
+        },
+        {
+          "role": "def",
+          "source": {
+            "path": "examples/switchEnumField.def.lean",
+            "sha256": "b26b30976619223242e3aae19fd93c740a3fa304242b4b1971c45846b450763d",
+            "bytes": 574,
+            "lines": 28
+          }
+        },
+        {
+          "role": "proof",
+          "source": {
+            "path": "examples/switchEnumField.proof.lean",
+            "sha256": "94f4d916067d945741df23f9ba6bf6bf7474cca03b2558da115619257b6b3f7d",
+            "bytes": 227,
+            "lines": 11
+          }
+        }
+      ],
+      "proveCorrectCommands": 2,
+      "output": {
+        "path": "Corpus/Core/switchEnumField.lean",
+        "sha256": "703006c2fdc2f206b3a9755a0de39dbc9426ac87bedd2c74713dd1382d5badc6",
+        "bytes": 1767,
+        "lines": 89
+      }
+    },
+    {
+      "id": "core/templateConcat",
+      "unit": "templateConcat",
+      "group": "core",
+      "sourceId": "lemmascript",
+      "module": "Corpus.Core.templateConcat",
+      "kind": "proof",
+      "imports": [
+        "LemmaScript"
+      ],
+      "components": [
+        {
+          "role": "types",
+          "source": {
+            "path": "examples/templateConcat.types.lean",
+            "sha256": "a364be10b86cdaf235432dcfa61d0fda27b14ff59c17d25b03b94707711cbd4d",
+            "bytes": 290,
+            "lines": 14
+          }
+        },
+        {
+          "role": "def",
+          "source": {
+            "path": "examples/templateConcat.def.lean",
+            "sha256": "f9dc553dbb9ebd6e9118a28fdfefb566d64444441b83277640c8b31ab4c4ccde",
+            "bytes": 419,
+            "lines": 17
+          }
+        },
+        {
+          "role": "proof",
+          "source": {
+            "path": "examples/templateConcat.proof.lean",
+            "sha256": "1ae457178b9464a3fb9b2c7f3ab02e27b044062b7ae98f62db5615444627621c",
+            "bytes": 341,
+            "lines": 12
+          }
+        }
+      ],
+      "proveCorrectCommands": 1,
+      "output": {
+        "path": "Corpus/Core/templateConcat.lean",
+        "sha256": "571f7d4e2cff81ea1e689833e5111f22b95a2a7aa241dcd30fc2902088674b35",
+        "bytes": 1597,
+        "lines": 65
+      }
+    },
+    {
+      "id": "core/toposort",
+      "unit": "toposort",
+      "group": "core",
+      "sourceId": "lemmascript",
+      "module": "Corpus.Core.toposort",
+      "kind": "proof",
+      "imports": [
+        "LemmaScript"
+      ],
+      "components": [
+        {
+          "role": "spec",
+          "source": {
+            "path": "examples/toposort.spec.lean",
+            "sha256": "0317b2f4beaa59f0e709246077d46ff655e2086ec4ee365dc6e5bead457dcc45",
+            "bytes": 2244,
+            "lines": 45
+          }
+        },
+        {
+          "role": "def",
+          "source": {
+            "path": "examples/toposort.def.lean",
+            "sha256": "4251035bee939484671d70f5a9c838626c9c1a3e1bdfa6875c0dd60f69e80835",
+            "bytes": 5625,
+            "lines": 113
+          }
+        },
+        {
+          "role": "proof",
+          "source": {
+            "path": "examples/toposort.proof.lean",
+            "sha256": "6f942bd19f992be17e26db420785c5fe46dd67f5726dabe4c983515627259f5e",
+            "bytes": 12026,
+            "lines": 276
+          }
+        }
+      ],
+      "proveCorrectCommands": 1,
+      "output": {
+        "path": "Corpus/Core/toposort.lean",
+        "sha256": "3f49d1c0f1f7ea86b7467246b16c97130be4d93db495a14d6df3b54afa73bc0e",
+        "bytes": 20398,
+        "lines": 456
+      }
+    },
+    {
+      "id": "core/transition",
+      "unit": "transition",
+      "group": "core",
+      "sourceId": "lemmascript",
+      "module": "Corpus.Core.transition",
+      "kind": "proof",
+      "imports": [
+        "LemmaScript"
+      ],
+      "components": [
+        {
+          "role": "types",
+          "source": {
+            "path": "examples/transition.types.lean",
+            "sha256": "b8cf87af51cb9c4241b18e41ea9c97e3171ccefb7c7aa7280d3408c5bb30dc48",
+            "bytes": 907,
+            "lines": 40
+          }
+        },
+        {
+          "role": "spec",
+          "source": {
+            "path": "examples/transition.spec.lean",
+            "sha256": "5f88b37ba327ec0d9327ea797330d1eb865628b6c2cf52a1e4fc4d537a52772b",
+            "bytes": 134,
+            "lines": 5
+          }
+        },
+        {
+          "role": "def",
+          "source": {
+            "path": "examples/transition.def.lean",
+            "sha256": "1bfca76105ddb22069c2b666bb6b15fc15f4c73e2d0be2dacc109de19f132b84",
+            "bytes": 771,
+            "lines": 26
+          }
+        },
+        {
+          "role": "proof",
+          "source": {
+            "path": "examples/transition.proof.lean",
+            "sha256": "d44a98d858f1985f6e5fa976e09791c115f30ed97360dd7414444721101c2f0d",
+            "bytes": 636,
+            "lines": 20
+          }
+        }
+      ],
+      "proveCorrectCommands": 2,
+      "output": {
+        "path": "Corpus/Core/transition.lean",
+        "sha256": "401211d2ea18448801aba2a2dc583ea47fcdd08c53ca396a11741bd1d1e7ab33",
+        "bytes": 3103,
+        "lines": 118
+      }
+    },
+    {
+      "id": "core/truthiness",
+      "unit": "truthiness",
+      "group": "core",
+      "sourceId": "lemmascript",
+      "module": "Corpus.Core.truthiness",
+      "kind": "proof",
+      "imports": [
+        "LemmaScript"
+      ],
+      "components": [
+        {
+          "role": "types",
+          "source": {
+            "path": "examples/truthiness.types.lean",
+            "sha256": "dfa8f17fbe3048e0e059979890b54aef49dccf2cd115d3c7e1a886334dddf031",
+            "bytes": 1553,
+            "lines": 111
+          }
+        },
+        {
+          "role": "def",
+          "source": {
+            "path": "examples/truthiness.def.lean",
+            "sha256": "935011ccb661925edfb256d810bee586b0a5a41cf4f8ecb860ebf0c33ccce300",
+            "bytes": 3461,
+            "lines": 116
+          }
+        },
+        {
+          "role": "proof",
+          "source": {
+            "path": "examples/truthiness.proof.lean",
+            "sha256": "40408bad64083fc8ecc6b6ad3bc9222af122ab474c659dd45ffaf3b84859ecd7",
+            "bytes": 2197,
+            "lines": 77
+          }
+        }
+      ],
+      "proveCorrectCommands": 12,
+      "output": {
+        "path": "Corpus/Core/truthiness.lean",
+        "sha256": "e14347f2d6f0703d2ca1ba810180add48b0cbeb0e30040474204b29a6749ed94",
+        "bytes": 7730,
+        "lines": 326
+      }
+    },
+    {
+      "id": "core/tuples",
+      "unit": "tuples",
+      "group": "core",
+      "sourceId": "lemmascript",
+      "module": "Corpus.Core.tuples",
+      "kind": "proof",
+      "imports": [
+        "LemmaScript"
+      ],
+      "components": [
+        {
+          "role": "types",
+          "source": {
+            "path": "examples/tuples.types.lean",
+            "sha256": "45148789860539608d9f905b34359186e61dc42dbc16dba9a7f6f20f9a4d9e67",
+            "bytes": 396,
+            "lines": 22
+          }
+        },
+        {
+          "role": "def",
+          "source": {
+            "path": "examples/tuples.def.lean",
+            "sha256": "24e717a3b9cce51a572f9b16e7fa9ff85ce2f0b18579b42d62010e512e071ccc",
+            "bytes": 1073,
+            "lines": 42
+          }
+        },
+        {
+          "role": "proof",
+          "source": {
+            "path": "examples/tuples.proof.lean",
+            "sha256": "b085bbf9c98e496f27efc965dca0991625992b804b2b12b1d690b59efcb39232",
+            "bytes": 376,
+            "lines": 16
+          }
+        }
+      ],
+      "proveCorrectCommands": 4,
+      "output": {
+        "path": "Corpus/Core/tuples.lean",
+        "sha256": "79521b514ae9d146492d154b74d14b5e02f93fb52574624456857938aeb4c606",
+        "bytes": 2336,
+        "lines": 102
+      }
+    },
+    {
+      "id": "core/unionInArray",
+      "unit": "unionInArray",
+      "group": "core",
+      "sourceId": "lemmascript",
+      "module": "Corpus.Core.unionInArray",
+      "kind": "elaboration",
+      "imports": [
+        "LemmaScript"
+      ],
+      "components": [
+        {
+          "role": "types",
+          "source": {
+            "path": "examples/unionInArray.types.lean",
+            "sha256": "1d033b0829d1d8de5648bfee51c04963d5b05c86d84df8e9b579b9697184cd3c",
+            "bytes": 552,
+            "lines": 31
+          }
+        },
+        {
+          "role": "def",
+          "source": {
+            "path": "examples/unionInArray.def.lean",
+            "sha256": "410bcdf70d6ff1029c5f637b11625df45a5bfa169b94db0755251c2d7a0b91e5",
+            "bytes": 496,
+            "lines": 24
+          }
+        }
+      ],
+      "proveCorrectCommands": 0,
+      "output": {
+        "path": "Corpus/Core/unionInArray.lean",
+        "sha256": "0ba1cc683e5603a241e2d39865cc7275f14cf6c3d3b3c9a819b275d1143407d5",
+        "bytes": 1437,
+        "lines": 72
+      }
+    },
+    {
+      "id": "node-casbin/arrayEquals",
+      "unit": "arrayEquals",
+      "group": "node-casbin",
+      "sourceId": "node-casbin",
+      "module": "Corpus.NodeCasbin.arrayEquals",
+      "kind": "proof",
+      "imports": [
+        "LemmaScript"
+      ],
+      "components": [
+        {
+          "role": "def",
+          "source": {
+            "path": "src/util/arrayEquals.def.lean",
+            "sha256": "eef161c8d8d6b297c3a14ba03bfbff7605f33f237a1e900402b4971153ac2313",
+            "bytes": 1013,
+            "lines": 32
+          }
+        },
+        {
+          "role": "proof",
+          "source": {
+            "path": "src/util/arrayEquals.proof.lean",
+            "sha256": "814a554fa66977fa660b0bec45a2cdb31748e4dce191368c7c9863feaf3d8e62",
+            "bytes": 160,
+            "lines": 7
+          }
+        }
+      ],
+      "proveCorrectCommands": 1,
+      "output": {
+        "path": "Corpus/NodeCasbin/arrayEquals.lean",
+        "sha256": "c4d19ad19fbec795ff795ee13d6a113367f8997aeee0aeaa5130eb54f164ff7a",
+        "bytes": 1631,
+        "lines": 56
+      }
+    },
+    {
+      "id": "node-casbin/effectorPure",
+      "unit": "effectorPure",
+      "group": "node-casbin",
+      "sourceId": "node-casbin",
+      "module": "Corpus.NodeCasbin.effectorPure",
+      "kind": "proof",
+      "imports": [
+        "LemmaScript"
+      ],
+      "components": [
+        {
+          "role": "types",
+          "source": {
+            "path": "src/effect/effectorPure.types.lean",
+            "sha256": "161c4d7f9e80bbceecbdb9de41056cb5b3644f572cde115bdb0837d265d09f0e",
+            "bytes": 1551,
+            "lines": 57
+          }
+        },
+        {
+          "role": "spec",
+          "source": {
+            "path": "src/effect/effectorPure.spec.lean",
+            "sha256": "35cdfd956e19060cefafe0883ea9dabf46a612055679709f31fd9283bc585bfa",
+            "bytes": 1891,
+            "lines": 51
+          }
+        },
+        {
+          "role": "def",
+          "source": {
+            "path": "src/effect/effectorPure.def.lean",
+            "sha256": "bd5bf6ea0723ef028c952b191f798860dadd2969f8105e1aee5fd890f98b0209",
+            "bytes": 1650,
+            "lines": 34
+          }
+        },
+        {
+          "role": "proof",
+          "source": {
+            "path": "src/effect/effectorPure.proof.lean",
+            "sha256": "344f1eaca90512f1047dc55ed4fa7f0b79406f7d16e90369135860d6a1919030",
+            "bytes": 19461,
+            "lines": 385
+          }
+        }
+      ],
+      "proveCorrectCommands": 2,
+      "output": {
+        "path": "Corpus/NodeCasbin/effectorPure.lean",
+        "sha256": "3b39b14f0c45c5d57e8e24714671b6d1aa601bfc82cf7a84be6e8dd2356bb5a8",
+        "bytes": 25394,
+        "lines": 554
+      }
+    },
+    {
+      "id": "node-casbin/getFilteredPolicy",
+      "unit": "getFilteredPolicy",
+      "group": "node-casbin",
+      "sourceId": "node-casbin",
+      "module": "Corpus.NodeCasbin.getFilteredPolicy",
+      "kind": "proof",
+      "imports": [
+        "LemmaScript"
+      ],
+      "components": [
+        {
+          "role": "def",
+          "source": {
+            "path": "src/model/getFilteredPolicy.def.lean",
+            "sha256": "0abd15db065e16f9fa3c422cb55d5a9eb3d0a57c536d8b8225baae5f9ca10fdd",
+            "bytes": 2021,
+            "lines": 47
+          }
+        },
+        {
+          "role": "proof",
+          "source": {
+            "path": "src/model/getFilteredPolicy.proof.lean",
+            "sha256": "707af493b9fc6dc6f074f8c5e2a61463ab4bfe01e0b35937483c1548c680c18a",
+            "bytes": 166,
+            "lines": 7
+          }
+        }
+      ],
+      "proveCorrectCommands": 1,
+      "output": {
+        "path": "Corpus/NodeCasbin/getFilteredPolicy.lean",
+        "sha256": "fb2feefbce1381fde40becd577c1651219c366459edc88a37facdaac2289c8ed",
+        "bytes": 2681,
+        "lines": 71
+      }
+    },
+    {
+      "id": "node-casbin/keyGet",
+      "unit": "keyGet",
+      "group": "node-casbin",
+      "sourceId": "node-casbin",
+      "module": "Corpus.NodeCasbin.keyGet",
+      "kind": "proof",
+      "imports": [
+        "LemmaScript",
+        "LemmaScript.JSString"
+      ],
+      "components": [
+        {
+          "role": "types",
+          "source": {
+            "path": "src/util/keyGet.types.lean",
+            "sha256": "2fcf926bb36ce0fd8a36e673193768676f268e0dbbb15c74be6fa285dbee47b8",
+            "bytes": 450,
+            "lines": 22
+          }
+        },
+        {
+          "role": "def",
+          "source": {
+            "path": "src/util/keyGet.def.lean",
+            "sha256": "a0cb6c5a542f8e874bc37fc73adc69a9aa043080db29ce47be2496cf864925f0",
+            "bytes": 713,
+            "lines": 16
+          }
+        },
+        {
+          "role": "proof",
+          "source": {
+            "path": "src/util/keyGet.proof.lean",
+            "sha256": "4d18675e0dd658a185c0430dea4e6239eb386282d6169c451dc63515f16e7947",
+            "bytes": 170,
+            "lines": 7
+          }
+        }
+      ],
+      "proveCorrectCommands": 1,
+      "output": {
+        "path": "Corpus/NodeCasbin/keyGet.lean",
+        "sha256": "7cd840100ab43285c71eed8a948dfd8b4e4df0b92e24dc0dfdf191e1f0ef1c26",
+        "bytes": 1904,
+        "lines": 66
+      }
+    },
+    {
+      "id": "node-casbin/keyMatch",
+      "unit": "keyMatch",
+      "group": "node-casbin",
+      "sourceId": "node-casbin",
+      "module": "Corpus.NodeCasbin.keyMatch",
+      "kind": "proof",
+      "imports": [
+        "LemmaScript",
+        "LemmaScript.JSString"
+      ],
+      "components": [
+        {
+          "role": "types",
+          "source": {
+            "path": "src/util/keyMatch.types.lean",
+            "sha256": "7824ccea4daf0fe410c0c49e33cbf6935e60c62816de767aa77b46a6c8175053",
+            "bytes": 415,
+            "lines": 19
+          }
+        },
+        {
+          "role": "def",
+          "source": {
+            "path": "src/util/keyMatch.def.lean",
+            "sha256": "6583ed309c7c05a0a7251feb97b337f599bc2cac5b8ffe69d2eb3acaf3b907f1",
+            "bytes": 354,
+            "lines": 13
+          }
+        },
+        {
+          "role": "proof",
+          "source": {
+            "path": "src/util/keyMatch.proof.lean",
+            "sha256": "c4c3efd21572c82a3e7b5da2ebc0b1825cbd1a187e0bc8e7167d75a99c673084",
+            "bytes": 414,
+            "lines": 16
+          }
+        }
+      ],
+      "proveCorrectCommands": 1,
+      "output": {
+        "path": "Corpus/NodeCasbin/keyMatch.lean",
+        "sha256": "1fd657d1982412ff414f3f211f001cc81af09c8da6737170195e7cfd2b8b9720",
+        "bytes": 1796,
+        "lines": 70
+      }
+    },
+    {
+      "id": "pi/changelog",
+      "unit": "changelog",
+      "group": "pi",
+      "sourceId": "pi",
+      "module": "Corpus.Pi.changelog",
+      "kind": "proof",
+      "imports": [
+        "LemmaScript"
+      ],
+      "components": [
+        {
+          "role": "types",
+          "source": {
+            "path": "packages/coding-agent/src/utils/changelog.types.lean",
+            "sha256": "e0a3418870b92e385d1d6cc52a651add5a7c99fdd94f51ea6aaa2da702981c7b",
+            "bytes": 475,
+            "lines": 24
+          }
+        },
+        {
+          "role": "def",
+          "source": {
+            "path": "packages/coding-agent/src/utils/changelog.def.lean",
+            "sha256": "574368af78ca5fa7d65c7c66b0fc243191550414851baad1924494fe4d49532e",
+            "bytes": 754,
+            "lines": 15
+          }
+        },
+        {
+          "role": "proof",
+          "source": {
+            "path": "packages/coding-agent/src/utils/changelog.proof.lean",
+            "sha256": "84ee34dce6949c4d0a7245270d2d29d50984a378877b72b5b7b36484699f4879",
+            "bytes": 192,
+            "lines": 8
+          }
+        }
+      ],
+      "proveCorrectCommands": 1,
+      "output": {
+        "path": "Corpus/Pi/changelog.lean",
+        "sha256": "54ea307426d19501f1c87aca302e2c63b94ec05ddbe3cc724e5809bc0ea753fe",
+        "bytes": 2167,
+        "lines": 69
+      }
+    },
+    {
+      "id": "pi/compaction",
+      "unit": "compaction",
+      "group": "pi",
+      "sourceId": "pi",
+      "module": "Corpus.Pi.compaction",
+      "kind": "proof",
+      "imports": [
+        "LemmaScript"
+      ],
+      "components": [
+        {
+          "role": "types",
+          "source": {
+            "path": "packages/agent/src/harness/compaction/compaction.types.lean",
+            "sha256": "839dfa78987f7bead82f1b21516852c6772e8b71d50c3a4b5fa10abc642f9083",
+            "bytes": 5886,
+            "lines": 173
+          }
+        },
+        {
+          "role": "def",
+          "source": {
+            "path": "packages/agent/src/harness/compaction/compaction.def.lean",
+            "sha256": "09420700da698ea0fcb6f274a3ab6a83e9ffe7bb59dea91f7a36a51e70053873",
+            "bytes": 7556,
+            "lines": 148
+          }
+        },
+        {
+          "role": "proof",
+          "source": {
+            "path": "packages/agent/src/harness/compaction/compaction.proof.lean",
+            "sha256": "153aa8fe8fc5100412412a67f2e9730874f95cc8e2aca5ae77a43e208abd68f9",
+            "bytes": 1867,
+            "lines": 51
+          }
+        }
+      ],
+      "proveCorrectCommands": 5,
+      "output": {
+        "path": "Corpus/Pi/compaction.lean",
+        "sha256": "434658cc27315230d715dce1c0c552a984743ea1a69125e14694ff935cb43ce0",
+        "bytes": 16116,
+        "lines": 394
+      }
+    },
+    {
+      "id": "pi/compaction-cli",
+      "unit": "compaction-cli",
+      "group": "pi",
+      "sourceId": "pi",
+      "module": "Corpus.Pi.«compaction-cli»",
+      "kind": "proof",
+      "imports": [
+        "LemmaScript"
+      ],
+      "components": [
+        {
+          "role": "types",
+          "source": {
+            "path": "packages/coding-agent/src/core/compaction/compaction-cli.types.lean",
+            "sha256": "f144f890f7c56dc7925d093f4655f800c8493632825b24130b0c54becdbb4db8",
+            "bytes": 7604,
+            "lines": 205
+          }
+        },
+        {
+          "role": "def",
+          "source": {
+            "path": "packages/coding-agent/src/core/compaction/compaction-cli.def.lean",
+            "sha256": "0653a2f6171cf08f9120db20a2a378a0b837972526175ac44269587abce229f3",
+            "bytes": 6523,
+            "lines": 138
+          }
+        },
+        {
+          "role": "proof",
+          "source": {
+            "path": "packages/coding-agent/src/core/compaction/compaction-cli.proof.lean",
+            "sha256": "401b2bef1f8eb8508e7d0ddc5397e4fe8e6cd3d458d0d804cd6bf52a28a6ded5",
+            "bytes": 4384,
+            "lines": 97
+          }
+        }
+      ],
+      "proveCorrectCommands": 8,
+      "output": {
+        "path": "Corpus/Pi/compaction-cli.lean",
+        "sha256": "96ab3c708b3976c3cd14b65de9b98a47490f09821249f7805e339434225b731c",
+        "bytes": 19382,
+        "lines": 462
+      }
+    },
+    {
+      "id": "pi/truncate",
+      "unit": "truncate",
+      "group": "pi",
+      "sourceId": "pi",
+      "module": "Corpus.Pi.truncate",
+      "kind": "proof",
+      "imports": [
+        "LemmaScript"
+      ],
+      "components": [
+        {
+          "role": "types",
+          "source": {
+            "path": "packages/coding-agent/src/core/tools/truncate.types.lean",
+            "sha256": "ea163503ec903ac0e56cf5abd0240fb83981bec813e23e3275ce965ea29d4c0d",
+            "bytes": 946,
+            "lines": 31
+          }
+        },
+        {
+          "role": "def",
+          "source": {
+            "path": "packages/coding-agent/src/core/tools/truncate.def.lean",
+            "sha256": "760f92acb6496779ea3aea8176ae42c8b23fed0cf2bea5be7062a900ea4250ec",
+            "bytes": 6384,
+            "lines": 102
+          }
+        },
+        {
+          "role": "proof",
+          "source": {
+            "path": "packages/coding-agent/src/core/tools/truncate.proof.lean",
+            "sha256": "8e7cb85547bc6ae25ccebb7de16503c84d14ea51ff69c43e09aa8786e6029306",
+            "bytes": 1314,
+            "lines": 29
+          }
+        }
+      ],
+      "proveCorrectCommands": 2,
+      "output": {
+        "path": "Corpus/Pi/truncate.lean",
+        "sha256": "8b30ff99f66ca4b4ee3eae8bd17d7022be271d32d891bfc55e717543de8780d4",
+        "bytes": 9428,
+        "lines": 184
+      }
+    }
+  ],
+  "attribution": {
+    "path": "Corpus/ATTRIBUTION.md",
+    "sha256": "6d3a58080b8b27d6f1046ff9609b3882b81bbf9a9e446d46b28a6b4b3dff59ee",
+    "bytes": 1178,
+    "lines": 13
+  }
+}

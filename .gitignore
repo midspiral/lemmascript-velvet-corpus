@@ -1,0 +1,5 @@
+node_modules/
+.lake/
+results/
+*.trace.json
+.DS_Store

@@ -1,0 +1,22 @@
+{
+  "name": "lemmascript-velvet-corpus",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "description": "A reproducible corpus of real LemmaScript-generated Lean workloads for Velvet and Loom",
+  "engines": {
+    "node": ">=20.6"
+  },
+  "scripts": {
+    "gather": "node --import tsx bin/gather.ts",
+    "check-artifacts": "node --import tsx bin/check-artifacts.ts",
+    "test": "node --import tsx --test test/*.test.ts",
+    "typecheck": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "@types/node": "^25.5.0",
+    "tsx": "^4.22.4",
+    "typescript": "^5.7.0"
+  },
+  "license": "MIT"
+}
