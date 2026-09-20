@@ -131,83 +131,82 @@ section
   Do not edit — re-run `lsc gen` to regenerate.
 -/
 
-set_option loom.semantics.termination "total"
-set_option loom.semantics.choice "demonic"
+set_option velvet.semantics.termination "total"
 
-method boolCond (b : Bool) return (res : Int)
-  ensures b → res = 1
-  ensures ¬(b) → res = 0
+method boolCond (b : Bool) returns (res : Int)
+  ensures ensures_1: (b → res = 1 : Prop)
+  ensures ensures_2: (¬(b) → res = 0 : Prop)
   do
     return Pure.boolCond b
 
-method numCond (n : Int) return (res : Int)
-  ensures n ≠ 0 → res = 1
-  ensures n = 0 → res = 0
+method numCond (n : Int) returns (res : Int)
+  ensures ensures_1: (n ≠ 0 → res = 1 : Prop)
+  ensures ensures_2: (n = 0 → res = 0 : Prop)
   do
     return Pure.numCond n
 
-method numNot (n : Int) return (res : Int)
-  ensures n = 0 → res = 1
-  ensures n ≠ 0 → res = 0
+method numNot (n : Int) returns (res : Int)
+  ensures ensures_1: (n = 0 → res = 1 : Prop)
+  ensures ensures_2: (n ≠ 0 → res = 0 : Prop)
   do
     return Pure.numNot n
 
-method numTernary (n : Int) return (res : Int)
-  ensures n ≠ 0 → res = 1
-  ensures n = 0 → res = 0
+method numTernary (n : Int) returns (res : Int)
+  ensures ensures_1: (n ≠ 0 → res = 1 : Prop)
+  ensures ensures_2: (n = 0 → res = 0 : Prop)
   do
     return Pure.numTernary n
 
-method strCond (s : String) return (res : Int)
-  ensures s.length > 0 → res = 1
-  ensures s.length = 0 → res = 0
+method strCond (s : String) returns (res : Int)
+  ensures ensures_1: (s.length > 0 → res = 1 : Prop)
+  ensures ensures_2: (s.length = 0 → res = 0 : Prop)
   do
     return Pure.strCond s
 
-method strNot (s : String) return (res : Int)
-  ensures s.length = 0 → res = 1
-  ensures s.length > 0 → res = 0
+method strNot (s : String) returns (res : Int)
+  ensures ensures_1: (s.length = 0 → res = 1 : Prop)
+  ensures ensures_2: (s.length > 0 → res = 0 : Prop)
   do
     return Pure.strNot s
 
-method arrCond (xs : Array Int) return (res : Int)
-  ensures res = 1
+method arrCond (xs : Array Int) returns (res : Int)
+  ensures ensures_1: (res = 1 : Prop)
   do
     return Pure.arrCond xs
 
-method arrNot (xs : Array Int) return (res : Int)
-  ensures res = 0
+method arrNot (xs : Array Int) returns (res : Int)
+  ensures ensures_1: (res = 0 : Prop)
   do
     return Pure.arrNot xs
 
-method andMixed (i : Int) (carry : Int) return (res : Int)
-  ensures i ≥ 0 → carry ≠ 0 → res = 1
-  ensures i < 0 ∨ carry = 0 → res = 0
+method andMixed (i : Int) (carry : Int) returns (res : Int)
+  ensures ensures_1: (i ≥ 0 → carry ≠ 0 → res = 1 : Prop)
+  ensures ensures_2: (i < 0 ∨ carry = 0 → res = 0 : Prop)
   do
     return Pure.andMixed i carry
 
-method orMixed (s : String) (n : Int) return (res : Int)
-  ensures s.length > 0 ∨ n ≠ 0 → res = 1
-  ensures s.length = 0 → n = 0 → res = 0
+method orMixed (s : String) (n : Int) returns (res : Int)
+  ensures ensures_1: (s.length > 0 ∨ n ≠ 0 → res = 1 : Prop)
+  ensures ensures_2: (s.length = 0 → n = 0 → res = 0 : Prop)
   do
     return Pure.orMixed s n
 
-method andOrNested (a : Int) (b : String) (c : Array Int) return (res : Int)
-  ensures a ≠ 0 ∨ b.length > 0 → res = 1
-  ensures a = 0 → b.length = 0 → res = 0
+method andOrNested (a : Int) (b : String) (c : Array Int) returns (res : Int)
+  ensures ensures_1: (a ≠ 0 ∨ b.length > 0 → res = 1 : Prop)
+  ensures ensures_2: (a = 0 → b.length = 0 → res = 0 : Prop)
   do
     return Pure.andOrNested a b c
 
-method carryScan (digits : Array Int) return (res : Int)
-  require digits.size > 0
-  ensures res ≥ -1
-  ensures res < digits.size
+method carryScan (digits : Array Int) returns (res : Int)
+  requires require_1: (digits.size > 0 : Prop)
+  ensures ensures_1: (res ≥ -1 : Prop)
+  ensures ensures_2: (res < digits.size : Prop)
   do
     let mut i : Int := digits.size - 1
     let mut carry : Int := 1
     while i ≥ 0 && carry ≠ 0
-      invariant i ≥ -1
-      invariant i < digits.size
+      invariant invariant_1: (i ≥ -1 : Prop)
+      invariant invariant_2: (i < digits.size : Prop)
       decreasing (i + 1).toNat
     do
       if digits[i.toNat]! = 0 then
@@ -215,30 +214,30 @@ method carryScan (digits : Array Int) return (res : Int)
       i := i - 1
     return i
 
-method optNumCond (o : Option Int) return (res : Int)
-  ensures (match o with | .some _ => false | .none => true) → res = 0
-  ensures (match o with | .some _value => _value == 0 | .none => false) → res = 0
-  ensures (match o with | .some _o_val => _o_val ≠ 0 → res = 1 | .none => true)
+method optNumCond (o : Option Int) returns (res : Int)
+  ensures ensures_1: ((match o with | .some _ => false | .none => true) → res = 0 : Prop)
+  ensures ensures_2: ((match o with | .some _value => _value == 0 | .none => false) → res = 0 : Prop)
+  ensures ensures_3: ((match o with | .some _o_val => _o_val ≠ 0 → res = 1 | .none => true) : Prop)
   do
     return Pure.optNumCond o
 
-method optNumNot (o : Option Int) return (res : Int)
-  ensures (match o with | .some _ => false | .none => true) → res = 1
-  ensures (match o with | .some _value => _value == 0 | .none => false) → res = 1
-  ensures (match o with | .some _o_val => _o_val ≠ 0 → res = 0 | .none => true)
+method optNumNot (o : Option Int) returns (res : Int)
+  ensures ensures_1: ((match o with | .some _ => false | .none => true) → res = 1 : Prop)
+  ensures ensures_2: ((match o with | .some _value => _value == 0 | .none => false) → res = 1 : Prop)
+  ensures ensures_3: ((match o with | .some _o_val => _o_val ≠ 0 → res = 0 | .none => true) : Prop)
   do
     return Pure.optNumNot o
 
-method optStrCond (o : Option String) return (res : Int)
-  ensures (match o with | .some _ => false | .none => true) → res = 0
-  ensures (match o with | .some _value => _value == "" | .none => false) → res = 0
-  ensures (match o with | .some _o_val => _o_val ≠ "" → res = 1 | .none => true)
+method optStrCond (o : Option String) returns (res : Int)
+  ensures ensures_1: ((match o with | .some _ => false | .none => true) → res = 0 : Prop)
+  ensures ensures_2: ((match o with | .some _value => _value == "" | .none => false) → res = 0 : Prop)
+  ensures ensures_3: ((match o with | .some _o_val => _o_val ≠ "" → res = 1 | .none => true) : Prop)
   do
     return Pure.optStrCond o
 
-method optPresent (o : Option Int) return (res : Int)
-  ensures (match o with | .some _o_val => res = 1 | .none => true)
-  ensures (match o with | .some _ => false | .none => true) → res = 0
+method optPresent (o : Option Int) returns (res : Int)
+  ensures ensures_1: ((match o with | .some _o_val => res = 1 | .none => true) : Prop)
+  ensures ensures_2: ((match o with | .some _ => false | .none => true) → res = 0 : Prop)
   do
     return Pure.optPresent o
 end
@@ -247,80 +246,73 @@ end
 /- BEGIN LemmaScript/examples/truthiness.proof.lean -/
 section
 
-set_option loom.semantics.termination "total"
-set_option loom.semantics.choice "demonic"
+set_option velvet.semantics.termination "total"
 
 -- These functions are expression-bodied, so the Lean backend emits a `Pure.*`
--- mirror and the method just delegates (`return Pure.f x`). `loom_solve`'s SMT
--- backend treats that mirror as opaque, so we discharge each postcondition by
+-- mirror and the method just delegates (`return Pure.f x`). The verifier
+-- treats that mirror as opaque, so we discharge each postcondition by
 -- unfolding the mirror and simplifying — the `simp` IS the truthiness check.
 
--- This pinned toolchain has no `String.length_eq_zero_iff`; reconstruct it from
--- the underlying char list so the string-truthiness `optStrCond` arm can close.
-private theorem str_length_eq_zero_iff {s : String} : s.length = 0 ↔ s = "" := by
-  cases s
-  simp [String.length, String.ext_iff, List.length_eq_zero_iff]
-
 prove_correct boolCond by
-  loom_goals_intro
-  loom_unfold
+  velvet_vcgen [boolCond]
+  all_goals expose_names
   all_goals (cases b <;> simp_all [Pure.boolCond])
 
 prove_correct numCond by
-  loom_goals_intro
-  loom_unfold
+  velvet_vcgen [numCond]
+  all_goals expose_names
   all_goals simp_all [Pure.numCond]
 
 prove_correct numNot by
-  loom_goals_intro
-  loom_unfold
+  velvet_vcgen [numNot]
+  all_goals expose_names
   all_goals simp_all [Pure.numNot]
 
 prove_correct numTernary by
-  loom_goals_intro
-  loom_unfold
+  velvet_vcgen [numTernary]
+  all_goals expose_names
   all_goals simp_all [Pure.numTernary]
 
 prove_correct strCond by
-  loom_goals_intro
-  loom_unfold
+  velvet_vcgen [strCond]
+  all_goals expose_names
   all_goals simp_all [Pure.strCond]
 
 prove_correct strNot by
-  loom_goals_intro
-  loom_unfold
-  all_goals (simp only [Pure.strNot, ← str_length_eq_zero_iff]; split <;> omega)
+  velvet_vcgen [strNot]
+  all_goals expose_names
+  all_goals (simp only [Pure.strNot, ← String.length_eq_zero_iff]; split <;> omega)
 
 prove_correct arrCond by
-  loom_goals_intro
-  loom_unfold
+  velvet_vcgen [arrCond]
+  all_goals expose_names
   all_goals simp_all [Pure.arrCond]
 
 prove_correct arrNot by
-  loom_goals_intro
-  loom_unfold
+  velvet_vcgen [arrNot]
+  all_goals expose_names
   all_goals simp_all [Pure.arrNot]
 
 -- The optional cases also need an explicit split on `o` so the `match o` in each
 -- postcondition reduces; then simp closes each arm.
 prove_correct optNumCond by
-  loom_goals_intro
-  loom_unfold
+  velvet_vcgen [optNumCond]
+  all_goals expose_names
   all_goals (cases o <;> simp_all [Pure.optNumCond])
 
 prove_correct optNumNot by
-  loom_goals_intro
-  loom_unfold
+  velvet_vcgen [optNumNot]
+  all_goals expose_names
   all_goals (cases o <;> simp_all [Pure.optNumNot])
 
 prove_correct optStrCond by
-  loom_goals_intro
-  loom_unfold
-  all_goals (cases o <;> simp_all [Pure.optStrCond, str_length_eq_zero_iff])
+  velvet_vcgen [optStrCond]
+  all_goals expose_names
+  all_goals (cases o <;> simp_all [Pure.optStrCond, String.length_eq_zero_iff])
 
 prove_correct optPresent by
-  loom_goals_intro
-  loom_unfold
+  velvet_vcgen [optPresent]
+  all_goals expose_names
   all_goals (cases o <;> simp_all [Pure.optPresent])
 end
 /- END LemmaScript/examples/truthiness.proof.lean -/

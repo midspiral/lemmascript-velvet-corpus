@@ -42,13 +42,12 @@ section
   Do not edit — re-run `lsc gen` to regenerate.
 -/
 
-set_option loom.semantics.termination "total"
-set_option loom.semantics.choice "demonic"
+set_option velvet.semantics.termination "total"
 
-method keyGet (key1 : String) (key2 : String) return (res : String)
-  ensures JSString.indexOf key2 "*" = -1 → res = ""
-  ensures key1.length ≤ JSString.indexOf key2 "*" → res = ""
-  ensures JSString.indexOf key2 "*" ≥ 0 → JSString.indexOf key2 "*" ≤ key1.length → JSString.indexOf key2 "*" ≤ key2.length → JSString.slice key1 0 (JSString.indexOf key2 "*") ≠ JSString.slice key2 0 (JSString.indexOf key2 "*") → res = ""
+method keyGet (key1 : String) (key2 : String) returns (res : String)
+  ensures ensures_1: (JSString.indexOf key2 "*" = -1 → res = "" : Prop)
+  ensures ensures_2: (key1.length ≤ JSString.indexOf key2 "*" → res = "" : Prop)
+  ensures ensures_3: (JSString.indexOf key2 "*" ≥ 0 → JSString.indexOf key2 "*" ≤ key1.length → JSString.indexOf key2 "*" ≤ key2.length → JSString.slice key1 0 (JSString.indexOf key2 "*") ≠ JSString.slice key2 0 (JSString.indexOf key2 "*") → res = "" : Prop)
   do
     return Pure.keyGet key1 key2
 end
@@ -57,10 +56,9 @@ end
 /- BEGIN node-casbin-lemmascript/src/util/keyGet.proof.lean -/
 section
 
-set_option loom.semantics.termination "total"
-set_option loom.semantics.choice "demonic"
+set_option velvet.semantics.termination "total"
 
 prove_correct keyGet by
-  unfold Pure.keyGet; loom_solve
+  velvet_vcgen [keyGet] with finish [Pure.keyGet]
 end
 /- END node-casbin-lemmascript/src/util/keyGet.proof.lean -/

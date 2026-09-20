@@ -36,15 +36,14 @@ section
   Do not edit — re-run `lsc gen` to regenerate.
 -/
 
-set_option loom.semantics.termination "total"
-set_option loom.semantics.choice "demonic"
+set_option velvet.semantics.termination "total"
 
-method dedupSize (arr : Array Int) return (res : Int)
+method dedupSize (arr : Array Int) returns (res : Int)
   do
     return Pure.dedupSize arr
 
-method member (arr : Array Int) (x : Int) return (res : Bool)
-  ensures res ↔ (∃ i : Nat, i < arr.size ∧ arr[i]! = x)
+method member (arr : Array Int) (x : Int) returns (res : Bool)
+  ensures ensures_1: (res ↔ (∃ i : Nat, i < arr.size ∧ arr[i]! = x) : Prop)
   do
     return Pure.member arr x
 end
@@ -53,12 +52,17 @@ end
 /- BEGIN LemmaScript/examples/setFromArray.proof.lean -/
 section
 
-set_option loom.semantics.termination "total"
-set_option loom.semantics.choice "demonic"
+set_option velvet.semantics.termination "total"
 
 prove_correct member by
-  loom_solve
-  simp only [Pure.member]
-  grind [List.contains_iff_mem, Array.mem_iff_getElem]
+  velvet_vcgen [member]
+  all_goals expose_names
+  simp only [Pure.member, Std.HashSet.contains_ofList, List.contains_iff_mem,
+    Array.mem_toList_iff, Array.mem_iff_getElem]
+  constructor
+  · rintro ⟨i, hi, hx⟩
+    exact ⟨i, hi, by simpa [getElem!_pos arr i hi] using hx⟩
+  · rintro ⟨i, hi, hx⟩
+    exact ⟨i, hi, by simpa [getElem!_pos arr i hi] using hx⟩
 end
 /- END LemmaScript/examples/setFromArray.proof.lean -/

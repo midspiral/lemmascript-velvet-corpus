@@ -193,29 +193,28 @@ section
   Do not edit — re-run `lsc gen` to regenerate.
 -/
 
-set_option loom.semantics.termination "total"
-set_option loom.semantics.choice "demonic"
+set_option velvet.semantics.termination "total"
 
-method isToolResultMessage (entry : SessionTreeEntry) return (res : Bool)
+method isToolResultMessage (entry : SessionTreeEntry) returns (res : Bool)
   do
     return Pure.isToolResultMessage entry
 
-method isTurnStarter (entry : SessionTreeEntry) return (res : Bool)
+method isTurnStarter (entry : SessionTreeEntry) returns (res : Bool)
   do
     return Pure.isTurnStarter entry
 
-method findValidCutPoints (entries : Array SessionTreeEntry) (startIndex : Int) (endIndex : Int) return (res : Array Int)
-  require 0 ≤ startIndex
-  require endIndex ≤ entries.size
-  ensures ∀ k : Nat, k < res.size → startIndex ≤ res[k]! ∧ res[k]! < endIndex
-  ensures ∀ k : Nat, k < res.size → ¬(Pure.isToolResultMessage entries[(res[k]!).toNat]!)
+method findValidCutPoints (entries : Array SessionTreeEntry) (startIndex : Int) (endIndex : Int) returns (res : Array Int)
+  requires require_1: (0 ≤ startIndex : Prop)
+  requires require_2: (endIndex ≤ entries.size : Prop)
+  ensures ensures_1: (∀ k : Nat, k < res.size → startIndex ≤ res[k]! ∧ res[k]! < endIndex : Prop)
+  ensures ensures_2: (∀ k : Nat, k < res.size → ¬(Pure.isToolResultMessage entries[(res[k]!).toNat]!) : Prop)
   do
     let mut cutPoints : Array Int := #[]
     let mut i : Int := startIndex
     while i < endIndex
-      invariant startIndex ≤ i
-      invariant ∀ k : Nat, k < cutPoints.size → startIndex ≤ cutPoints[k]! ∧ cutPoints[k]! < endIndex
-      invariant ∀ k : Nat, k < cutPoints.size → ¬(Pure.isToolResultMessage entries[(cutPoints[k]!).toNat]!)
+      invariant invariant_1: (startIndex ≤ i : Prop)
+      invariant invariant_2: (∀ k : Nat, k < cutPoints.size → startIndex ≤ cutPoints[k]! ∧ cutPoints[k]! < endIndex : Prop)
+      invariant invariant_3: (∀ k : Nat, k < cutPoints.size → ¬(Pure.isToolResultMessage entries[(cutPoints[k]!).toNat]!) : Prop)
       decreasing (endIndex - i).toNat
     do
       let entry := entries[i.toNat]!
@@ -241,18 +240,18 @@ method findValidCutPoints (entries : Array SessionTreeEntry) (startIndex : Int) 
       i := i + 1
     return cutPoints
 
-method findTurnStartIndex (entries : Array SessionTreeEntry) (entryIndex : Int) (startIndex : Int) return (res : Int)
-  require 0 ≤ startIndex
-  require entryIndex < entries.size
-  ensures res = -1 ∨ startIndex ≤ res ∧ res ≤ entryIndex ∧ Pure.isTurnStarter entries[res.toNat]!
+method findTurnStartIndex (entries : Array SessionTreeEntry) (entryIndex : Int) (startIndex : Int) returns (res : Int)
+  requires require_1: (0 ≤ startIndex : Prop)
+  requires require_2: (entryIndex < entries.size : Prop)
+  ensures ensures_1: (res = -1 ∨ startIndex ≤ res ∧ res ≤ entryIndex ∧ Pure.isTurnStarter entries[res.toNat]! : Prop)
   do
     let mut i : Int := entryIndex
     let mut _loopRet : Int := -1
     while i ≥ startIndex
-      invariant i ≤ entryIndex
-      invariant _loopRet = -1 ∨ startIndex ≤ _loopRet ∧ _loopRet ≤ entryIndex ∧ Pure.isTurnStarter entries[_loopRet.toNat]!
-      done_with True
+      invariant invariant_1: (i ≤ entryIndex : Prop)
+      invariant invariant_2: (_loopRet = -1 ∨ startIndex ≤ _loopRet ∧ _loopRet ≤ entryIndex ∧ Pure.isTurnStarter entries[_loopRet.toNat]! : Prop)
       decreasing (i - startIndex + 1).toNat
+      done_with (true : Prop)
     do
       let entry := entries[i.toNat]!
       if (match entry with | .branch_summary .. => true | _ => false) || (match entry with | .custom_message .. => true | _ => false) then
@@ -267,13 +266,13 @@ method findTurnStartIndex (entries : Array SessionTreeEntry) (entryIndex : Int) 
       i := i - 1
     return _loopRet
 
-method findCutPoint (entries : Array SessionTreeEntry) (startIndex : Int) (endIndex : Int) (keepRecentTokens : Int) return (res : CutPointResult)
-  require 0 ≤ startIndex
-  require endIndex ≤ entries.size
-  require ∀ j : Nat, startIndex < j → j < endIndex → Pure.isToolResultMessage entries[j]! → (match entries[j - 1]! with | .message .. => true | _ => false)
-  ensures startIndex ≤ res.firstKeptEntryIndex ∧ res.firstKeptEntryIndex < endIndex ∧ ¬(Pure.isToolResultMessage entries[(res.firstKeptEntryIndex).toNat]!) ∨ res.firstKeptEntryIndex = startIndex
-  ensures (∀ j : Nat, res.firstKeptEntryIndex ≤ j → j < endIndex → Pure.isToolResultMessage entries[j]! → 0 ≤ j - 1 ∧ res.firstKeptEntryIndex ≤ j - 1 ∧ (match entries[j - 1]! with | .message .. => true | _ => false)) ∨ res.firstKeptEntryIndex = startIndex
-  ensures res.isSplitTurn → 0 ≤ res.turnStartIndex ∧ res.turnStartIndex < entries.size ∧ startIndex ≤ res.turnStartIndex ∧ res.turnStartIndex ≤ res.firstKeptEntryIndex ∧ Pure.isTurnStarter entries[(res.turnStartIndex).toNat]!
+method findCutPoint (entries : Array SessionTreeEntry) (startIndex : Int) (endIndex : Int) (keepRecentTokens : Int) returns (res : CutPointResult)
+  requires require_1: (0 ≤ startIndex : Prop)
+  requires require_2: (endIndex ≤ entries.size : Prop)
+  requires require_3: (∀ j : Nat, startIndex < j → j < endIndex → Pure.isToolResultMessage entries[j]! → (match entries[j - 1]! with | .message .. => true | _ => false) : Prop)
+  ensures ensures_1: (startIndex ≤ res.firstKeptEntryIndex ∧ res.firstKeptEntryIndex < endIndex ∧ ¬(Pure.isToolResultMessage entries[(res.firstKeptEntryIndex).toNat]!) ∨ res.firstKeptEntryIndex = startIndex : Prop)
+  ensures ensures_2: ((∀ j : Nat, res.firstKeptEntryIndex ≤ j → j < endIndex → Pure.isToolResultMessage entries[j]! → 0 ≤ j - 1 ∧ res.firstKeptEntryIndex ≤ j - 1 ∧ (match entries[j - 1]! with | .message .. => true | _ => false)) ∨ res.firstKeptEntryIndex = startIndex : Prop)
+  ensures ensures_3: (res.isSplitTurn → 0 ≤ res.turnStartIndex ∧ res.turnStartIndex < entries.size ∧ startIndex ≤ res.turnStartIndex ∧ res.turnStartIndex ≤ res.firstKeptEntryIndex ∧ Pure.isTurnStarter entries[(res.turnStartIndex).toNat]! : Prop)
   do
     let _t0 ← findValidCutPoints entries startIndex endIndex
     let mut cutPoints : Array Int := _t0
@@ -283,14 +282,14 @@ method findCutPoint (entries : Array SessionTreeEntry) (startIndex : Int) (endIn
     let mut cutIndex : Int := cutPoints[0]!
     let mut i : Int := endIndex - 1
     while i ≥ startIndex
-      invariant i < endIndex
-      invariant startIndex ≤ cutIndex
-      invariant cutIndex < endIndex
-      invariant ¬(Pure.isToolResultMessage entries[cutIndex.toNat]!)
-      invariant ∀ k : Nat, k < cutPoints.size → startIndex ≤ cutPoints[k]! ∧ cutPoints[k]! < endIndex
-      invariant ∀ k : Nat, k < cutPoints.size → ¬(Pure.isToolResultMessage entries[(cutPoints[k]!).toNat]!)
-      done_with True
+      invariant invariant_1: (i < endIndex : Prop)
+      invariant invariant_2: (startIndex ≤ cutIndex : Prop)
+      invariant invariant_3: (cutIndex < endIndex : Prop)
+      invariant invariant_4: (¬(Pure.isToolResultMessage entries[cutIndex.toNat]!) : Prop)
+      invariant invariant_5: (∀ k : Nat, k < cutPoints.size → startIndex ≤ cutPoints[k]! ∧ cutPoints[k]! < endIndex : Prop)
+      invariant invariant_6: (∀ k : Nat, k < cutPoints.size → ¬(Pure.isToolResultMessage entries[(cutPoints[k]!).toNat]!) : Prop)
       decreasing (i - startIndex + 1).toNat
+      done_with (true : Prop)
     do
       let entry := entries[i.toNat]!
       if (match entry with | .message .. => true | _ => false) then
@@ -300,13 +299,13 @@ method findCutPoint (entries : Array SessionTreeEntry) (startIndex : Int) (endIn
         if accumulatedTokens ≥ keepRecentTokens then
           let mut c : Nat := 0
           while c < cutPoints.size
-            invariant startIndex ≤ cutIndex
-            invariant cutIndex < endIndex
-            invariant ¬(Pure.isToolResultMessage entries[cutIndex.toNat]!)
-            invariant ∀ k : Nat, k < cutPoints.size → startIndex ≤ cutPoints[k]! ∧ cutPoints[k]! < endIndex
-            invariant ∀ k : Nat, k < cutPoints.size → ¬(Pure.isToolResultMessage entries[(cutPoints[k]!).toNat]!)
-            done_with True
+            invariant invariant_7: (startIndex ≤ cutIndex : Prop)
+            invariant invariant_8: (cutIndex < endIndex : Prop)
+            invariant invariant_9: (¬(Pure.isToolResultMessage entries[cutIndex.toNat]!) : Prop)
+            invariant invariant_10: (∀ k : Nat, k < cutPoints.size → startIndex ≤ cutPoints[k]! ∧ cutPoints[k]! < endIndex : Prop)
+            invariant invariant_11: (∀ k : Nat, k < cutPoints.size → ¬(Pure.isToolResultMessage entries[(cutPoints[k]!).toNat]!) : Prop)
             decreasing cutPoints.size - c
+            done_with (true : Prop)
           do
             if cutPoints[c]! ≥ i then
               cutIndex := cutPoints[c]!
@@ -317,11 +316,11 @@ method findCutPoint (entries : Array SessionTreeEntry) (startIndex : Int) (endIn
       else
         i := i - 1
     while cutIndex > startIndex
-      invariant startIndex ≤ cutIndex
-      invariant cutIndex < endIndex
-      invariant ¬(Pure.isToolResultMessage entries[cutIndex.toNat]!)
-      done_with True
+      invariant invariant_12: (startIndex ≤ cutIndex : Prop)
+      invariant invariant_13: (cutIndex < endIndex : Prop)
+      invariant invariant_14: (¬(Pure.isToolResultMessage entries[cutIndex.toNat]!) : Prop)
       decreasing (cutIndex - startIndex).toNat
+      done_with (true : Prop)
     do
       let prevEntry := entries[(cutIndex - 1).toNat]!
       if (match prevEntry with | .compaction .. => true | _ => false) then
@@ -341,54 +340,44 @@ end
 /- BEGIN pi-lemmascript/packages/agent/src/harness/compaction/compaction.proof.lean -/
 section
 
-set_option loom.semantics.termination "total"
-set_option loom.semantics.choice "demonic"
+set_option velvet.semantics.termination "total"
 
 -- Spec predicates (Bool pure mirrors).
 prove_correct isToolResultMessage by
-  unfold Pure.isToolResultMessage; loom_solve
+  velvet_vcgen [isToolResultMessage] with finish [Pure.isToolResultMessage]
 
 prove_correct isTurnStarter by
-  unfold Pure.isTurnStarter; loom_solve
+  velvet_vcgen [isTurnStarter] with finish [Pure.isTurnStarter]
 
--- Loop selectors. The custom solver unfolds the spec predicates so grind can
+-- Loop selectors. Unfold the spec predicates so grind can
 -- connect the per-branch role/discriminator facts to isToolResultMessage /
 -- isTurnStarter when establishing the loop invariants.
 section LoopProofs
-set_option loom.solver "custom"
-set_option hygiene false in
-macro_rules
-| `(tactic|loom_solver) => `(tactic| first
-  | omega
-  | grind
-  | grind [Pure.isToolResultMessage, Pure.isTurnStarter]
-  | (simp only [Pure.isToolResultMessage, Pure.isTurnStarter] at *; (split <;> simp_all); done)
-  | (simp only [Pure.isToolResultMessage, Pure.isTurnStarter] at *; (split <;> grind); done)
-  | (simp_all only [Pure.isToolResultMessage, Pure.isTurnStarter]; grind)
-  | (simp only [Pure.isToolResultMessage, Pure.isTurnStarter] at *; grind))
-
 prove_correct findValidCutPoints by
-  loom_solve
+  velvet_vcgen [findValidCutPoints] with try finish [Pure.isToolResultMessage, Pure.isTurnStarter]
 
 prove_correct findTurnStartIndex by
-  loom_solve
+  velvet_vcgen [findTurnStartIndex] with try finish [Pure.isToolResultMessage, Pure.isTurnStarter]
 
 set_option maxHeartbeats 4000000 in
 prove_correct findCutPoint by
-  loom_solve
-  -- ensures_1 (turn-split): the reported turnStartIndex is a real boundary.
+  velvet_vcgen [findCutPoint]
+  all_goals expose_names
+  all_goals try omega
+  all_goals try grind [Pure.isToolResultMessage, Pure.isTurnStarter]
+  · left
+    intro j hcj hje htr
+    have hjne : cutIndex ≠ (↑j : Int) := fun he =>
+      invariant_14 (by rw [show cutIndex.toNat = j from by omega]; exact htr)
+    exact ⟨by omega, by grind, require_3 j (by grind) hje htr⟩
   · intro hsplit
     rcases ensures_1_1 with h1 | ⟨hsx, hxc, hts⟩
     · subst h1; simp_all
     · split_ifs with hc
       · simp_all
       · exact ⟨by omega, by omega, by omega, by omega, hts⟩
-  -- ensures_2 (no-orphan): every retained toolResult keeps its tool-use turn.
-  · left
-    intro j _hcj hje htr
-    have hjne : cutIndex_1 ≠ (↑j : ℤ) := fun he =>
-      invariant_9 (by rw [show cutIndex_1.toNat = j from by omega]; exact htr)
-    exact ⟨by omega, by omega, require_1 j (by omega) hje htr⟩
+  · simp only [Pure.isToolResultMessage]
+    split <;> simp_all
 end LoopProofs
 end
 /- END pi-lemmascript/packages/agent/src/harness/compaction/compaction.proof.lean -/

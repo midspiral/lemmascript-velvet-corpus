@@ -48,16 +48,15 @@ section
   Do not edit — re-run `lsc gen` to regenerate.
 -/
 
-set_option loom.semantics.termination "total"
-set_option loom.semantics.choice "demonic"
+set_option velvet.semantics.termination "total"
 
-method weight (p : Perm) return (res : Int)
-  ensures res ≥ 1
+method weight (p : Perm) returns (res : Int)
+  ensures ensures_1: (res ≥ 1 : Prop)
   do
     return Pure.weight p
 
-method pickPlainString (kind : String) return (res : Int)
-  ensures res ≥ 0
+method pickPlainString (kind : String) returns (res : Int)
+  ensures ensures_1: (res ≥ 0 : Prop)
   do
     match kind with
     | "small" =>
@@ -76,14 +75,12 @@ end
 /- BEGIN LemmaScript/examples/switchEnumField.proof.lean -/
 section
 
-set_option loom.semantics.termination "total"
-set_option loom.semantics.choice "demonic"
+set_option velvet.semantics.termination "total"
 
 prove_correct weight by
-  unfold Pure.weight
-  loom_solve
+  velvet_vcgen [weight] with finish [Pure.weight]
 
 prove_correct pickPlainString by
-  loom_solve
+  velvet_vcgen [pickPlainString] with finish
 end
 /- END LemmaScript/examples/switchEnumField.proof.lean -/

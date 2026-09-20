@@ -133,29 +133,28 @@ section
   Do not edit — re-run `lsc gen` to regenerate.
 -/
 
-set_option loom.semantics.termination "total"
-set_option loom.semantics.choice "demonic"
+set_option velvet.semantics.termination "total"
 
-method pushEffectStep (mode : Mode) (eft : Eft) (state : EffectState) return (res : EffectState)
-  ensures state.done = true → res = state
-  ensures state.done = false → mode = Mode.allow → eft = Eft.allow → res.res = true ∧ res.done = true
-  ensures state.done = false → mode = Mode.deny → eft = Eft.deny → res.res = false ∧ res.done = true
-  ensures state.done = false → mode = Mode.priority → eft ≠ Eft.indeterminate → res.done = true
-  ensures state.done = false → mode = Mode.priority → eft = Eft.allow → res.res = true
-  ensures state.done = false → mode = Mode.priority → eft = Eft.deny → res.res = false
-  ensures state.done = false → mode = Mode.allow → eft ≠ Eft.allow → res.done = false
-  ensures state.done = false → mode = Mode.deny → eft ≠ Eft.deny → res.done = false
+method pushEffectStep (mode : Mode) (eft : Eft) (state : EffectState) returns (res : EffectState)
+  ensures ensures_1: (state.done = true → res = state : Prop)
+  ensures ensures_2: (state.done = false → mode = Mode.allow → eft = Eft.allow → res.res = true ∧ res.done = true : Prop)
+  ensures ensures_3: (state.done = false → mode = Mode.deny → eft = Eft.deny → res.res = false ∧ res.done = true : Prop)
+  ensures ensures_4: (state.done = false → mode = Mode.priority → eft ≠ Eft.indeterminate → res.done = true : Prop)
+  ensures ensures_5: (state.done = false → mode = Mode.priority → eft = Eft.allow → res.res = true : Prop)
+  ensures ensures_6: (state.done = false → mode = Mode.priority → eft = Eft.deny → res.res = false : Prop)
+  ensures ensures_7: (state.done = false → mode = Mode.allow → eft ≠ Eft.allow → res.done = false : Prop)
+  ensures ensures_8: (state.done = false → mode = Mode.deny → eft ≠ Eft.deny → res.done = false : Prop)
   do
     return Pure.pushEffectStep mode eft state
 
-method processEffects (mode : Mode) (effects : Array Eft) return (res : EffectState)
+method processEffects (mode : Mode) (effects : Array Eft) returns (res : EffectState)
   do
     let mut state : EffectState := { res := false, recorded := false, done := false }
     let mut i : Nat := 0
     while i < effects.size
-      invariant i ≤ effects.size
-      invariant mode = Mode.allow → state.done = true → state.res = true
-      invariant mode = Mode.deny → state.done = true → state.res = false
+      invariant invariant_1: (i ≤ effects.size : Prop)
+      invariant invariant_2: (mode = Mode.allow → state.done = true → state.res = true : Prop)
+      invariant invariant_3: (mode = Mode.deny → state.done = true → state.res = false : Prop)
       decreasing effects.size - i
     do
       state ← pushEffectStep mode effects[i]! state
@@ -167,31 +166,16 @@ end
 /- BEGIN node-casbin-lemmascript/src/effect/effectorPure.proof.lean -/
 section
 
-set_option loom.semantics.termination "total"
-set_option loom.semantics.choice "demonic"
+set_option velvet.semantics.termination "total"
 
 prove_correct pushEffectStep by
-  unfold Pure.pushEffectStep; loom_solve
+  velvet_vcgen [pushEffectStep] with finish [Pure.pushEffectStep]
 
-section ProcessEffectsProof
-set_option loom.solver "custom"
-set_option hygiene false in
-macro_rules
-| `(tactic|loom_solver) => `(tactic| first
-  | grind
-  | omega
-  | (intro h1 h2;
-     have e8 : state.done = true → x = state := ensures_8;
-     have i2 : mode = Mode.allow → state.done = true → state.res = true := invariant_2;
-     have i3 : mode = Mode.deny → state.done = true → state.res = false := invariant_3;
-     have e1 : state.done = false → mode = Mode.deny → effects[i]! ≠ Eft.deny → x.done = false := ensures_1;
-     have e2 : state.done = false → mode = Mode.allow → effects[i]! ≠ Eft.allow → x.done = false := ensures_2;
-     have e6 : state.done = false → mode = Mode.deny → effects[i]! = Eft.deny → x.res = false ∧ x.done = true := ensures_6;
-     have e7 : state.done = false → mode = Mode.allow → effects[i]! = Eft.allow → x.res = true ∧ x.done = true := ensures_7;
-     by_cases hsd : state.done = true <;> simp_all))
 prove_correct processEffects by
-  loom_solve
-end ProcessEffectsProof
+  velvet_vcgen [processEffects] with try finish
+  all_goals expose_names
+  all_goals cases h : state.done <;> grind
+
 
 -- ═══════════════════════════════════════════════════════════
 -- Sequence-level properties (pure Lean, using generated Pure.pushEffectStep)
@@ -479,76 +463,76 @@ theorem denyNone_order_independent (efts : List Eft) (i : Nat) (hne : efts ≠ [
 -- Per-step Hoare triples (Velvet)
 -- ═══════════════════════════════════════════════════════════
 
-open TotalCorrectness DemonicChoice in
+open Std.Internal.Do in
 theorem doneIsStable (mode : Mode) (eft : Eft) (state : EffectState)
     (h : state.done = true) :
-    triple (state.done = true)
-           (pushEffectStep mode eft state)
-           (fun res => res = state) := by
-  unfold pushEffectStep Pure.pushEffectStep; loom_solve
+    Triple (pushEffectStep mode eft state)
+           (state.done = true)
+           (fun res => res = state) False := by
+  velvet_vcgen [pushEffectStep] with finish [Pure.pushEffectStep]
 
-open TotalCorrectness DemonicChoice in
+open Std.Internal.Do in
 theorem allowSome_allowSetsTrue (eft : Eft) (state : EffectState)
     (h1 : state.done = false) (h2 : eft = Eft.allow) :
-    triple (state.done = false ∧ eft = Eft.allow)
-           (pushEffectStep Mode.allow eft state)
-           (fun res => res.res = true ∧ res.done = true) := by
-  unfold pushEffectStep Pure.pushEffectStep; loom_solve
+    Triple (pushEffectStep Mode.allow eft state)
+           (state.done = false ∧ eft = Eft.allow)
+           (fun res => res.res = true ∧ res.done = true) False := by
+  velvet_vcgen [pushEffectStep] with finish [Pure.pushEffectStep]
 
-open TotalCorrectness DemonicChoice in
+open Std.Internal.Do in
 theorem denyNone_nonDenyKeepsTrue (eft : Eft) (state : EffectState)
     (h1 : state.done = false) (h2 : eft ≠ Eft.deny) :
-    triple (state.done = false ∧ eft ≠ Eft.deny)
-           (pushEffectStep Mode.deny eft state)
-           (fun res => res.res = true) := by
-  unfold pushEffectStep Pure.pushEffectStep; loom_solve
+    Triple (pushEffectStep Mode.deny eft state)
+           (state.done = false ∧ eft ≠ Eft.deny)
+           (fun res => res.res = true) False := by
+  velvet_vcgen [pushEffectStep] with finish [Pure.pushEffectStep]
 
-open TotalCorrectness DemonicChoice in
+open Std.Internal.Do in
 theorem denyNone_denySetsfalse (eft : Eft) (state : EffectState)
     (h1 : state.done = false) (h2 : eft = Eft.deny) :
-    triple (state.done = false ∧ eft = Eft.deny)
-           (pushEffectStep Mode.deny eft state)
-           (fun res => res.res = false ∧ res.done = true) := by
-  unfold pushEffectStep Pure.pushEffectStep; loom_solve
+    Triple (pushEffectStep Mode.deny eft state)
+           (state.done = false ∧ eft = Eft.deny)
+           (fun res => res.res = false ∧ res.done = true) False := by
+  velvet_vcgen [pushEffectStep] with finish [Pure.pushEffectStep]
 
-open TotalCorrectness DemonicChoice in
+open Std.Internal.Do in
 theorem allowAndDeny_allowSetsTrue (eft : Eft) (state : EffectState)
     (h1 : state.done = false) (h2 : eft = Eft.allow) :
-    triple (state.done = false ∧ eft = Eft.allow)
-           (pushEffectStep Mode.allow_and_deny eft state)
-           (fun res => res.res = true ∧ res.done = false) := by
-  unfold pushEffectStep Pure.pushEffectStep; loom_solve
+    Triple (pushEffectStep Mode.allow_and_deny eft state)
+           (state.done = false ∧ eft = Eft.allow)
+           (fun res => res.res = true ∧ res.done = false) False := by
+  velvet_vcgen [pushEffectStep] with finish [Pure.pushEffectStep]
 
-open TotalCorrectness DemonicChoice in
+open Std.Internal.Do in
 theorem allowAndDeny_denyOverrides (eft : Eft) (state : EffectState)
     (h1 : state.done = false) (h2 : eft = Eft.deny) :
-    triple (state.done = false ∧ eft = Eft.deny)
-           (pushEffectStep Mode.allow_and_deny eft state)
-           (fun res => res.res = false ∧ res.done = true) := by
-  unfold pushEffectStep Pure.pushEffectStep; loom_solve
+    Triple (pushEffectStep Mode.allow_and_deny eft state)
+           (state.done = false ∧ eft = Eft.deny)
+           (fun res => res.res = false ∧ res.done = true) False := by
+  velvet_vcgen [pushEffectStep] with finish [Pure.pushEffectStep]
 
-open TotalCorrectness DemonicChoice in
+open Std.Internal.Do in
 theorem priority_decidesOnNonIndeterminate (eft : Eft) (state : EffectState)
     (h1 : state.done = false) (h2 : eft ≠ Eft.indeterminate) :
-    triple (state.done = false ∧ eft ≠ Eft.indeterminate)
-           (pushEffectStep Mode.priority eft state)
-           (fun res => res.done = true ∧ res.res = (eft = Eft.allow)) := by
-  unfold pushEffectStep Pure.pushEffectStep; loom_solve
+    Triple (pushEffectStep Mode.priority eft state)
+           (state.done = false ∧ eft ≠ Eft.indeterminate)
+           (fun res => res.done = true ∧ res.res = (eft = Eft.allow)) False := by
+  velvet_vcgen [pushEffectStep] with finish [Pure.pushEffectStep]
 
-open TotalCorrectness DemonicChoice in
+open Std.Internal.Do in
 theorem priority_indeterminateSkips (state : EffectState)
     (h : state.done = false) :
-    triple (state.done = false)
-           (pushEffectStep Mode.priority Eft.indeterminate state)
-           (fun res => res.done = false) := by
-  unfold pushEffectStep Pure.pushEffectStep; loom_solve
+    Triple (pushEffectStep Mode.priority Eft.indeterminate state)
+           (state.done = false)
+           (fun res => res.done = false) False := by
+  velvet_vcgen [pushEffectStep] with finish [Pure.pushEffectStep]
 
-open TotalCorrectness DemonicChoice in
+open Std.Internal.Do in
 theorem allowMode_preserves_doneImpliesRes (eft : Eft) (state : EffectState)
     (h : state.done = true → state.res = true) :
-    triple (state.done = true → state.res = true)
-           (pushEffectStep Mode.allow eft state)
-           (fun res => res.done = true → res.res = true) := by
-  unfold pushEffectStep Pure.pushEffectStep; loom_solve
+    Triple (pushEffectStep Mode.allow eft state)
+           (state.done = true → state.res = true)
+           (fun res => res.done = true → res.res = true) False := by
+  velvet_vcgen [pushEffectStep] with finish [Pure.pushEffectStep]
 end
 /- END node-casbin-lemmascript/src/effect/effectorPure.proof.lean -/

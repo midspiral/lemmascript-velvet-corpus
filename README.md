@@ -1,7 +1,7 @@
 # lemmascript-velvet-corpus
 
 A reproducible corpus of real Lean workloads produced by LemmaScript, intended
-for finding and profiling performance problems in Velvet and Loom. It is a
+for finding and profiling performance problems in Velvet 2. It is a
 corpus of complete programs and proofs, not an agentic proof benchmark.
 
 Each logical example is flattened into one Lean module. For example, the
@@ -22,7 +22,7 @@ npm run gather
 
 Those five source checkouts and Node.js are needed only to regenerate or check
 the snapshot. Building and profiling the committed corpus requires only this
-repository, Lean, and the sibling Velvet and Loom checkouts described below.
+repository, Lean, and the sibling Velvet checkout described below.
 
 Only their Lean artifacts are consumed. The TypeScript here implements the
 reproducible copy/concatenation step; application TypeScript is neither copied
@@ -45,19 +45,15 @@ rules.
 
 ## Build and inspect cases
 
-The checked-in Lake setup uses the sibling `../velvet` and `../loom` checkouts
-as its reference engine. These checkouts come from the `lemma` branches of
-[`namin/velvet`](https://github.com/namin/velvet/tree/lemma) and
-[`namin/loom`](https://github.com/namin/loom/tree/lemma). At present this is the
-known-good LemmaScript stack: concatenation removes the custom cross-module
-obligation-persistence requirement, but some cases still exercise the
-`for ... in ...` and bounded range-loop changes.
+The checked-in Lake setup uses Lean 4.34.0 and the sibling `../velvet`
+checkout from the `lemma2` branch of
+[`namin/velvet`](https://github.com/namin/velvet/tree/lemma2).
+Velvet 2 no longer needs Loom or external SMT solvers.
 
-The reference build validated while creating this snapshot used Velvet
-`5d6085bda021e1f967ed2f4d19c0a6e2d23a8f38` and Loom
-`2f18de6c83130b8fd309d9fc390a627743fd92e0`. The path dependencies are
-deliberately live so a Velvet developer measures their working tree; those
-hashes are a reproducible comparison point, not an enforced checkout action.
+The reference build uses Velvet
+`22ed7829f4a90e786eed9b193d29fe46e61fe949`. The path dependency is deliberately
+live so a Velvet developer measures their working tree; this hash is a
+reproducible comparison point, not an enforced checkout action.
 
 ```sh
 lake build                         # all groups and the section-boundary check
@@ -87,12 +83,12 @@ lake env lean \
   Corpus/Core/binarySearch.lean
 ```
 
-Run `lake build` first so dependency compilation and solver setup are outside
-the measurement. The resulting time is for the complete combined module—types,
+Run `lake build` first so dependency compilation is outside the measurement.
+The resulting time is for the complete combined module—types,
 specifications, method elaboration, and proofs—not proof time alone.
 
-To test another engine without editing `lakefile.lean`, put path entries for
-`Velvet` and `Loom` in `.lake/package-overrides.json`, or pass an equivalent
+To test another engine without editing `lakefile.lean`, put a path entry for
+`velvet` in `.lake/package-overrides.json`, or pass an equivalent
 file with Lake's `--packages` option. A path entry has this form (paths are
 relative to this repository):
 
@@ -103,20 +99,11 @@ relative to this repository):
     {
       "type": "path",
       "scope": "",
-      "name": "Velvet",
+      "name": "velvet",
       "manifestFile": "lake-manifest.json",
       "inherited": false,
       "dir": "../my-velvet",
-      "configFile": "lakefile.lean"
-    },
-    {
-      "type": "path",
-      "scope": "",
-      "name": "Loom",
-      "manifestFile": "lake-manifest.json",
-      "inherited": false,
-      "dir": "../my-loom",
-      "configFile": "lakefile.lean"
+      "configFile": "lakefile.toml"
     }
   ]
 }

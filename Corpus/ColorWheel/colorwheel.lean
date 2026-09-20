@@ -358,7 +358,7 @@ instance : Decidable (ModelInv m) := by unfold ModelInv; infer_instance
 -- ═══ Spec lemmas ═══
 
 -- randomInRange bounds: the core arithmetic lemma everything depends on.
-@[grind, loomAbstractionSimp]
+@[grind]
 theorem Pure.randomInRange_ge (seed min max : Int) (hs0 : 0 ≤ seed) (hs1 : seed ≤ 100)
     (hm : min ≤ max) : min ≤ Pure.randomInRange seed min max := by
   unfold Pure.randomInRange
@@ -368,7 +368,7 @@ theorem Pure.randomInRange_ge (seed min max : Int) (hs0 : 0 ≤ seed) (hs1 : see
       Int.ediv_nonneg (mul_nonneg hs0 (by omega)) (by omega)
     omega
 
-@[grind, loomAbstractionSimp]
+@[grind]
 theorem Pure.randomInRange_le (seed min max : Int) (hs0 : 0 ≤ seed) (hs1 : seed ≤ 100)
     (hm : min ≤ max) : Pure.randomInRange seed min max ≤ max := by
   unfold Pure.randomInRange
@@ -389,188 +389,187 @@ section
   Do not edit — re-run `lsc gen` to regenerate.
 -/
 
-set_option loom.semantics.termination "total"
-set_option loom.semantics.choice "demonic"
+set_option velvet.semantics.termination "total"
 
-method clamp (x : Int) (min : Int) (max : Int) return (res : Int)
-  require min ≤ max
-  ensures res ≥ min
-  ensures res ≤ max
+method clamp (x : Int) (min : Int) (max : Int) returns (res : Int)
+  requires require_1: (min ≤ max : Prop)
+  ensures ensures_1: (res ≥ min : Prop)
+  ensures ensures_2: (res ≤ max : Prop)
   do
     return Pure.clamp x min max
 
-method normalizeHue (h : Int) return (res : Int)
-  ensures res ≥ 0
-  ensures res < 360
+method normalizeHue (h : Int) returns (res : Int)
+  ensures ensures_1: (res ≥ 0 : Prop)
+  ensures ensures_2: (res < 360 : Prop)
   do
     return Pure.normalizeHue h
 
-method clampColor (c : Color) return (res : Color)
-  ensures res.h ≥ 0
-  ensures res.h < 360
-  ensures res.s ≥ 0
-  ensures res.s ≤ 100
-  ensures res.l ≥ 0
-  ensures res.l ≤ 100
+method clampColor (c : Color) returns (res : Color)
+  ensures ensures_1: (res.h ≥ 0 : Prop)
+  ensures ensures_2: (res.h < 360 : Prop)
+  ensures ensures_3: (res.s ≥ 0 : Prop)
+  ensures ensures_4: (res.s ≤ 100 : Prop)
+  ensures ensures_5: (res.l ≥ 0 : Prop)
+  ensures ensures_6: (res.l ≤ 100 : Prop)
   do
     return Pure.clampColor c
 
-method moodBoundsOf (mood : Mood) return (res : MoodBoundsResult)
+method moodBoundsOf (mood : Mood) returns (res : MoodBoundsResult)
   do
     return Pure.moodBoundsOf mood
 
-method colorSatisfiesMood (c : Color) (mood : Mood) return (res : Bool)
+method colorSatisfiesMood (c : Color) (mood : Mood) returns (res : Bool)
   do
     return Pure.colorSatisfiesMood c mood
 
-method randomInRange (seed : Int) (min : Int) (max : Int) return (res : Int)
-  require seed ≥ 0
-  require seed ≤ 100
-  require min ≤ max
-  ensures res ≥ min
-  ensures res ≤ max
+method randomInRange (seed : Int) (min : Int) (max : Int) returns (res : Int)
+  requires require_1: (seed ≥ 0 : Prop)
+  requires require_2: (seed ≤ 100 : Prop)
+  requires require_3: (min ≤ max : Prop)
+  ensures ensures_1: (res ≥ min : Prop)
+  ensures ensures_2: (res ≤ max : Prop)
   do
     return Pure.randomInRange seed min max
 
-method goldenSLForMood (mood : Mood) (colorIndex : Int) (seedS : Int) (seedL : Int) return (res : SLPair)
-  require colorIndex ≥ 0
-  require colorIndex < 5
-  require seedS ≥ 0
-  require seedS ≤ 100
-  require seedL ≥ 0
-  require seedL ≤ 100
+method goldenSLForMood (mood : Mood) (colorIndex : Int) (seedS : Int) (seedL : Int) returns (res : SLPair)
+  requires require_1: (colorIndex ≥ 0 : Prop)
+  requires require_2: (colorIndex < 5 : Prop)
+  requires require_3: (seedS ≥ 0 : Prop)
+  requires require_4: (seedS ≤ 100 : Prop)
+  requires require_5: (seedL ≥ 0 : Prop)
+  requires require_6: (seedL ≤ 100 : Prop)
   do
     return Pure.goldenSLForMood mood colorIndex seedS seedL
 
-method generateColorGolden (h : Int) (mood : Mood) (colorIndex : Int) (seedS : Int) (seedL : Int) return (res : Color)
-  require h ≥ 0
-  require h < 360
-  require colorIndex ≥ 0
-  require colorIndex < 5
-  require seedS ≥ 0
-  require seedS ≤ 100
-  require seedL ≥ 0
-  require seedL ≤ 100
+method generateColorGolden (h : Int) (mood : Mood) (colorIndex : Int) (seedS : Int) (seedL : Int) returns (res : Color)
+  requires require_1: (h ≥ 0 : Prop)
+  requires require_2: (h < 360 : Prop)
+  requires require_3: (colorIndex ≥ 0 : Prop)
+  requires require_4: (colorIndex < 5 : Prop)
+  requires require_5: (seedS ≥ 0 : Prop)
+  requires require_6: (seedS ≤ 100 : Prop)
+  requires require_7: (seedL ≥ 0 : Prop)
+  requires require_8: (seedL ≤ 100 : Prop)
   do
     return Pure.generateColorGolden h mood colorIndex seedS seedL
 
-method allColorsSatisfyMood (colors : Array Color) (mood : Mood) return (res : Bool)
-  require colors.size = 5
+method allColorsSatisfyMood (colors : Array Color) (mood : Mood) returns (res : Bool)
+  requires require_1: (colors.size = 5 : Prop)
   do
     return Pure.allColorsSatisfyMood colors mood
 
-method baseHarmonyHues (baseHue : Int) (harmony : Harmony) return (res : Array Int)
+method baseHarmonyHues (baseHue : Int) (harmony : Harmony) returns (res : Array Int)
   do
     return Pure.baseHarmonyHues baseHue harmony
 
-method allHarmonyHues (baseHue : Int) (harmony : Harmony) return (res : Array Int)
+method allHarmonyHues (baseHue : Int) (harmony : Harmony) returns (res : Array Int)
   do
     return Pure.allHarmonyHues baseHue harmony
 
-method huesMatchHarmony (colors : Array Color) (baseHue : Int) (harmony : Harmony) return (res : Bool)
+method huesMatchHarmony (colors : Array Color) (baseHue : Int) (harmony : Harmony) returns (res : Bool)
   do
     return Pure.huesMatchHarmony colors baseHue harmony
 
-method generatePaletteColors (baseHue : Int) (mood : Mood) (harmony : Harmony) (randomSeeds : Array Int) return (res : Array Color)
-  require baseHue ≥ 0
-  require baseHue < 360
-  require randomSeeds.size = 10
-  require ∀ k : Nat, k < 10 → randomSeeds[k]! ≥ 0 ∧ randomSeeds[k]! ≤ 100
+method generatePaletteColors (baseHue : Int) (mood : Mood) (harmony : Harmony) (randomSeeds : Array Int) returns (res : Array Color)
+  requires require_1: (baseHue ≥ 0 : Prop)
+  requires require_2: (baseHue < 360 : Prop)
+  requires require_3: (randomSeeds.size = 10 : Prop)
+  requires require_4: (∀ k : Nat, k < 10 → randomSeeds[k]! ≥ 0 ∧ randomSeeds[k]! ≤ 100 : Prop)
   do
     return Pure.generatePaletteColors baseHue mood harmony randomSeeds
 
-method adjustColorSL (c : Color) (newHue : Int) (deltaS : Int) (deltaL : Int) return (res : Color)
-  require newHue ≥ 0
-  require newHue < 360
+method adjustColorSL (c : Color) (newHue : Int) (deltaS : Int) (deltaL : Int) returns (res : Color)
+  requires require_1: (newHue ≥ 0 : Prop)
+  requires require_2: (newHue < 360 : Prop)
   do
     return Pure.adjustColorSL c newHue deltaS deltaL
 
-method applyIndependentAdjustment (m : Model) (index : Int) (deltaH : Int) (deltaS : Int) (deltaL : Int) return (res : Model)
-  require index ≥ 0
-  require index < 5
-  require (m.colors).size = 5
+method applyIndependentAdjustment (m : Model) (index : Int) (deltaH : Int) (deltaS : Int) (deltaL : Int) returns (res : Model)
+  requires require_1: (index ≥ 0 : Prop)
+  requires require_2: (index < 5 : Prop)
+  requires require_3: ((m.colors).size = 5 : Prop)
   do
     return Pure.applyIndependentAdjustment m index deltaH deltaS deltaL
 
-method applyLinkedAdjustment (m : Model) (deltaH : Int) (deltaS : Int) (deltaL : Int) return (res : Model)
-  require (m.colors).size = 5
+method applyLinkedAdjustment (m : Model) (deltaH : Int) (deltaS : Int) (deltaL : Int) returns (res : Model)
+  requires require_1: ((m.colors).size = 5 : Prop)
   do
     return Pure.applyLinkedAdjustment m deltaH deltaS deltaL
 
-method applySetColorDirect (m : Model) (index : Int) (color : Color) return (res : Model)
-  require index ≥ 0
-  require index < 5
-  require (m.colors).size = 5
+method applySetColorDirect (m : Model) (index : Int) (color : Color) returns (res : Model)
+  requires require_1: (index ≥ 0 : Prop)
+  requires require_2: (index < 5 : Prop)
+  requires require_3: ((m.colors).size = 5 : Prop)
   do
     return Pure.applySetColorDirect m index color
 
-method normalizeModel (m : Model) return (res : Model)
+method normalizeModel (m : Model) returns (res : Model)
   do
     return Pure.normalizeModel m
 
-method validBaseHue (h : Int) return (res : Bool)
+method validBaseHue (h : Int) returns (res : Bool)
   do
     return Pure.validBaseHue h
 
-method validRandomSeeds (seeds : Array Int) return (res : Bool)
-  require seeds.size = 10
+method validRandomSeeds (seeds : Array Int) returns (res : Bool)
+  requires require_1: (seeds.size = 10 : Prop)
   do
     return Pure.validRandomSeeds seeds
 
-method applySelectContrastPair (m : Model) (fg : Int) (bg : Int) return (res : Model)
+method applySelectContrastPair (m : Model) (fg : Int) (bg : Int) returns (res : Model)
   do
     return Pure.applySelectContrastPair m fg bg
 
-method applyGeneratePalette (m : Model) (baseHue : Int) (mood : Mood) (harmony : Harmony) (randomSeeds : Array Int) return (res : Model)
-  require (m.colors).size = 5
+method applyGeneratePalette (m : Model) (baseHue : Int) (mood : Mood) (harmony : Harmony) (randomSeeds : Array Int) returns (res : Model)
+  requires require_1: ((m.colors).size = 5 : Prop)
   do
     return Pure.applyGeneratePalette m baseHue mood harmony randomSeeds
 
-method applyAdjustPalette (m : Model) (deltaH : Int) (deltaS : Int) (deltaL : Int) return (res : Model)
-  require (m.colors).size = 5
+method applyAdjustPalette (m : Model) (deltaH : Int) (deltaS : Int) (deltaL : Int) returns (res : Model)
+  requires require_1: ((m.colors).size = 5 : Prop)
   do
     return Pure.applyAdjustPalette m deltaH deltaS deltaL
 
-method applyRegenerateMood (m : Model) (mood : Mood) (randomSeeds : Array Int) return (res : Model)
-  require (m.colors).size = 5
-  require m.baseHue ≥ 0
-  require m.baseHue < 360
+method applyRegenerateMood (m : Model) (mood : Mood) (randomSeeds : Array Int) returns (res : Model)
+  requires require_1: ((m.colors).size = 5 : Prop)
+  requires require_2: (m.baseHue ≥ 0 : Prop)
+  requires require_3: (m.baseHue < 360 : Prop)
   do
     return Pure.applyRegenerateMood m mood randomSeeds
 
-method applyRegenerateHarmony (m : Model) (harmony : Harmony) (randomSeeds : Array Int) return (res : Model)
-  require (m.colors).size = 5
-  require m.baseHue ≥ 0
-  require m.baseHue < 360
+method applyRegenerateHarmony (m : Model) (harmony : Harmony) (randomSeeds : Array Int) returns (res : Model)
+  requires require_1: ((m.colors).size = 5 : Prop)
+  requires require_2: (m.baseHue ≥ 0 : Prop)
+  requires require_3: (m.baseHue < 360 : Prop)
   do
     return Pure.applyRegenerateHarmony m harmony randomSeeds
 
-method applyRandomizeBaseHue (m : Model) (newBaseHue : Int) (randomSeeds : Array Int) return (res : Model)
-  require (m.colors).size = 5
+method applyRandomizeBaseHue (m : Model) (newBaseHue : Int) (randomSeeds : Array Int) returns (res : Model)
+  requires require_1: ((m.colors).size = 5 : Prop)
   do
     return Pure.applyRandomizeBaseHue m newBaseHue randomSeeds
 
-method validAction (a : Action) return (res : Bool)
+method validAction (a : Action) returns (res : Bool)
   do
     return Pure.validAction a
 
-method apply (m : Model) (a : Action) return (res : Model)
-  require (m.colors).size = 5
-  require m.baseHue ≥ 0
-  require m.baseHue < 360
-  require Pure.validAction a
+method apply (m : Model) (a : Action) returns (res : Model)
+  requires require_1: ((m.colors).size = 5 : Prop)
+  requires require_2: (m.baseHue ≥ 0 : Prop)
+  requires require_3: (m.baseHue < 360 : Prop)
+  requires require_4: (Pure.validAction a : Prop)
   do
     return Pure.apply m a
 
-method step (m : Model) (a : Action) return (res : Model)
-  require (m.colors).size = 5
-  require m.baseHue ≥ 0
-  require m.baseHue < 360
-  require Pure.validAction a
+method step (m : Model) (a : Action) returns (res : Model)
+  requires require_1: ((m.colors).size = 5 : Prop)
+  requires require_2: (m.baseHue ≥ 0 : Prop)
+  requires require_3: (m.baseHue < 360 : Prop)
+  requires require_4: (Pure.validAction a : Prop)
   do
     return Pure.step m a
 
-method init  return (res : Model)
+method init  returns (res : Model)
   do
     return Pure.init 
 end
@@ -579,47 +578,78 @@ end
 /- BEGIN colorwheel-lemmascript/src/colorwheel.proof.lean -/
 section
 
-set_option loom.semantics.termination "total"
-set_option loom.semantics.choice "demonic"
+set_option velvet.semantics.termination "total"
 
 -- `normalizeHue`/`goldenSLForMood` use `Int.tmod` (JS `%` truncates toward zero),
 -- which `omega`/`grind` don't reason about natively. These bounds let them close.
 attribute [local grind] Int.tmod_lt_of_pos Int.lt_tmod_of_pos
 
 -- ═══ Pure helpers ═══
-prove_correct clamp by unfold Pure.clamp; loom_solve
-prove_correct normalizeHue by unfold Pure.normalizeHue; loom_solve
-prove_correct clampColor by unfold Pure.clampColor Pure.normalizeHue Pure.clamp; loom_solve
-prove_correct moodBoundsOf by unfold Pure.moodBoundsOf; loom_solve
-prove_correct colorSatisfiesMood by unfold Pure.colorSatisfiesMood; loom_solve
-prove_correct adjustColorSL by unfold Pure.adjustColorSL; loom_solve
-prove_correct validBaseHue by unfold Pure.validBaseHue; loom_solve
-prove_correct applySelectContrastPair by unfold Pure.applySelectContrastPair; loom_solve
-prove_correct randomInRange by loom_solve
-prove_correct validRandomSeeds by unfold Pure.validRandomSeeds; loom_solve
-prove_correct allColorsSatisfyMood by unfold Pure.allColorsSatisfyMood; loom_solve
-prove_correct baseHarmonyHues by unfold Pure.baseHarmonyHues; loom_solve
-prove_correct allHarmonyHues by unfold Pure.allHarmonyHues; loom_solve
-prove_correct huesMatchHarmony by unfold Pure.huesMatchHarmony; loom_solve
+prove_correct clamp by
+  velvet_vcgen [clamp] with finish [Pure.clamp]
+prove_correct normalizeHue by
+  velvet_vcgen [normalizeHue] with finish [Pure.normalizeHue]
+prove_correct clampColor by
+  velvet_vcgen [clampColor] with finish [Pure.clampColor, Pure.normalizeHue, Pure.clamp]
+prove_correct moodBoundsOf by
+  velvet_vcgen [moodBoundsOf] with finish [Pure.moodBoundsOf]
+prove_correct colorSatisfiesMood by
+  velvet_vcgen [colorSatisfiesMood] with finish [Pure.colorSatisfiesMood]
+prove_correct adjustColorSL by
+  velvet_vcgen [adjustColorSL] with finish [Pure.adjustColorSL]
+prove_correct validBaseHue by
+  velvet_vcgen [validBaseHue] with finish [Pure.validBaseHue]
+prove_correct applySelectContrastPair by
+  velvet_vcgen [applySelectContrastPair] with finish [Pure.applySelectContrastPair]
+prove_correct randomInRange by
+  velvet_vcgen [randomInRange]
+  all_goals first
+    | (apply Pure.randomInRange_ge <;> assumption)
+    | (apply Pure.randomInRange_le <;> assumption)
+prove_correct validRandomSeeds by
+  velvet_vcgen [validRandomSeeds] with finish [Pure.validRandomSeeds]
+prove_correct allColorsSatisfyMood by
+  velvet_vcgen [allColorsSatisfyMood] with finish [Pure.allColorsSatisfyMood]
+prove_correct baseHarmonyHues by
+  velvet_vcgen [baseHarmonyHues] with finish [Pure.baseHarmonyHues]
+prove_correct allHarmonyHues by
+  velvet_vcgen [allHarmonyHues] with finish [Pure.allHarmonyHues]
+prove_correct huesMatchHarmony by
+  velvet_vcgen [huesMatchHarmony] with finish [Pure.huesMatchHarmony]
 
 -- ═══ Generation ═══
-prove_correct goldenSLForMood by loom_solve
-prove_correct generateColorGolden by loom_solve
-prove_correct generatePaletteColors by loom_solve
-prove_correct init by loom_solve
+prove_correct goldenSLForMood by
+  velvet_vcgen [goldenSLForMood] with try finish
+prove_correct generateColorGolden by
+  velvet_vcgen [generateColorGolden] with try finish
+prove_correct generatePaletteColors by
+  velvet_vcgen [generatePaletteColors] with try finish
+prove_correct init by
+  velvet_vcgen [init] with try finish
 
 -- ═══ Transitions (now pure with ternaries) ═══
-prove_correct applyGeneratePalette by loom_solve
-prove_correct applyRegenerateMood by loom_solve
-prove_correct applyRegenerateHarmony by loom_solve
-prove_correct applyRandomizeBaseHue by loom_solve
-prove_correct applyIndependentAdjustment by loom_solve
-prove_correct applySetColorDirect by loom_solve
-prove_correct applyLinkedAdjustment by loom_solve
-prove_correct applyAdjustPalette by loom_solve
-prove_correct normalizeModel by loom_solve
-prove_correct apply by loom_solve
-prove_correct step by loom_solve
+prove_correct applyGeneratePalette by
+  velvet_vcgen [applyGeneratePalette] with try finish
+prove_correct applyRegenerateMood by
+  velvet_vcgen [applyRegenerateMood] with try finish
+prove_correct applyRegenerateHarmony by
+  velvet_vcgen [applyRegenerateHarmony] with try finish
+prove_correct applyRandomizeBaseHue by
+  velvet_vcgen [applyRandomizeBaseHue] with try finish
+prove_correct applyIndependentAdjustment by
+  velvet_vcgen [applyIndependentAdjustment] with try finish
+prove_correct applySetColorDirect by
+  velvet_vcgen [applySetColorDirect] with try finish
+prove_correct applyLinkedAdjustment by
+  velvet_vcgen [applyLinkedAdjustment] with try finish
+prove_correct applyAdjustPalette by
+  velvet_vcgen [applyAdjustPalette] with try finish
+prove_correct normalizeModel by
+  velvet_vcgen [normalizeModel] with try finish
+prove_correct apply by
+  velvet_vcgen [apply] with try finish
+prove_correct step by
+  velvet_vcgen [step] with try finish
 
 -- ═══ Invariant theorems ═══
 
@@ -882,19 +912,12 @@ theorem generatePaletteIdempotent (m : Model) (baseHue : Int) (mood : Mood)
     (_hvr : Pure.validRandomSeeds seeds = true) :
     let m' := Pure.step m (.GeneratePalette baseHue mood harmony seeds)
     Pure.step m' (.GeneratePalette baseHue mood harmony seeds) = m' := by
-  simp only
-  -- Both steps apply GP with same params: the only difference is contrastPair
-  -- (from m vs from normalizeModel result). normalizeModel's non-cp output is cp-independent (rfl).
-  simp only [Pure.step, Pure.apply, Pure.applyGeneratePalette, Pure.validBaseHue]
-  split_ifs with hv
-  · -- params invalid: contradicts preconditions
-    exfalso; simp_all [Pure.validBaseHue]
-  · -- params valid: two normalizeModel calls on inputs differing only in contrastPair
-    -- Show the contrastPair from normalizeModel equals m.contrastPair (ModelInv → valid cp)
-    unfold ModelInv at h; obtain ⟨_, _, _, _, hcf0, hcf1, hcb0, hcb1, _, _⟩ := h
-    rw [normalizeModel_preserves_contrastPair
-      (⟨baseHue, mood, harmony, Pure.generatePaletteColors baseHue mood harmony seeds,
-        m.contrastPair, 0, 0, 0⟩ : Model) hcf0 hcf1 hcb0 hcb1]
+  simp [Pure.step, Pure.apply, Pure.applyGeneratePalette, _hvb, _hvs, _hvr]
+  unfold ModelInv at h
+  obtain ⟨_, _, _, _, hcf0, hcf1, hcb0, hcb1, _, _⟩ := h
+  rw [normalizeModel_preserves_contrastPair
+    (⟨baseHue, mood, harmony, Pure.generatePaletteColors baseHue mood harmony seeds,
+      m.contrastPair, 0, 0, 0⟩ : Model) hcf0 hcf1 hcb0 hcb1]
 
 -- ═══ Monotonicity of Degradation ═══
 
@@ -948,26 +971,32 @@ private lemma colorSatisfiesMood_of_generated_core (mood : Mood) (h i seedS seed
   have hsL1 : sL ≤ 100 := by have := Int.tmod_lt_of_pos (seedL + i * 38) (by omega : (0 : Int) < 101); omega
   -- Per mood: each first branch provides bounds + closes with omega
   have rge := @Pure.randomInRange_ge; have rle := @Pure.randomInRange_le
-  cases mood <;> simp only [decide_eq_true_eq] <;> first
+  cases mood <;> dsimp [sS, sL] at * <;> first
     | trivial
     | (have := rge sS 70 100 hsS0 hsS1 (by omega); have := rle sS 70 100 hsS0 hsS1 (by omega)
        have := rge sL 40 60 hsL0 hsL1 (by omega); have := rle sL 40 60 hsL0 hsL1 (by omega)
-       split_ifs <;> omega)
+       dsimp [sS, sL] at *
+       grind)
     | (have := rge sS 20 45 hsS0 hsS1 (by omega); have := rle sS 20 45 hsS0 hsS1 (by omega)
        have := rge sL 55 75 hsL0 hsL1 (by omega); have := rle sL 55 75 hsL0 hsL1 (by omega)
-       split_ifs <;> omega)
+       dsimp [sS, sL] at *
+       grind)
     | (have := rge sS 0 35 hsS0 hsS1 (by omega); have := rle sS 0 35 hsS0 hsS1 (by omega)
        have := rge sL 75 100 hsL0 hsL1 (by omega); have := rle sL 75 100 hsL0 hsL1 (by omega)
-       split_ifs <;> omega)
+       dsimp [sS, sL] at *
+       grind)
     | (have := rge sS 60 100 hsS0 hsS1 (by omega); have := rle sS 60 100 hsS0 hsS1 (by omega)
        have := rge sL 25 45 hsL0 hsL1 (by omega); have := rle sL 25 45 hsL0 hsL1 (by omega)
-       split_ifs <;> omega)
+       dsimp [sS, sL] at *
+       grind)
     | (have := rge sS 15 40 hsS0 hsS1 (by omega); have := rle sS 15 40 hsS0 hsS1 (by omega)
        have := rge sL 30 60 hsL0 hsL1 (by omega); have := rle sL 30 60 hsL0 hsL1 (by omega)
-       split_ifs <;> omega)
+       dsimp [sS, sL] at *
+       grind)
     | (have := rge sS 90 100 hsS0 hsS1 (by omega); have := rle sS 90 100 hsS0 hsS1 (by omega)
        have := rge sL 50 65 hsL0 hsL1 (by omega); have := rle sL 50 65 hsL0 hsL1 (by omega)
-       split_ifs <;> omega)
+       dsimp [sS, sL] at *
+       grind)
 
 -- Simp-friendly wrapper with individual bound args for automatic side condition discharge
 @[simp] private lemma colorSatisfiesMood_of_generated (mood : Mood) (h i seedS seedL : Int)
@@ -990,7 +1019,6 @@ theorem canReachAnyColor (m : Model) (idx : Int) (target : Color) (h : ModelInv 
   interval_cases n <;> simp_all [← hn, clampColor_idempotent _ hv, clampColor_idem]
 
 set_option maxHeartbeats 1600000 in
-set_option auto.smt.timeout 30 in
 theorem canRecoverMood (m : Model) (targetMood : Mood) (seeds : Array Int) (h : ModelInv m)
     (hvs : seeds.size = 10) (hvr : Pure.validRandomSeeds seeds = true) :
     (Pure.step m (.RegenerateMood targetMood seeds)).mood = targetMood := by

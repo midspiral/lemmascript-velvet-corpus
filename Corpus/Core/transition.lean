@@ -57,7 +57,7 @@ end
 /- BEGIN LemmaScript/examples/transition.spec.lean -/
 section
 
-@[grind, loomAbstractionSimp]
+@[grind, simp]
 def lastEvent (events : Array Event) : Event :=
   events[events.size - 1]!
 end
@@ -70,21 +70,20 @@ section
   Do not edit — re-run `lsc gen` to regenerate.
 -/
 
-set_option loom.semantics.termination "total"
-set_option loom.semantics.choice "demonic"
+set_option velvet.semantics.termination "total"
 
-method transition (state : State) (event : Event) return (res : State)
-  ensures event = Event.timeout → res = State.idle
+method transition (state : State) (event : Event) returns (res : State)
+  ensures ensures_1: (event = Event.timeout → res = State.idle : Prop)
   do
     return Pure.transition state event
 
-method runSession (events : Array Event) return (res : State)
+method runSession (events : Array Event) returns (res : State)
   do
     let mut state : State := State.idle
     let mut i : Nat := 0
     while i < events.size
-      invariant i ≤ events.size
-      invariant i > 0 → events[i - 1]! = Event.timeout → state = State.idle
+      invariant invariant_1: (i ≤ events.size : Prop)
+      invariant invariant_2: (i > 0 → events[i - 1]! = Event.timeout → state = State.idle : Prop)
       decreasing events.size - i
     do
       state ← transition state events[i]!
@@ -96,23 +95,21 @@ end
 /- BEGIN LemmaScript/examples/transition.proof.lean -/
 section
 
-set_option loom.semantics.termination "total"
-set_option loom.semantics.choice "demonic"
+set_option velvet.semantics.termination "total"
 
 prove_correct transition by
-  unfold Pure.transition; loom_solve
+  velvet_vcgen [transition] with finish [Pure.transition]
 
 prove_correct runSession by
-  loom_solve
+  velvet_vcgen [runSession] with finish
 
 -- Standalone property: if the last event is timeout, runSession returns idle.
-open TotalCorrectness DemonicChoice in
+open Std.Internal.Do in
 theorem runSession_timeout_resets (events : Array Event)
     (h1 : events.size > 0) (h2 : lastEvent events = .timeout) :
-    triple (events.size > 0 ∧ lastEvent events = .timeout)
-           (runSession events)
-           (fun res => res = State.idle) := by
-  unfold runSession
-  loom_solve
+    Triple (runSession events)
+           (events.size > 0 ∧ lastEvent events = .timeout)
+           (fun res => res = State.idle) False := by
+  velvet_vcgen [runSession] with finish
 end
 /- END LemmaScript/examples/transition.proof.lean -/

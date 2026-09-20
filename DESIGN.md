@@ -506,45 +506,22 @@ obligation created in one anonymous section remains available to a
 `prove_correct` command in the next. This directly tests the scoping assumption
 used when combining components.
 
-The repository pins one Lean toolchain, initially Lean 4.24.0, and commits
-`lake-manifest.json`. Because corpus files directly import Mathlib, the root
-package should declare and pin Mathlib rather than depend accidentally on it
-remaining transitive through Velvet.
+The repository pins Lean 4.34.0 and commits `lake-manifest.json`. Because
+corpus files directly import Mathlib, the root package declares and pins
+Mathlib rather than depending on a transitive dependency.
 
-Solver installation is centralized once in the root workspace, using the
-versions exercised by the current projects (Z3 4.15.4 and cvc5 1.3.1). The
-five copied source projects' lakefiles and repeated solver-download code are
-not copied.
+### Velvet is a replaceable dependency
 
-### Velvet and Loom are variables, not corpus contents
+The Velvet 2 workspace uses the sibling `../velvet` checkout on `lemma2`.
+Loom and external SMT solvers are no longer dependencies. The README records
+the Velvet revision used for reference validation and shows how to substitute
+another checkout through Lake package overrides.
 
-The corpus does not vendor Velvet or Loom. Its initial Lake configuration uses
-the sibling development checkouts so a Velvet developer can measure an edited
-working tree immediately. The README records the exact pair used for the
-reference validation. A developer can substitute either package without
-editing committed files through Lake package overrides and a temporary JSON
-file. Once Velvet's package declaration has a portable Loom dependency, the
-default manifest can become an exact Git pin while retaining these local
-overrides.
-
-Combining each logical unit removes the need for the custom Velvet change that
-persists obligations across imported `.def.lean` and `.proof.lean` modules. It
-does not prove that every case works with stock Velvet and Loom. The current
-LemmaScript stack also contains changes for `for ... in ...` preprocessing and
-bounded range-loop hypotheses, and some cases may depend on them.
-
-Therefore the initial compatibility pass is:
-
-1. gather the normalized corpus;
-2. build every case with the known-good custom pair;
-3. build it again with the Velvet designer's current upstream/local pair; and
-4. record which remaining failures are actual feature dependencies.
-
-Initially, the reference pin may need the custom pair. It should move to
-upstream revisions when those remaining dependencies land. The current custom
-Velvet lakefile itself uses a sibling Loom path, so it needs a small packaging
-commit that pins a portable Loom Git revision before it can serve as the
-fresh-clone reference dependency.
+The gatherer consumes the migrated source branches listed in
+`config/sources.json`; case bodies and support files still come directly from
+those checkouts. A compatibility pass gathers the normalized corpus, builds
+all groups and the section-boundary check, and checks the snapshot against its
+source artifacts.
 
 ## Profiling
 
