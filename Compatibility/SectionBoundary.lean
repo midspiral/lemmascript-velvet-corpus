@@ -4,10 +4,9 @@ import LemmaScript
    obligation created inside an anonymous section is available afterward. -/
 section
 
-set_option loom.semantics.termination "total"
-set_option loom.semantics.choice "demonic"
+set_option velvet.semantics.termination "total"
 
-method sectionBoundary (x : Int) return (result : Int)
+method sectionBoundary (x : Int) returns (result : Int)
   ensures result = x
   do
     return x
@@ -16,10 +15,9 @@ end
 
 section
 
-set_option loom.semantics.termination "total"
-set_option loom.semantics.choice "demonic"
+set_option velvet.semantics.termination "total"
 
 prove_correct sectionBoundary by
-  loom_solve
+  velvet_vcgen [sectionBoundary] with finish
 
 end

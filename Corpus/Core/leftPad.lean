@@ -15,23 +15,22 @@ section
   Do not edit — re-run `lsc gen` to regenerate.
 -/
 
-set_option loom.semantics.termination "total"
-set_option loom.semantics.choice "demonic"
+set_option velvet.semantics.termination "total"
 
-method leftPad (str : String) (len : Nat) (ch : String) return (res : String)
-  require ch.length = 1
-  ensures str.length ≥ len → res = str
-  ensures str.length < len → res.length = len
+method leftPad (str : String) (len : Nat) (ch : String) returns (res : String)
+  requires require_1: (ch.length = 1 : Prop)
+  ensures ensures_1: (str.length ≥ len → res = str : Prop)
+  ensures ensures_2: (str.length < len → res.length = len : Prop)
   do
     let mut len : Nat := len
     let mut result : String := str
     len := len - str.length
     let mut i : Nat := 0
     while i < len
-      invariant result.length = str.length + i
-      invariant i ≥ 0
-      invariant len > 0 → i ≤ len
-      invariant len ≤ 0 → result = str
+      invariant invariant_1: (result.length = str.length + i : Prop)
+      invariant invariant_2: (i ≥ 0 : Prop)
+      invariant invariant_3: (len > 0 → i ≤ len : Prop)
+      invariant invariant_4: (len ≤ 0 → result = str : Prop)
       decreasing len - i
     do
       result := ch ++ result
@@ -43,16 +42,7 @@ end
 /- BEGIN LemmaScript/examples/leftPad.proof.lean -/
 section
 
-set_option loom.semantics.termination "total"
-set_option loom.semantics.choice "demonic"
-
--- `loom_solve` alone can't discharge the loop invariant `(ch ++ result).length
--- = str.length + (i + 1)`: the solver doesn't know how `++` and `.length`
--- interact. Feeding `String.length_append` into the pre-solve simp set rewrites
--- the goal to linear arithmetic, which closes automatically.
-attribute [loomLogicSimp] String.length_append
-
 prove_correct leftPad by
-  loom_solve
+  velvet_vcgen [leftPad] with finish [String.length_append]
 end
 /- END LemmaScript/examples/leftPad.proof.lean -/

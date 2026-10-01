@@ -42,40 +42,42 @@ section
   Do not edit — re-run `lsc gen` to regenerate.
 -/
 
-set_option loom.semantics.termination "total"
-set_option loom.semantics.choice "demonic"
+set_option velvet.semantics.termination "total"
 
-method swap (p : Int × String) return (res : String × Int)
-  ensures res.1 = p.2
-  ensures res.2 = p.1
+method swap (p : Int × String) returns (res : String × Int)
+  ensures ensures_1: (res.1 = p.2 : Prop)
+  ensures ensures_2: (res.2 = p.1 : Prop)
   do
     return Pure.swap p
 
-method middle (t : Int × String × Bool) return (res : String)
-  ensures res = t.2.1
+method middle (t : Int × String × Bool) returns (res : String)
+  ensures ensures_1: (res = t.2.1 : Prop)
   do
     return Pure.middle t
 
-method addFirstTwo (p : Int × Int × String) return (res : Int)
-  ensures res = p.1 + p.2.1
+method addFirstTwo (p : Int × Int × String) returns (res : Int)
+  ensures ensures_1: (res = p.1 + p.2.1 : Prop)
   do
     return Pure.addFirstTwo p
 
-method sumFirsts (pairs : Array (Int × String)) return (res : Array Int)
+method sumFirsts (pairs : Array (Int × String)) returns (res : Array Int)
   do
     let mut out : Array Int := #[]
-    for _n_idx in [:pairs.size]
-      invariant _n_idx ≤ pairs.size
+    let _rangeStop0 : Nat := pairs.size
+    for _n_idx in [:_rangeStop0]
+      invariant invariant_1: (_n_idx ≤ pairs.size : Prop)
+      done_with (let _n_idx : Nat := _rangeStop0; (_n_idx ≤ pairs.size : Prop))
     do
+      let _n_idx : Nat := _n_idx
       let _n_elem := pairs[_n_idx]!
       let n := _n_elem.1
       let label := _n_elem.2
       out := Array.push out n
     return out
 
-method homogeneousStaysSeq (xs : Array Int) return (res : Int)
-  require xs.size = 2
-  ensures res = xs[0]! + xs[1]!
+method homogeneousStaysSeq (xs : Array Int) returns (res : Int)
+  requires require_1: (xs.size = 2 : Prop)
+  ensures ensures_1: (res = xs[0]! + xs[1]! : Prop)
   do
     return Pure.homogeneousStaysSeq xs
 end
@@ -84,19 +86,18 @@ end
 /- BEGIN LemmaScript/examples/tuples.proof.lean -/
 section
 
-set_option loom.semantics.termination "total"
-set_option loom.semantics.choice "demonic"
+set_option velvet.semantics.termination "total"
 
 prove_correct swap by
-  unfold Pure.swap; loom_solve
+  velvet_vcgen [swap] with finish [Pure.swap]
 
 prove_correct middle by
-  unfold Pure.middle; loom_solve
+  velvet_vcgen [middle] with finish [Pure.middle]
 
 prove_correct addFirstTwo by
-  unfold Pure.addFirstTwo; loom_solve
+  velvet_vcgen [addFirstTwo] with finish [Pure.addFirstTwo]
 
 prove_correct homogeneousStaysSeq by
-  unfold Pure.homogeneousStaysSeq; loom_solve
+  velvet_vcgen [homogeneousStaysSeq] with finish [Pure.homogeneousStaysSeq]
 end
 /- END LemmaScript/examples/tuples.proof.lean -/

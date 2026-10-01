@@ -12,7 +12,7 @@ import LemmaScript
 /- BEGIN LemmaScript/examples/toposort.spec.lean -/
 section
 
-@[grind, loomAbstractionSimp]
+@[grind, simp]
 def allDistinct (s : Array String) (n : Nat) : Prop :=
   if h : n = 0 then True
   else if h2 : n ≤ s.size then
@@ -65,62 +65,73 @@ section
   Do not edit — re-run `lsc gen` to regenerate.
 -/
 
-set_option loom.semantics.termination "total"
-set_option loom.semantics.choice "demonic"
+set_option velvet.semantics.termination "total"
 
-method topologicalSort (nodeIds : Array String) (deps : Std.HashMap String (Std.HashSet String)) return (res : Array String)
-  require allDistinct nodeIds nodeIds.size
-  ensures res.size ≤ nodeIds.size
+method topologicalSort (nodeIds : Array String) (deps : Std.HashMap String (Std.HashSet String)) returns (res : Array String)
+  requires require_1: (allDistinct nodeIds nodeIds.size : Prop)
+  ensures ensures_1: (res.size ≤ nodeIds.size : Prop)
   do
-    let mut inDegree : Std.HashMap String Int := Std.HashMap.empty
-    let mut adjacency : Std.HashMap String (Array String) := Std.HashMap.empty
-    let mut nodeIdSet : Std.HashSet String := Std.HashSet.empty
-    for _id_idx in [:nodeIds.size]
-      invariant _id_idx ≤ nodeIds.size
-      invariant ∀ k : Int, 0 ≤ k → k < _id_idx → inDegree.contains nodeIds[k.toNat]!
-      invariant ∀ k : String, inDegree.contains k → inDegree.get! k = 0
-      invariant ∀ k : String, adjacency.contains k → adjacency.get! k = #[]
-      invariant nodeIdSet.size ≤ _id_idx
-      invariant ∀ k : Nat, k < _id_idx → nodeIdSet.contains nodeIds[k]!
+    let mut inDegree : Std.HashMap String Int := ∅
+    let mut adjacency : Std.HashMap String (Array String) := ∅
+    let mut nodeIdSet : Std.HashSet String := ∅
+    let _rangeStop0 : Nat := nodeIds.size
+    for _id_idx in [:_rangeStop0]
+      invariant invariant_1: (_id_idx ≤ nodeIds.size : Prop)
+      invariant invariant_2: (∀ k : Int, 0 ≤ k → k < _id_idx → inDegree.contains nodeIds[k.toNat]! : Prop)
+      invariant invariant_3: (∀ k : String, inDegree.contains k → inDegree.get! k = 0 : Prop)
+      invariant invariant_4: (∀ k : String, adjacency.contains k → adjacency.get! k = #[] : Prop)
+      invariant invariant_5: (nodeIdSet.size ≤ _id_idx : Prop)
+      invariant invariant_6: (∀ k : Nat, k < _id_idx → nodeIdSet.contains nodeIds[k]! : Prop)
+      done_with (let _id_idx : Nat := _rangeStop0; (_id_idx ≤ nodeIds.size : Prop) ∧ (∀ k : Int, 0 ≤ k → k < _id_idx → inDegree.contains nodeIds[k.toNat]! : Prop) ∧ (∀ k : String, inDegree.contains k → inDegree.get! k = 0 : Prop) ∧ (∀ k : String, adjacency.contains k → adjacency.get! k = #[] : Prop) ∧ (nodeIdSet.size ≤ _id_idx : Prop) ∧ (∀ k : Nat, k < _id_idx → nodeIdSet.contains nodeIds[k]! : Prop))
     do
+      let _id_idx : Nat := _id_idx
       let id := nodeIds[_id_idx]!
       inDegree := inDegree.insert id 0
       adjacency := adjacency.insert id #[]
       nodeIdSet := nodeIdSet.insert id
-    for _id_idx2 in [:nodeIds.size]
-      invariant _id_idx2 ≤ nodeIds.size
-      invariant ∀ k : Int, 0 ≤ k → k < nodeIds.size → inDegree.contains nodeIds[k.toNat]!
-      invariant ∀ k : String, adjacency.contains k → ∀ v : String, (adjacency.get! k).contains v → nodeIdSet.contains v
-      invariant ∀ k : String, inDegree.contains k → inDegree.get! k ≥ 0
-      invariant ∀ k : Nat, k < nodeIds.size → nodeIdSet.contains nodeIds[k]!
+    let _rangeStop1 : Nat := nodeIds.size
+    for _id_idx2 in [:_rangeStop1]
+      invariant invariant_7: (_id_idx2 ≤ nodeIds.size : Prop)
+      invariant invariant_8: (∀ k : Int, 0 ≤ k → k < nodeIds.size → inDegree.contains nodeIds[k.toNat]! : Prop)
+      invariant invariant_9: (∀ k : String, adjacency.contains k → ∀ v : String, (adjacency.get! k).contains v → nodeIdSet.contains v : Prop)
+      invariant invariant_10: (∀ k : String, inDegree.contains k → inDegree.get! k ≥ 0 : Prop)
+      invariant invariant_11: (∀ k : Nat, k < nodeIds.size → nodeIdSet.contains nodeIds[k]! : Prop)
+      done_with (let _id_idx2 : Nat := _rangeStop1; (_id_idx2 ≤ nodeIds.size : Prop) ∧ (∀ k : Int, 0 ≤ k → k < nodeIds.size → inDegree.contains nodeIds[k.toNat]! : Prop) ∧ (∀ k : String, adjacency.contains k → ∀ v : String, (adjacency.get! k).contains v → nodeIdSet.contains v : Prop) ∧ (∀ k : String, inDegree.contains k → inDegree.get! k ≥ 0 : Prop) ∧ (∀ k : Nat, k < nodeIds.size → nodeIdSet.contains nodeIds[k]! : Prop))
     do
+      let _id_idx2 : Nat := _id_idx2
       let id := nodeIds[_id_idx2]!
       if deps.contains id then
         let _nodeDeps_val := deps[id]!
         inDegree := inDegree.insert id _nodeDeps_val.size
         let _dep_seq := _nodeDeps_val.toArray
-        for _dep_idx in [:_dep_seq.size]
-          invariant _dep_idx ≤ _dep_seq.size
-          invariant nodeIdSet.contains id
-          invariant ∀ k : String, adjacency.contains k → ∀ v : String, (adjacency.get! k).contains v → nodeIdSet.contains v
+        let _rangeStop2 : Nat := _dep_seq.size
+        for _dep_idx in [:_rangeStop2]
+          invariant invariant_12: (_dep_idx ≤ _dep_seq.size : Prop)
+          invariant invariant_13: (nodeIdSet.contains id : Prop)
+          invariant invariant_14: (∀ k : String, adjacency.contains k → ∀ v : String, (adjacency.get! k).contains v → nodeIdSet.contains v : Prop)
+          done_with (let _dep_idx : Nat := _rangeStop2; (_dep_idx ≤ _dep_seq.size : Prop) ∧ (nodeIdSet.contains id : Prop) ∧ (∀ k : String, adjacency.contains k → ∀ v : String, (adjacency.get! k).contains v → nodeIdSet.contains v : Prop))
         do
+          let _dep_idx : Nat := _dep_idx
           let dep := _dep_seq[_dep_idx]!
           if adjacency.contains dep then
             let _adj_val := adjacency[dep]!
             adjacency := adjacency.insert dep (_adj_val ++ #[id])
-    let mut enqueued : Std.HashSet String := Std.HashSet.empty
+    let mut enqueued : Std.HashSet String := ∅
     let mut queue : Array String := #[]
-    for _id_idx3 in [:nodeIds.size]
-      invariant _id_idx3 ≤ nodeIds.size
-      invariant queue.size ≤ nodeIds.size
-      invariant queue.size ≤ _id_idx3
-      invariant enqueued.size ≤ _id_idx3
-      invariant enqueued.size ≤ queue.size
-      invariant queue.size ≤ enqueued.size
-      invariant ∀ k : String, enqueued.contains k → ∃ j : Int, 0 ≤ j ∧ j < _id_idx3 ∧ nodeIds[j.toNat]! = k
-      invariant ∀ k : String, enqueued.contains k → inDegree.contains k ∧ inDegree.get! k = 0
-      invariant ∀ k : String, enqueued.contains k → nodeIdSet.contains k
+    let _rangeStop3 : Nat := nodeIds.size
+    for _id_idx3 in [:_rangeStop3]
+      invariant invariant_15: (_id_idx3 ≤ nodeIds.size : Prop)
+      invariant invariant_16: (queue.size ≤ nodeIds.size : Prop)
+      invariant invariant_17: (queue.size ≤ _id_idx3 : Prop)
+      invariant invariant_18: (enqueued.size ≤ _id_idx3 : Prop)
+      invariant invariant_19: (enqueued.size ≤ queue.size : Prop)
+      invariant invariant_20: (queue.size ≤ enqueued.size : Prop)
+      invariant invariant_21: (∀ k : String, enqueued.contains k → ∃ j : Int, 0 ≤ j ∧ j < _id_idx3 ∧ nodeIds[j.toNat]! = k : Prop)
+      invariant invariant_22: (∀ k : String, enqueued.contains k → inDegree.contains k ∧ inDegree.get! k = 0 : Prop)
+      invariant invariant_23: (∀ k : String, enqueued.contains k → nodeIdSet.contains k : Prop)
+      done_with (let _id_idx3 : Nat := _rangeStop3; (_id_idx3 ≤ nodeIds.size : Prop) ∧ (queue.size ≤ nodeIds.size : Prop) ∧ (queue.size ≤ _id_idx3 : Prop) ∧ (enqueued.size ≤ _id_idx3 : Prop) ∧ (enqueued.size ≤ queue.size : Prop) ∧ (queue.size ≤ enqueued.size : Prop) ∧ (∀ k : String, enqueued.contains k → ∃ j : Int, 0 ≤ j ∧ j < _id_idx3 ∧ nodeIds[j.toNat]! = k : Prop) ∧ (∀ k : String, enqueued.contains k → inDegree.contains k ∧ inDegree.get! k = 0 : Prop) ∧ (∀ k : String, enqueued.contains k → nodeIdSet.contains k : Prop))
     do
+      let _id_idx3 : Nat := _id_idx3
       let id := nodeIds[_id_idx3]!
       if if inDegree.contains id then let _value := inDegree[id]!
 _value == 0 else false then
@@ -130,17 +141,17 @@ _value == 0 else false then
     let mut sorted : Array String := #[]
     let mut qHead : Int := 0
     while qHead < queue.size
-      invariant qHead ≤ queue.size
-      invariant sorted.size = qHead
-      invariant sorted.size ≤ nodeIds.size
-      invariant queue.size ≤ nodeIds.size
-      invariant enqueued.size ≤ nodeIds.size
-      invariant enqueued.size ≤ queue.size
-      invariant queue.size ≤ enqueued.size
-      invariant ∀ k : String, enqueued.contains k → inDegree.contains k ∧ inDegree.get! k ≤ 0
-      invariant ∀ k : String, enqueued.contains k → nodeIdSet.contains k
-      invariant nodeIdSet.size ≤ nodeIds.size
-      invariant ∀ k : String, adjacency.contains k → ∀ v : String, (adjacency.get! k).contains v → nodeIdSet.contains v
+      invariant invariant_24: (qHead ≤ queue.size : Prop)
+      invariant invariant_25: (sorted.size = qHead : Prop)
+      invariant invariant_26: (sorted.size ≤ nodeIds.size : Prop)
+      invariant invariant_27: (queue.size ≤ nodeIds.size : Prop)
+      invariant invariant_28: (enqueued.size ≤ nodeIds.size : Prop)
+      invariant invariant_29: (enqueued.size ≤ queue.size : Prop)
+      invariant invariant_30: (queue.size ≤ enqueued.size : Prop)
+      invariant invariant_31: (∀ k : String, enqueued.contains k → inDegree.contains k ∧ inDegree.get! k ≤ 0 : Prop)
+      invariant invariant_32: (∀ k : String, enqueued.contains k → nodeIdSet.contains k : Prop)
+      invariant invariant_33: (nodeIdSet.size ≤ nodeIds.size : Prop)
+      invariant invariant_34: (∀ k : String, adjacency.contains k → ∀ v : String, (adjacency.get! k).contains v → nodeIdSet.contains v : Prop)
       decreasing nodeIds.size - sorted.size
     do
       let id := queue[qHead.toNat]!
@@ -148,19 +159,22 @@ _value == 0 else false then
       qHead := qHead + 1
       if adjacency.contains id then
         let _neighbors_val := adjacency[id]!
-        for _neighbor_idx in [:_neighbors_val.size]
-          invariant _neighbor_idx ≤ _neighbors_val.size
-          invariant qHead ≤ queue.size
-          invariant sorted.size = qHead
-          invariant enqueued.size ≤ nodeIds.size
-          invariant enqueued.size ≤ queue.size
-          invariant queue.size ≤ enqueued.size
-          invariant ∀ k : String, enqueued.contains k → inDegree.contains k ∧ inDegree.get! k ≤ 0
-          invariant ∀ k : String, enqueued.contains k → nodeIdSet.contains k
-          invariant nodeIdSet.size ≤ nodeIds.size
-          invariant ∀ k : String, adjacency.contains k → ∀ v : String, (adjacency.get! k).contains v → nodeIdSet.contains v
-          invariant ∀ v : String, _neighbors_val.contains v → nodeIdSet.contains v
+        let _rangeStop4 : Nat := _neighbors_val.size
+        for _neighbor_idx in [:_rangeStop4]
+          invariant invariant_35: (_neighbor_idx ≤ _neighbors_val.size : Prop)
+          invariant invariant_36: (qHead ≤ queue.size : Prop)
+          invariant invariant_37: (sorted.size = qHead : Prop)
+          invariant invariant_38: (enqueued.size ≤ nodeIds.size : Prop)
+          invariant invariant_39: (enqueued.size ≤ queue.size : Prop)
+          invariant invariant_40: (queue.size ≤ enqueued.size : Prop)
+          invariant invariant_41: (∀ k : String, enqueued.contains k → inDegree.contains k ∧ inDegree.get! k ≤ 0 : Prop)
+          invariant invariant_42: (∀ k : String, enqueued.contains k → nodeIdSet.contains k : Prop)
+          invariant invariant_43: (nodeIdSet.size ≤ nodeIds.size : Prop)
+          invariant invariant_44: (∀ k : String, adjacency.contains k → ∀ v : String, (adjacency.get! k).contains v → nodeIdSet.contains v : Prop)
+          invariant invariant_45: (∀ v : String, _neighbors_val.contains v → nodeIdSet.contains v : Prop)
+          done_with (let _neighbor_idx : Nat := _rangeStop4; (_neighbor_idx ≤ _neighbors_val.size : Prop) ∧ (qHead ≤ queue.size : Prop) ∧ (sorted.size = qHead : Prop) ∧ (enqueued.size ≤ nodeIds.size : Prop) ∧ (enqueued.size ≤ queue.size : Prop) ∧ (queue.size ≤ enqueued.size : Prop) ∧ (∀ k : String, enqueued.contains k → inDegree.contains k ∧ inDegree.get! k ≤ 0 : Prop) ∧ (∀ k : String, enqueued.contains k → nodeIdSet.contains k : Prop) ∧ (nodeIdSet.size ≤ nodeIds.size : Prop) ∧ (∀ k : String, adjacency.contains k → ∀ v : String, (adjacency.get! k).contains v → nodeIdSet.contains v : Prop) ∧ (∀ v : String, _neighbors_val.contains v → nodeIdSet.contains v : Prop))
         do
+          let _neighbor_idx : Nat := _neighbor_idx
           let neighbor := _neighbors_val[_neighbor_idx]!
           assertGadget ((nodeIdSet.contains neighbor) = true)
           if inDegree.contains neighbor then
@@ -178,8 +192,7 @@ end
 /- BEGIN LemmaScript/examples/toposort.proof.lean -/
 section
 
-set_option loom.semantics.termination "total"
-set_option loom.semantics.choice "demonic"
+set_option velvet.semantics.termination "total"
 set_option maxHeartbeats 400000
 
 theorem allDistinct_means_no_dups (s : Array String) (n : Nat)
@@ -412,44 +425,43 @@ theorem adj_invariant_preserved
     exact hold k hk' v (Array.contains_iff.mpr hv')
 
 section TopoProof
-set_option loom.solver "custom"
 set_option hygiene false in
-macro_rules
-| `(tactic|loom_solver) => `(tactic| first
-  | (strip_withname; grind (splits := 30))
-  | (strip_withname; omega)
+macro "topo_solve" : tactic => `(tactic| first
+  | (grind (splits := 30) [-allDistinct])
+  | (omega)
   -- Specifically discharge the adjacency-preservation VC
-  | (strip_withname; apply adj_invariant_preserved <;> assumption)
+  | (apply adj_invariant_preserved <;> assumption)
   -- Preservation by helper lemmas
-  | (strip_withname; apply contains_invariant_preserved_int <;> assumption)
-  | (strip_withname; apply hashset_contains_invariant_preserved <;> assumption)
-  | (strip_withname; apply adjacency_emptyArrays_preserved <;> assumption)
-  | (strip_withname; apply enqueued_witness_preserved <;> assumption)
-  | (strip_withname; apply enqueued_witness_bound_widen <;> assumption)
+  | (apply contains_invariant_preserved_int <;> assumption)
+  | (apply hashset_contains_invariant_preserved <;> assumption)
+  | (apply adjacency_emptyArrays_preserved <;> assumption)
+  | (apply enqueued_witness_preserved <;> assumption)
+  | (apply enqueued_witness_bound_widen <;> assumption)
+  | (have h := enqueued_witness_preserved nodeIds enqueued _id_idx3 invariant_21
+     grind [-allDistinct])
   -- Distinctness assertion: nodeIds[i] not yet enqueued
-  | (strip_withname; apply not_enqueued_of_distinct <;> assumption)
+  | (apply not_enqueued_of_distinct <;> (first | assumption | grind [-allDistinct]))
   -- Size bound: enqueued.insert v ≤ nodeIdSet.size when v is "new"
-  | (strip_withname
-     apply Nat.le_trans
+  | (apply Nat.le_trans
      · apply hashset_subset_insert_size <;> assumption
      · assumption)
   -- Joint insert preservation for invariant_41
-  | (strip_withname
-     apply joint_insert_preserves_inDegree_le_zero <;> (first | assumption | omega))
-  | (strip_withname
-     apply inDegree_insert_preserves_decrement <;> assumption)
+  | (apply joint_insert_preserves_inDegree_le_zero <;> (first | assumption | omega))
+  | (apply inDegree_insert_preserves_decrement <;> assumption)
   -- Establishment of inner-loop neighbor invariant
-  | (strip_withname
-     apply neighbors_in_nodeIdSet <;> assumption)
-  | (strip_withname;
-     simp only [Array.size_push, Std.HashSet.size_insert];
+  | (apply neighbors_in_nodeIdSet <;> assumption)
+  | (simp only [Array.size_push, Std.HashSet.size_insert];
      (try (generalize Std.HashSet.size _ = _es at *));
      split <;> omega)
-  | (strip_withname; omega))
+  | (omega))
 
 set_option maxHeartbeats 16000000 in
 prove_correct topologicalSort by
-  loom_solve!
+  velvet_vcgen [topologicalSort] with
+    (expose_names
+     tactic =>
+       repeat' apply And.intro
+       all_goals topo_solve)
 
 end TopoProof
 end

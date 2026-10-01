@@ -10,6 +10,7 @@
   "scripts": {
     "gather": "node --import tsx bin/gather.ts",
     "check-artifacts": "node --import tsx bin/check-artifacts.ts",
+    "compare": "node --import tsx bin/compare.ts",
     "test": "node --import tsx --test test/*.test.ts",
     "typecheck": "tsc --noEmit"
   },

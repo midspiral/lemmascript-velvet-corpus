@@ -7,18 +7,17 @@ Source components, in order:
   LemmaScript/examples/arraySum.proof.lean
 -/
 
-import Velvet.Syntax
-import Velvet.Std
+import LemmaScript
 
 /- BEGIN LemmaScript/examples/arraySum.spec.lean -/
 section
 
-@[grind, loomAbstractionSimp]
+@[grind, simp]
 def sumTo (arr : Array Int) : Nat → Int
   | 0 => 0
   | n + 1 => sumTo arr n + if n < arr.size then arr[n]! else 0
 
-@[grind, loomAbstractionSimp]
+@[grind, simp]
 theorem sumTo_step (arr : Array Int) (i : Int) (hi : 0 ≤ i) (hlt : i.toNat < arr.size) :
     sumTo arr (i + 1).toNat = sumTo arr i.toNat + arr[i.toNat]! := by
   have : (i + 1).toNat = i.toNat + 1 := by omega
@@ -33,18 +32,17 @@ section
   Do not edit — re-run `lsc gen` to regenerate.
 -/
 
-set_option loom.semantics.termination "total"
-set_option loom.semantics.choice "demonic"
+set_option velvet.semantics.termination "total"
 
-method arraySum (arr : Array Int) return (res : Int)
-  ensures res = sumTo arr arr.size
+method arraySum (arr : Array Int) returns (res : Int)
+  ensures ensures_1: (res = sumTo arr arr.size : Prop)
   do
     let mut sum : Int := 0
     let mut i : Nat := 0
     while i < arr.size
-      invariant 0 ≤ i
-      invariant i ≤ arr.size
-      invariant sum = sumTo arr i
+      invariant invariant_1: (0 ≤ i : Prop)
+      invariant invariant_2: (i ≤ arr.size : Prop)
+      invariant invariant_3: (sum = sumTo arr i : Prop)
       decreasing arr.size - i
     do
       sum := sum + arr[i]!
@@ -56,10 +54,9 @@ end
 /- BEGIN LemmaScript/examples/arraySum.proof.lean -/
 section
 
-set_option loom.semantics.termination "total"
-set_option loom.semantics.choice "demonic"
+set_option velvet.semantics.termination "total"
 
 prove_correct arraySum by
-  loom_solve
+  velvet_vcgen [arraySum] with finish
 end
 /- END LemmaScript/examples/arraySum.proof.lean -/

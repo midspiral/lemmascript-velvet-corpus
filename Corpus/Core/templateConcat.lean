@@ -34,15 +34,14 @@ section
   Do not edit — re-run `lsc gen` to regenerate.
 -/
 
-set_option loom.semantics.termination "total"
-set_option loom.semantics.choice "demonic"
+set_option velvet.semantics.termination "total"
 
-method noSep (a : Int) (b : Int) return (res : String)
+method noSep (a : Int) (b : Int) returns (res : String)
   do
     return Pure.noSep a b
 
-method bracketed (a : Int) (b : Int) return (res : Int)
-  ensures res ≥ 4
+method bracketed (a : Int) (b : Int) returns (res : Int)
+  ensures ensures_1: (res ≥ 4 : Prop)
   do
     return Pure.bracketed a b
 end
@@ -51,11 +50,10 @@ end
 /- BEGIN LemmaScript/examples/templateConcat.proof.lean -/
 section
 
-set_option loom.semantics.termination "total"
-set_option loom.semantics.choice "demonic"
+set_option velvet.semantics.termination "total"
 
 prove_correct bracketed by
-  loom_solve
+  velvet_vcgen [bracketed] with (expose_names; try finish)
   simp only [Pure.bracketed, String.length_append]
   have h1 : "[".length = 1 := by decide
   have h2 : "][".length = 2 := by decide

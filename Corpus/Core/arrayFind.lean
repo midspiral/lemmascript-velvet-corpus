@@ -47,14 +47,13 @@ section
   Do not edit — re-run `lsc gen` to regenerate.
 -/
 
-set_option loom.semantics.termination "total"
-set_option loom.semantics.choice "demonic"
+set_option velvet.semantics.termination "total"
 
-method lookup (entries : Array Entry) (key : String) return (res : Int)
+method lookup (entries : Array Entry) (key : String) returns (res : Int)
   do
     return Pure.lookup entries key
 
-method hasEntry (entries : Array Entry) (key : String) return (res : Bool)
+method hasEntry (entries : Array Entry) (key : String) returns (res : Bool)
   do
     return Pure.hasEntry entries key
 end

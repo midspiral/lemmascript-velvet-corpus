@@ -6,7 +6,7 @@
       "id": "lemmascript",
       "repo": "midspiral/LemmaScript",
       "checkout": "LemmaScript",
-      "branch": "main",
+      "branch": "velvet2",
       "license": "MIT",
       "licenseFile": "LICENSE",
       "support": ["LemmaScript.lean", "LemmaScript"],
@@ -22,7 +22,7 @@
       "id": "clear-split",
       "repo": "midspiral/clear-split-lemmascript",
       "checkout": "clear-split-lemmascript",
-      "branch": "main",
+      "branch": "main-velvet2",
       "license": "MIT",
       "licenseFile": "LICENSE",
       "groups": [
@@ -37,7 +37,7 @@
       "id": "colorwheel",
       "repo": "midspiral/colorwheel-lemmascript",
       "checkout": "colorwheel-lemmascript",
-      "branch": "main",
+      "branch": "main-velvet2",
       "license": "MIT",
       "licenseFile": "LICENSE",
       "groups": [
@@ -52,7 +52,7 @@
       "id": "node-casbin",
       "repo": "midspiral/node-casbin-lemmascript",
       "checkout": "node-casbin-lemmascript",
-      "branch": "lemmascript",
+      "branch": "lemmascript-velvet2",
       "license": "Apache-2.0",
       "licenseFile": "LICENSE",
       "groups": [
@@ -67,7 +67,7 @@
       "id": "pi",
       "repo": "midspiral/pi-lemmascript",
       "checkout": "pi-lemmascript",
-      "branch": "lemmascript",
+      "branch": "lemmascript-velvet2",
       "license": "MIT",
       "licenseFile": "LICENSE",
       "groups": [

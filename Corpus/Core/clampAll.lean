@@ -15,13 +15,12 @@ section
   Do not edit — re-run `lsc gen` to regenerate.
 -/
 
-set_option loom.semantics.termination "total"
-set_option loom.semantics.choice "demonic"
+set_option velvet.semantics.termination "total"
 
-method clampElement (x : Int) (lo : Int) (hi : Int) return (res : Int)
-  require lo ≤ hi
-  ensures res ≥ lo
-  ensures res ≤ hi
+method clampElement (x : Int) (lo : Int) (hi : Int) returns (res : Int)
+  requires require_1: (lo ≤ hi : Prop)
+  ensures ensures_1: (res ≥ lo : Prop)
+  ensures ensures_2: (res ≤ hi : Prop)
   do
     let mut result : Int := x
     if result < lo then
@@ -30,8 +29,8 @@ method clampElement (x : Int) (lo : Int) (hi : Int) return (res : Int)
       result := hi
     return result
 
-method clampAll (arr : Array Int) (lo : Int) (hi : Int) return (res : Array Int)
-  require lo ≤ hi
+method clampAll (arr : Array Int) (lo : Int) (hi : Int) returns (res : Array Int)
+  requires require_1: (lo ≤ hi : Prop)
   do
     let _t1 ← arr.mapM (fun x => do
     let _t0 ← clampElement x lo hi
@@ -43,13 +42,12 @@ end
 /- BEGIN LemmaScript/examples/clampAll.proof.lean -/
 section
 
-set_option loom.semantics.termination "total"
-set_option loom.semantics.choice "demonic"
+set_option velvet.semantics.termination "total"
 
 prove_correct clampElement by
-  loom_solve
+  velvet_vcgen [clampElement] with finish
 
 prove_correct clampAll by
-  loom_solve
+  velvet_vcgen [clampAll] with finish
 end
 /- END LemmaScript/examples/clampAll.proof.lean -/

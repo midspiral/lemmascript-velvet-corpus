@@ -46,13 +46,12 @@ section
   Do not edit — re-run `lsc gen` to regenerate.
 -/
 
-set_option loom.semantics.termination "total"
-set_option loom.semantics.choice "demonic"
+set_option velvet.semantics.termination "total"
 
-method nextSeq (state : Int) (pkt : Packet) return (res : Int)
-  ensures (match pkt with | .syn _pkt_seq => res = _pkt_seq | _ => true)
-  ensures (match pkt with | .data _pkt_seq _pkt_len => res = state + _pkt_len | _ => true)
-  ensures (match pkt with | .fin => res = state | _ => true)
+method nextSeq (state : Int) (pkt : Packet) returns (res : Int)
+  ensures ensures_1: ((match pkt with | .syn _pkt_seq => res = _pkt_seq | _ => true) : Prop)
+  ensures ensures_2: ((match pkt with | .data _pkt_seq _pkt_len => res = state + _pkt_len | _ => true) : Prop)
+  ensures ensures_3: ((match pkt with | .fin => res = state | _ => true) : Prop)
   do
     return Pure.nextSeq state pkt
 end
@@ -61,10 +60,9 @@ end
 /- BEGIN LemmaScript/examples/packet.proof.lean -/
 section
 
-set_option loom.semantics.termination "total"
-set_option loom.semantics.choice "demonic"
+set_option velvet.semantics.termination "total"
 
 prove_correct nextSeq by
-  unfold Pure.nextSeq; loom_solve
+  velvet_vcgen [nextSeq] with finish [Pure.nextSeq]
 end
 /- END LemmaScript/examples/packet.proof.lean -/

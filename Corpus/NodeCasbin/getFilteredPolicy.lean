@@ -15,23 +15,22 @@ section
   Do not edit — re-run `lsc gen` to regenerate.
 -/
 
-set_option loom.semantics.termination "total"
-set_option loom.semantics.choice "demonic"
+set_option velvet.semantics.termination "total"
 
-method ruleMatches (rule : Array String) (fieldValues : Array String) (fieldIndex : Nat) (numFields : Nat) return (res : Bool)
-  require numFields ≤ fieldValues.size
-  require fieldIndex + numFields ≤ rule.size
-  ensures res = false → ∃ k : Nat, k < numFields ∧ fieldValues[k]! ≠ "" ∧ rule[fieldIndex + k]! ≠ fieldValues[k]!
-  ensures res = true → ∀ k : Nat, k < numFields → fieldValues[k]! = "" ∨ rule[fieldIndex + k]! = fieldValues[k]!
+method ruleMatches (rule : Array String) (fieldValues : Array String) (fieldIndex : Nat) (numFields : Nat) returns (res : Bool)
+  requires require_1: (numFields ≤ fieldValues.size : Prop)
+  requires require_2: (fieldIndex + numFields ≤ rule.size : Prop)
+  ensures ensures_1: (res = false → ∃ k : Nat, k < numFields ∧ fieldValues[k]! ≠ "" ∧ rule[fieldIndex + k]! ≠ fieldValues[k]! : Prop)
+  ensures ensures_2: (res = true → ∀ k : Nat, k < numFields → fieldValues[k]! = "" ∨ rule[fieldIndex + k]! = fieldValues[k]! : Prop)
   do
     let mut matched : Bool := true
     let mut i : Nat := 0
     while i < numFields
-      invariant i ≤ numFields
-      invariant matched = true → ∀ k : Nat, k < i → fieldValues[k]! = "" ∨ rule[fieldIndex + k]! = fieldValues[k]!
-      invariant matched = false → ∃ k : Nat, k < numFields ∧ fieldValues[k]! ≠ "" ∧ rule[fieldIndex + k]! ≠ fieldValues[k]!
-      done_with matched = false ∨ ¬(i < numFields)
+      invariant invariant_1: (i ≤ numFields : Prop)
+      invariant invariant_2: (matched = true → ∀ k : Nat, k < i → fieldValues[k]! = "" ∨ rule[fieldIndex + k]! = fieldValues[k]! : Prop)
+      invariant invariant_3: (matched = false → ∃ k : Nat, k < numFields ∧ fieldValues[k]! ≠ "" ∧ rule[fieldIndex + k]! ≠ fieldValues[k]! : Prop)
       decreasing numFields - i
+      done_with (matched = false ∨ ¬(i < numFields) : Prop)
     do
       if fieldValues[i]! ≠ "" then
         if rule[fieldIndex + i]! ≠ fieldValues[i]! then
@@ -40,15 +39,15 @@ method ruleMatches (rule : Array String) (fieldValues : Array String) (fieldInde
       i := i + 1
     return matched
 
-method filterPolicies (policies : Array (Array String)) (fieldValues : Array String) (fieldIndex : Nat) (numPolicies : Nat) (numFields : Nat) return (res : Array (Array String))
-  require numPolicies ≤ policies.size
-  require numFields ≤ fieldValues.size
-  require ∀ i : Nat, i < numPolicies → fieldIndex + numFields ≤ (policies[i]!).size
+method filterPolicies (policies : Array (Array String)) (fieldValues : Array String) (fieldIndex : Nat) (numPolicies : Nat) (numFields : Nat) returns (res : Array (Array String))
+  requires require_1: (numPolicies ≤ policies.size : Prop)
+  requires require_2: (numFields ≤ fieldValues.size : Prop)
+  requires require_3: (∀ i : Nat, i < numPolicies → fieldIndex + numFields ≤ (policies[i]!).size : Prop)
   do
     let mut result : Array (Array String) := #[]
     let mut i : Nat := 0
     while i < numPolicies
-      invariant i ≤ numPolicies
+      invariant invariant_1: (i ≤ numPolicies : Prop)
       decreasing numPolicies - i
     do
       let _t0 ← ruleMatches policies[i]! fieldValues fieldIndex numFields
@@ -62,10 +61,9 @@ end
 /- BEGIN node-casbin-lemmascript/src/model/getFilteredPolicy.proof.lean -/
 section
 
-set_option loom.semantics.termination "total"
-set_option loom.semantics.choice "demonic"
+set_option velvet.semantics.termination "total"
 
 prove_correct ruleMatches by
-  loom_solve
+  velvet_vcgen [ruleMatches] with try finish
 end
 /- END node-casbin-lemmascript/src/model/getFilteredPolicy.proof.lean -/

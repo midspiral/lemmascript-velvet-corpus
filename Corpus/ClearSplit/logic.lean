@@ -154,81 +154,80 @@ section
   Do not edit — re-run `lsc gen` to regenerate.
 -/
 
-set_option loom.semantics.termination "total"
-set_option loom.semantics.choice "demonic"
+set_option velvet.semantics.termination "total"
 
-method sumTo (arr : Array Int) (n : Nat) return (res : Int)
-  require n ≤ arr.size
+method sumTo (arr : Array Int) (n : Nat) returns (res : Int)
+  requires require_1: (n ≤ arr.size : Prop)
   do
     return Pure.sumTo arr n
 
-method expenseDelta (paidBy : Int) (amount : Int) (share : Int) (member : Int) return (res : Int)
-  ensures paidBy = member → res = amount - share
-  ensures paidBy ≠ member → res = 0 - share
+method expenseDelta (paidBy : Int) (amount : Int) (share : Int) (member : Int) returns (res : Int)
+  ensures ensures_1: (paidBy = member → res = amount - share : Prop)
+  ensures ensures_2: (paidBy ≠ member → res = 0 - share : Prop)
   do
     return Pure.expenseDelta paidBy amount share member
 
-method settlementDelta («from» : Int) («to» : Int) (amount : Int) (member : Int) return (res : Int)
-  ensures «from» = member → res = amount
-  ensures «to» = member → «from» ≠ member → res = 0 - amount
-  ensures «from» ≠ member → «to» ≠ member → res = 0
+method settlementDelta («from» : Int) («to» : Int) (amount : Int) (member : Int) returns (res : Int)
+  ensures ensures_1: («from» = member → res = amount : Prop)
+  ensures ensures_2: («to» = member → «from» ≠ member → res = 0 - amount : Prop)
+  ensures ensures_3: («from» ≠ member → «to» ≠ member → res = 0 : Prop)
   do
     return Pure.settlementDelta «from» «to» amount member
 
-method balanceOverExpenses (paidBy : Array Int) (amounts : Array Int) (shares : Array Int) (member : Int) (n : Nat) return (res : Int)
-  require n ≤ paidBy.size
-  require n ≤ amounts.size
-  require n ≤ shares.size
+method balanceOverExpenses (paidBy : Array Int) (amounts : Array Int) (shares : Array Int) (member : Int) (n : Nat) returns (res : Int)
+  requires require_1: (n ≤ paidBy.size : Prop)
+  requires require_2: (n ≤ amounts.size : Prop)
+  requires require_3: (n ≤ shares.size : Prop)
   do
     return Pure.balanceOverExpenses paidBy amounts shares member n
 
-method balanceOverSettlements (settFrom : Array Int) (settTo : Array Int) (settAmounts : Array Int) (member : Int) (n : Nat) return (res : Int)
-  require n ≤ settFrom.size
-  require n ≤ settTo.size
-  require n ≤ settAmounts.size
+method balanceOverSettlements (settFrom : Array Int) (settTo : Array Int) (settAmounts : Array Int) (member : Int) (n : Nat) returns (res : Int)
+  requires require_1: (n ≤ settFrom.size : Prop)
+  requires require_2: (n ≤ settTo.size : Prop)
+  requires require_3: (n ≤ settAmounts.size : Prop)
   do
     return Pure.balanceOverSettlements settFrom settTo settAmounts member n
 
-method validExpense (e : Expense) (memberCount : Nat) return (res : Bool)
+method validExpense (e : Expense) (memberCount : Nat) returns (res : Bool)
   do
     return Pure.validExpense e memberCount
 
-method allExpensesValid (expenses : Array Expense) (n : Nat) (memberCount : Nat) return (res : Bool)
-  require n ≤ expenses.size
+method allExpensesValid (expenses : Array Expense) (n : Nat) (memberCount : Nat) returns (res : Bool)
+  requires require_1: (n ≤ expenses.size : Prop)
   do
     return Pure.allExpensesValid expenses n memberCount
 
-method validSettlement (s : Settlement) (memberCount : Nat) return (res : Bool)
+method validSettlement (s : Settlement) (memberCount : Nat) returns (res : Bool)
   do
     return Pure.validSettlement s memberCount
 
-method allSettlementsValid (settlements : Array Settlement) (n : Nat) (memberCount : Nat) return (res : Bool)
-  require n ≤ settlements.size
+method allSettlementsValid (settlements : Array Settlement) (n : Nat) (memberCount : Nat) returns (res : Bool)
+  requires require_1: (n ≤ settlements.size : Prop)
   do
     return Pure.allSettlementsValid settlements n memberCount
 
-method inv (model : Model) return (res : Bool)
+method inv (model : Model) returns (res : Bool)
   do
     return Pure.inv model
 
-method validAction (a : Action) (memberCount : Nat) return (res : Bool)
+method validAction (a : Action) (memberCount : Nat) returns (res : Bool)
   do
     return Pure.validAction a memberCount
 
-method computeBalance (paidBy : Array Int) (amounts : Array Int) (shares : Array Int) (settFrom : Array Int) (settTo : Array Int) (settAmounts : Array Int) (member : Nat) (expenseCount : Nat) (settlementCount : Nat) return (res : Int)
-  require expenseCount ≤ paidBy.size
-  require expenseCount ≤ amounts.size
-  require expenseCount ≤ shares.size
-  require settlementCount ≤ settFrom.size
-  require settlementCount ≤ settTo.size
-  require settlementCount ≤ settAmounts.size
-  ensures res = Pure.balanceOverExpenses paidBy amounts shares member expenseCount + Pure.balanceOverSettlements settFrom settTo settAmounts member settlementCount
+method computeBalance (paidBy : Array Int) (amounts : Array Int) (shares : Array Int) (settFrom : Array Int) (settTo : Array Int) (settAmounts : Array Int) (member : Nat) (expenseCount : Nat) (settlementCount : Nat) returns (res : Int)
+  requires require_1: (expenseCount ≤ paidBy.size : Prop)
+  requires require_2: (expenseCount ≤ amounts.size : Prop)
+  requires require_3: (expenseCount ≤ shares.size : Prop)
+  requires require_4: (settlementCount ≤ settFrom.size : Prop)
+  requires require_5: (settlementCount ≤ settTo.size : Prop)
+  requires require_6: (settlementCount ≤ settAmounts.size : Prop)
+  ensures ensures_1: (res = Pure.balanceOverExpenses paidBy amounts shares member expenseCount + Pure.balanceOverSettlements settFrom settTo settAmounts member settlementCount : Prop)
   do
     let mut balance : Int := 0
     let mut i : Nat := 0
     while i < expenseCount
-      invariant i ≤ expenseCount
-      invariant balance = Pure.balanceOverExpenses paidBy amounts shares member i
+      invariant invariant_1: (i ≤ expenseCount : Prop)
+      invariant invariant_2: (balance = Pure.balanceOverExpenses paidBy amounts shares member i : Prop)
       decreasing expenseCount - i
     do
       let _t0 ← expenseDelta paidBy[i]! amounts[i]! shares[i]! member
@@ -236,8 +235,8 @@ method computeBalance (paidBy : Array Int) (amounts : Array Int) (shares : Array
       i := i + 1
     let mut j : Nat := 0
     while j < settlementCount
-      invariant j ≤ settlementCount
-      invariant balance = Pure.balanceOverExpenses paidBy amounts shares member expenseCount + Pure.balanceOverSettlements settFrom settTo settAmounts member j
+      invariant invariant_3: (j ≤ settlementCount : Prop)
+      invariant invariant_4: (balance = Pure.balanceOverExpenses paidBy amounts shares member expenseCount + Pure.balanceOverSettlements settFrom settTo settAmounts member j : Prop)
       decreasing settlementCount - j
     do
       let _t1 ← settlementDelta settFrom[j]! settTo[j]! settAmounts[j]! member
@@ -245,11 +244,11 @@ method computeBalance (paidBy : Array Int) (amounts : Array Int) (shares : Array
       j := j + 1
     return balance
 
-method step (model : Model) (action : Action) return (res : Model)
-  require Pure.inv model
-  ensures Pure.inv res
-  ensures ¬(Pure.validAction action model.memberCount) → res = model
-  ensures res.memberCount = model.memberCount
+method step (model : Model) (action : Action) returns (res : Model)
+  requires require_1: (Pure.inv model : Prop)
+  ensures ensures_1: (Pure.inv res : Prop)
+  ensures ensures_2: (¬(Pure.validAction action model.memberCount) → res = model : Prop)
+  ensures ensures_3: (res.memberCount = model.memberCount : Prop)
   do
     return Pure.step model action
 end
@@ -258,14 +257,13 @@ end
 /- BEGIN clear-split-lemmascript/src/logic/logic.proof.lean -/
 section
 
-set_option loom.semantics.termination "total"
-set_option loom.semantics.choice "demonic"
+set_option velvet.semantics.termination "total"
 
 prove_correct expenseDelta by
-  unfold Pure.expenseDelta; loom_solve
+  velvet_vcgen [expenseDelta] with finish [Pure.expenseDelta]
 
 prove_correct settlementDelta by
-  unfold Pure.settlementDelta; loom_solve
+  velvet_vcgen [settlementDelta] with finish [Pure.settlementDelta]
 
 -- Step lemmas for the recursive spec helpers, used to discharge
 -- computeBalance's loop invariants via grind hints below.
@@ -295,20 +293,17 @@ theorem balanceOverSettlements_zero (settFrom settTo settAmounts : Array Int) (m
   unfold Pure.balanceOverSettlements; simp
 
 prove_correct computeBalance by
-  loom_goals_intro
-  all_goals strip_withname
-  all_goals (try unfold WithName at *)
-  all_goals (first
-    | (have h := balanceOverExpenses_step paidBy amounts shares ↑member i
-       simp only [Pure.expenseDelta] at h
-       grind)
-    | (have h := balanceOverSettlements_step settFrom settTo settAmounts ↑member j
-       simp only [Pure.settlementDelta] at h
-       grind)
-    | (have h := balanceOverExpenses_zero paidBy amounts shares ↑member; grind)
-    | (have h := balanceOverSettlements_zero settFrom settTo settAmounts ↑member; grind)
-    | grind
-    | omega)
+  velvet_vcgen [computeBalance]
+    simplifying_assumptions [balanceOverExpenses_zero, balanceOverSettlements_zero,
+      balanceOverExpenses_step, balanceOverSettlements_step]
+    with (expose_names; first
+      (finish)
+      (have h := balanceOverExpenses_step paidBy amounts shares ↑member i
+       finish [Pure.expenseDelta])
+      (have h := balanceOverSettlements_step settFrom settTo settAmounts ↑member j
+       finish [Pure.settlementDelta])
+      (have h := balanceOverExpenses_zero paidBy amounts shares ↑member; all_goals finish)
+      (have h := balanceOverSettlements_zero settFrom settTo settAmounts ↑member; all_goals finish))
 
 -- Helper: pushing a valid expense preserves allExpensesValid
 -- Key lemma: arr.push e at index < arr.size equals arr at that index
@@ -368,49 +363,44 @@ theorem allSettlementsValid_push (settlements : Array Settlement) (s : Settlemen
 section StepProof
 set_option maxHeartbeats 400000
 prove_correct step by
-  unfold Pure.step
-  loom_goals_intro
-  all_goals strip_withname
-  all_goals (try unfold WithName at *)
-  -- Handle each leftover VC: memberCount (rfl), !validAction → result = model, inv preservation.
-  all_goals (first
-    | rfl
-    -- ensures_2: !validAction → result = model. The action has already been split
-    -- by wpgen, and we're either in a reject sub-case (rfl) or accept sub-case
-    -- (path conditions hold, so validAction = true, contradicting h).
-    -- ensures_2: !validAction → result = model. We need an implication to introduce.
-    -- After cases + split_ifs, each reject sub-case is `model = model` (rfl) and the
-    -- accept sub-case derives False because path conditions prove validAction = true.
-    | (intro h
-       try cases action
-       all_goals dsimp only
-       all_goals (try split_ifs)
-       all_goals (first
-         | rfl
-         | (exfalso
-            apply h
-            first
-              | (simp [Pure.validAction, Pure.validExpense]
-                 refine ⟨?_, ?_, ?_, ?_, ?_⟩ <;> omega)
-              | (simp [Pure.validAction, Pure.validSettlement]
-                 refine ⟨?_, ?_, ?_, ?_, ?_, ?_⟩ <;> omega))))
-    -- ensures_3: inv preservation, per-action handling
-    | (cases action with
-       | addExpense e =>
-         simp only [Pure.inv, Pure.validExpense] at *
-         split <;> (try split) <;> (try split) <;> (try split) <;> (try split) <;> simp_all <;>
-         (rw [show model.expenses.size + 1 = (model.expenses.push e).size from by
-                simp [Array.size_push]];
-          exact allExpensesValid_push model.expenses e model.memberCount (by tauto)
-                (by simp [Pure.validExpense]; tauto))
-       | addSettlement s =>
-         simp only [Pure.inv, Pure.validSettlement] at *
-         split <;> (try split) <;> (try split) <;> (try split) <;> (try split) <;> (try split) <;>
-           simp_all <;>
-         (rw [show model.settlements.size + 1 = (model.settlements.push s).size from by
-                simp [Array.size_push]];
-          exact allSettlementsValid_push model.settlements s model.memberCount (by tauto)
-                (by simp [Pure.validSettlement]; omega))))
+  velvet_vcgen [step] with
+    (expose_names
+     tactic =>
+       simp only [Pure.step]
+       -- Preserve memberCount, reject invalid actions, and preserve the invariant.
+       first
+       | rfl
+       -- Reject sub-cases return model; accepted actions contradict invalidity.
+       | (intro h
+          try cases action
+          all_goals dsimp only
+          all_goals (try split_ifs)
+          all_goals (first
+            | rfl
+            | (exfalso
+               apply h
+               first
+                 | (simp [Pure.validAction, Pure.validExpense]
+                    refine ⟨?_, ?_, ?_, ?_, ?_⟩ <;> omega)
+                 | (simp [Pure.validAction, Pure.validSettlement]
+                    refine ⟨?_, ?_, ?_, ?_, ?_, ?_⟩ <;> omega))))
+       -- Invariant preservation needs the corresponding push lemma per action.
+       | (cases action with
+          | addExpense e =>
+            simp only [Pure.inv, Pure.validExpense] at *
+            split <;> (try split) <;> (try split) <;> (try split) <;> (try split) <;> simp_all <;>
+            (rw [show model.expenses.size + 1 = (model.expenses.push e).size from by
+                   simp [Array.size_push]];
+             exact allExpensesValid_push model.expenses e model.memberCount (by tauto)
+                   (by simp [Pure.validExpense]; tauto))
+          | addSettlement s =>
+            simp only [Pure.inv, Pure.validSettlement] at *
+            split <;> (try split) <;> (try split) <;> (try split) <;> (try split) <;> (try split) <;>
+              simp_all <;>
+            (rw [show model.settlements.size + 1 = (model.settlements.push s).size from by
+                   simp [Array.size_push]];
+             exact allSettlementsValid_push model.settlements s model.memberCount (by tauto)
+                   (by simp [Pure.validSettlement]; omega))))
 end StepProof
 
 -- ═════════════════════════════════════════════════════════════���
