@@ -602,10 +602,9 @@ prove_correct validBaseHue by
 prove_correct applySelectContrastPair by
   velvet_vcgen [applySelectContrastPair] with finish [Pure.applySelectContrastPair]
 prove_correct randomInRange by
-  velvet_vcgen [randomInRange]
-  all_goals first
-    | (apply Pure.randomInRange_ge <;> assumption)
-    | (apply Pure.randomInRange_le <;> assumption)
+  velvet_vcgen [randomInRange] with first
+    (apply Pure.randomInRange_ge <;> finish)
+    (apply Pure.randomInRange_le <;> finish)
 prove_correct validRandomSeeds by
   velvet_vcgen [validRandomSeeds] with finish [Pure.validRandomSeeds]
 prove_correct allColorsSatisfyMood by

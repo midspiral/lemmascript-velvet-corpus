@@ -20,7 +20,7 @@
       "expectedBranch": "main-velvet2",
       "observedBranch": "main-velvet2",
       "head": "641e936f4faa238b3d1cd0541fff2c6de401d005",
-      "relevantDirty": false,
+      "relevantDirty": true,
       "branchMatches": true,
       "license": {
         "spdx": "MIT",
@@ -45,7 +45,7 @@
       "expectedBranch": "main-velvet2",
       "observedBranch": "main-velvet2",
       "head": "430a9a26f8d12a84314d8bd676d16f79f28f21a5",
-      "relevantDirty": false,
+      "relevantDirty": true,
       "branchMatches": true,
       "license": {
         "spdx": "MIT",
@@ -69,8 +69,8 @@
       "checkout": "LemmaScript",
       "expectedBranch": "velvet2",
       "observedBranch": "velvet2",
-      "head": "f3f8e60fb2bc01b74b99e9ae50c20c6311455996",
-      "relevantDirty": false,
+      "head": "b2925806e1c0ad621a8b0c54ae3a244322f580dd",
+      "relevantDirty": true,
       "branchMatches": true,
       "license": {
         "spdx": "MIT",
@@ -95,7 +95,7 @@
       "expectedBranch": "lemmascript-velvet2",
       "observedBranch": "lemmascript-velvet2",
       "head": "0b7be63921b6f5c4e4416fad986105434e836305",
-      "relevantDirty": false,
+      "relevantDirty": true,
       "branchMatches": true,
       "license": {
         "spdx": "Apache-2.0",
@@ -120,7 +120,7 @@
       "expectedBranch": "lemmascript-velvet2",
       "observedBranch": "lemmascript-velvet2",
       "head": "4514b4bf928b3a198ee657425c6866f056840c5f",
-      "relevantDirty": false,
+      "relevantDirty": true,
       "branchMatches": true,
       "license": {
         "spdx": "MIT",
@@ -250,18 +250,18 @@
           "role": "proof",
           "source": {
             "path": "src/logic/logic.proof.lean",
-            "sha256": "f68dc5bf590e67f92d74d035398474bed05af5930e225073c58f867a265edfe5",
-            "bytes": 27010,
-            "lines": 513
+            "sha256": "861c0d4f7ea00b03ac685676e4d4509c12898dec79b0aa4d12325c2447baa9c5",
+            "bytes": 26796,
+            "lines": 507
           }
         }
       ],
       "proveCorrectCommands": 4,
       "output": {
         "path": "Corpus/ClearSplit/logic.lean",
-        "sha256": "1b5635aa4917fef4d74e0ca3ed833d73ef6bca5d2999f5e56399a2603d006264",
-        "bytes": 36525,
-        "lines": 772
+        "sha256": "b850ab1f31dcf37ed2eaffad47136d30e5b0fcab3f86481bd5f2db10a1f74369",
+        "bytes": 36311,
+        "lines": 766
       }
     },
     {
@@ -307,9 +307,9 @@
           "role": "proof",
           "source": {
             "path": "src/colorwheel.proof.lean",
-            "sha256": "12bf250384bcdacbae681eaca9ff4386f042a68e45cd4e92bf685628b7c84b62",
-            "bytes": 6404,
-            "lines": 147
+            "sha256": "a098ee775c206a8e23ebcada6a266dcb0b3bad43b0458b9cc81a8bb1d56a7fdd",
+            "bytes": 6385,
+            "lines": 146
           }
         },
         {
@@ -325,9 +325,9 @@
       "proveCorrectCommands": 29,
       "output": {
         "path": "Corpus/ColorWheel/colorwheel.lean",
-        "sha256": "913928ef0ad2a19eb2cfe65fe0c2cbfbd4a1cdf549ad025d94f0161867efb416",
-        "bytes": 57756,
-        "lines": 1190
+        "sha256": "f378092ea8caa8a60b5af8434ed2639d665cfc7e12809630c17c8364bc5ad702",
+        "bytes": 57737,
+        "lines": 1189
       }
     },
     {
@@ -533,18 +533,18 @@
           "role": "proof",
           "source": {
             "path": "examples/binarySearch.proof.lean",
-            "sha256": "1bcbe51369c79e8c65a53cb704b0bfd86ec96d7a1bebd7324743286a6d1e307d",
-            "bytes": 1174,
-            "lines": 27
+            "sha256": "c811a2f442c00610e1748e5960bdba795bbac729c7f2d06756f36810d9b4db79",
+            "bytes": 1175,
+            "lines": 26
           }
         }
       ],
       "proveCorrectCommands": 3,
       "output": {
         "path": "Corpus/Core/binarySearch.lean",
-        "sha256": "6d836486fa23ce37d43e4bbd22282b412d91a3a5cf5733bfd9b354257f322bff",
-        "bytes": 5240,
-        "lines": 149
+        "sha256": "72639c152a312f500750ae2fac6d71295c1c9e30fba76c3100d1fac3570f32b4",
+        "bytes": 5241,
+        "lines": 148
       }
     },
     {
@@ -694,18 +694,18 @@
           "role": "proof",
           "source": {
             "path": "examples/discriminantTrailing.proof.lean",
-            "sha256": "430e993471db51fb37e45158ce0239e0bcac55ecb18c03d4051752689c6233ca",
-            "bytes": 201,
-            "lines": 9
+            "sha256": "d5348dbe19ace93cd2b193adbe04a4e2357221e2811334c3d2d2e113b858304a",
+            "bytes": 166,
+            "lines": 7
           }
         }
       ],
       "proveCorrectCommands": 1,
       "output": {
         "path": "Corpus/Core/discriminantTrailing.lean",
-        "sha256": "f2b8ca1ef05d5c7b2f381027b0368197d7d64bbf0c6f5ea6fea309f6018b427d",
-        "bytes": 1701,
-        "lines": 75
+        "sha256": "6ae63f81b387ad822492c9cce161eca82745e12af78f4fa4028ae24093a68800",
+        "bytes": 1666,
+        "lines": 73
       }
     },
     {
@@ -835,18 +835,18 @@
           "role": "proof",
           "source": {
             "path": "examples/iff.proof.lean",
-            "sha256": "28a60d954dedb59b25bc3ff12be289019f44efa43510a5ab24bd6dd81930127e",
-            "bytes": 440,
-            "lines": 15
+            "sha256": "7aaa45bd68b1cdeba505887fff61aa636a4e369bfa4048ab4684d6b8cc0aecee",
+            "bytes": 371,
+            "lines": 12
           }
         }
       ],
       "proveCorrectCommands": 2,
       "output": {
         "path": "Corpus/Core/iff.lean",
-        "sha256": "ea9df50edfb7b62de8ab350bf6003f64ee89b8accc5d5f5bac59750fb77eb807",
-        "bytes": 1728,
-        "lines": 71
+        "sha256": "506fcc94c3178e8114f67d8fcd37ba940b390cf594c91c7a2a7fc92f2a696dc7",
+        "bytes": 1659,
+        "lines": 68
       }
     },
     {
@@ -1005,18 +1005,18 @@
           "role": "proof",
           "source": {
             "path": "examples/majority.proof.lean",
-            "sha256": "527aa319728d25369b85a4f736f6d43a7ec6d8892ebf0c59b5a48c9216fcc1a3",
-            "bytes": 389,
-            "lines": 14
+            "sha256": "02280f8bd82a9ad680a9fa363b850aef6b1ec514ba6e1843fc65e92504f10399",
+            "bytes": 290,
+            "lines": 11
           }
         }
       ],
       "proveCorrectCommands": 2,
       "output": {
         "path": "Corpus/Core/majority.lean",
-        "sha256": "76c57236026eaffd2c98cdd6c7d48c1281dd19b1c8c439a11c56eee4a7af2cb1",
-        "bytes": 3430,
-        "lines": 122
+        "sha256": "84844b59478c9ab48c2a7355926cf3726eb346b516879428ade4ee15248885d2",
+        "bytes": 3331,
+        "lines": 119
       }
     },
     {
@@ -1222,18 +1222,18 @@
           "role": "proof",
           "source": {
             "path": "examples/perm.proof.lean",
-            "sha256": "73bc9be75c84ce4ad7e0df0f3544a85e6099d412276a5503e5c1d84cc57e932b",
-            "bytes": 2950,
-            "lines": 75
+            "sha256": "54c4d7d9fde5384e1c4e213da23f39d95a49fd8cd455115b2c95e80235394bd5",
+            "bytes": 2803,
+            "lines": 70
           }
         }
       ],
       "proveCorrectCommands": 5,
       "output": {
         "path": "Corpus/Core/perm.lean",
-        "sha256": "562e1b59ce12ba9b7e2fec8adc34fd0cd1e1582d20802b6f63cc120fec88894c",
-        "bytes": 5104,
-        "lines": 159
+        "sha256": "4dc08f0f9e04b8b798f721bc32a5e276bd5197e855798bea8b051e65db318ea7",
+        "bytes": 4957,
+        "lines": 154
       }
     },
     {
@@ -1345,18 +1345,18 @@
           "role": "proof",
           "source": {
             "path": "examples/setFromArray.proof.lean",
-            "sha256": "8be2c977c0e1522abc334cf208aed3ea4eee1eadbc2e57dec9df0d2c115e4234",
-            "bytes": 478,
-            "lines": 14
+            "sha256": "9a1239e1ca4547989ebc5eaa2740c2db7b64e1f59a432b9fa13e676c1f92f84f",
+            "bytes": 471,
+            "lines": 13
           }
         }
       ],
       "proveCorrectCommands": 1,
       "output": {
         "path": "Corpus/Core/setFromArray.lean",
-        "sha256": "d8c28431d7ecf4b49d6a4c2e50240be543b5e2279429a35c4cf17fae46960778",
-        "bytes": 1767,
-        "lines": 68
+        "sha256": "53ce1b21c41fef97210f70dfdf7f0735ab60a15151ae834abdf850f557eb09cb",
+        "bytes": 1760,
+        "lines": 67
       }
     },
     {
@@ -1393,18 +1393,18 @@
           "role": "proof",
           "source": {
             "path": "examples/spec.proof.lean",
-            "sha256": "6e941f0d0bfff02718af9ccfb10f150392da0431d7cf94daac75000eed8ff511",
-            "bytes": 5222,
-            "lines": 173
+            "sha256": "9003f134025664ffe12aaa16150f5a3a49e2111588a0c185aade4053832f9a71",
+            "bytes": 5227,
+            "lines": 172
           }
         }
       ],
       "proveCorrectCommands": 51,
       "output": {
         "path": "Corpus/Core/spec.lean",
-        "sha256": "0ffb0d664a61993936c47568537d42722b767cac9fb6cf50a29ecca52c256401",
-        "bytes": 28514,
-        "lines": 881
+        "sha256": "9dd90f84e2aea779790340ab204a6d116f7b2270a4804396780175f99b0b21e7",
+        "bytes": 28519,
+        "lines": 880
       }
     },
     {
@@ -1554,18 +1554,18 @@
           "role": "proof",
           "source": {
             "path": "examples/templateConcat.proof.lean",
-            "sha256": "73b6bf581fc9f9965be4dacbe9f6c2a55d1f0eafbc1b49c26835f279e58eab67",
-            "bytes": 355,
-            "lines": 12
+            "sha256": "84bba7ecd943a0819ff7de4aef1123c4d7bcc7ece5f4a08375e544bc11160c43",
+            "bytes": 346,
+            "lines": 11
           }
         }
       ],
       "proveCorrectCommands": 1,
       "output": {
         "path": "Corpus/Core/templateConcat.lean",
-        "sha256": "fc82775304133cdb5fe8d2a62b76899d012cfeb078e715175d80ef738f562e1e",
-        "bytes": 1592,
-        "lines": 64
+        "sha256": "fce2b12c82ca968284105dcd22e126e681b09943fcd6d436772daa8ed02f4795",
+        "bytes": 1583,
+        "lines": 63
       }
     },
     {
@@ -1601,18 +1601,18 @@
           "role": "proof",
           "source": {
             "path": "examples/toposort.proof.lean",
-            "sha256": "cc3543bf6d95a0e8e32318f78ffec50d8c408b3909bbb081e3e6744f334d947b",
-            "bytes": 11943,
-            "lines": 273
+            "sha256": "9341fb8fef6273d82d896a1f98dd39b6621e91aecc38328747a7f6f5c5693ef0",
+            "bytes": 11957,
+            "lines": 274
           }
         }
       ],
       "proveCorrectCommands": 1,
       "output": {
         "path": "Corpus/Core/toposort.lean",
-        "sha256": "85c6e92d8bdb20e9aea5d4adf1d48d2059abc5337d7246722b12448000830c2f",
-        "bytes": 24143,
-        "lines": 467
+        "sha256": "e9e340f8d59d4e617a8b19ad742452f34797efceb540611e4e2cb1ac19186aaf",
+        "bytes": 24157,
+        "lines": 468
       }
     },
     {
@@ -1704,18 +1704,18 @@
           "role": "proof",
           "source": {
             "path": "examples/truthiness.proof.lean",
-            "sha256": "1bdde3d89b3fcde223d9381c4e7946ca82126f980222cd96d36893052db1c23a",
-            "bytes": 2043,
-            "lines": 70
+            "sha256": "87688fe6f532cac6c0578629c0d229bf707f977eb8730327089a2c0fef00d6fd",
+            "bytes": 1478,
+            "lines": 45
           }
         }
       ],
       "proveCorrectCommands": 12,
       "output": {
         "path": "Corpus/Core/truthiness.lean",
-        "sha256": "b758d496f21a4c8679609df397286e2097c45a45d0caa20d728dc847f3f26623",
-        "bytes": 8276,
-        "lines": 318
+        "sha256": "8a4c41f3e6cda85f1c1f17902d7f06419a0a1dd884bc08210da65b4f611c6080",
+        "bytes": 7711,
+        "lines": 293
       }
     },
     {
@@ -1883,18 +1883,18 @@
           "role": "proof",
           "source": {
             "path": "src/effect/effectorPure.proof.lean",
-            "sha256": "e1d289bdb9630379491af4cd71ebcf84b031e677adc9f242f425aa6782dcbfea",
-            "bytes": 18554,
-            "lines": 370
+            "sha256": "3e0ac14975117e963a88d00e483408059921073aa9d8abf152f7fc351942582f",
+            "bytes": 18553,
+            "lines": 369
           }
         }
       ],
       "proveCorrectCommands": 2,
       "output": {
         "path": "Corpus/NodeCasbin/effectorPure.lean",
-        "sha256": "e60a92d5fb46b4c14a1c668f3902d6ec9a85fd724d425dbe7e84aa24bc84caef",
-        "bytes": 24674,
-        "lines": 538
+        "sha256": "cf493610d0b8e9b49b1b1a1d5005713fafb5d08f5ccb60604e38f7b9bc8882f5",
+        "bytes": 24673,
+        "lines": 537
       }
     },
     {
@@ -2111,18 +2111,18 @@
           "role": "proof",
           "source": {
             "path": "packages/agent/src/harness/compaction/compaction.proof.lean",
-            "sha256": "529c0981d73e8ef226c3d2329badf6c6e56bfbbf089a165ae81b3eac559b6ef8",
-            "bytes": 1539,
-            "lines": 41
+            "sha256": "77b04b44637f22ea5a1a31dccf0fbce26d991882bb6c82022711c762684815c3",
+            "bytes": 1721,
+            "lines": 45
           }
         }
       ],
       "proveCorrectCommands": 5,
       "output": {
         "path": "Corpus/Pi/compaction.lean",
-        "sha256": "55cd002ade3d879861799162de7b42594677aaa2ab53d0baee626fe1489b7c80",
-        "bytes": 16478,
-        "lines": 383
+        "sha256": "63a51e0da834d8c097e7c9deff112a97fbbd0ebe7b8c8c89d081e982e5f5b060",
+        "bytes": 16660,
+        "lines": 387
       }
     },
     {
@@ -2158,18 +2158,18 @@
           "role": "proof",
           "source": {
             "path": "packages/coding-agent/src/core/compaction/compaction-cli.proof.lean",
-            "sha256": "49bb8e0887ff15602725cad365d461e7b1cba7bbca722b6e6bc128ebaf751299",
-            "bytes": 3990,
-            "lines": 90
+            "sha256": "22295b683463a004ec42d5909957befa24b35b7a99ab57eaf9e63e6171edc35b",
+            "bytes": 4185,
+            "lines": 93
           }
         }
       ],
       "proveCorrectCommands": 8,
       "output": {
         "path": "Corpus/Pi/compaction-cli.lean",
-        "sha256": "c7f55734e77aab1c58dd1f5c384e2136bf407c17f19ced5126e077a2a0edb1a0",
-        "bytes": 19701,
-        "lines": 454
+        "sha256": "fe56f8f69cdb13ef38ee61994db1f7a3f1664668389ba40d7483fded1cfed61a",
+        "bytes": 19896,
+        "lines": 457
       }
     },
     {
@@ -2205,18 +2205,18 @@
           "role": "proof",
           "source": {
             "path": "packages/coding-agent/src/core/tools/truncate.proof.lean",
-            "sha256": "bacc4d1054f3b07b0e2fa51a112ccbe44898382c20282b53a541089b01cfb194",
-            "bytes": 360,
-            "lines": 12
+            "sha256": "42cd3b037110d060adc6f1ba3e4358e71312dc797a9308e3090b1e0a1d713119",
+            "bytes": 368,
+            "lines": 14
           }
         }
       ],
       "proveCorrectCommands": 2,
       "output": {
         "path": "Corpus/Pi/truncate.lean",
-        "sha256": "624b6a6e7ad0fec66b4a01f01e641fffe5993319ed97cf24bdc5013163c8b9f1",
-        "bytes": 8870,
-        "lines": 166
+        "sha256": "c34fa44bb60bf771679c6f26c7f253ff590b79f96793dfd1f470de5775ba3f41",
+        "bytes": 8878,
+        "lines": 168
       }
     }
   ],

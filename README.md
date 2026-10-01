@@ -62,6 +62,35 @@ lake build CorpusColorWheel
 lake env lean Corpus/Core/binarySearch.lean
 ```
 
+## Compare two corpora
+
+From the Velvet 2 corpus, compare against the sibling Velvet 1 snapshot:
+
+```sh
+npm run compare -- ../lemmascript-velvet-corpus1          # three runs per case
+npm run compare -- ../lemmascript-velvet-corpus1 --runs 1 # quick first pass
+```
+
+The runner builds both checkouts first, outside the measured interval, then
+runs `lake env lean` on each matching case. Runs are sequential and alternate
+version order. It reports median wall-clock time per case and the overall
+speedup: baseline time divided by current time. A value above 1 means the
+current corpus is faster. Setup failures or failed elaborations stop the run.
+
+Reports, raw samples, engine revisions, and logs go under ignored
+`results/compare-*/`. Overall speedup uses the sum of per-case medians; the
+report also gives the geometric mean of the case speedups. These measurements
+cover complete module elaboration and compare both stacks, including their
+Lean versions, imports, and migrated proofs.
+
+Use `--case core/toposort` to select a case (repeatable), `--timeout 300` to
+set the per-run limit in seconds, or `--no-build` if both workspaces were just
+built. Run on an otherwise idle machine for useful timings.
+
+See the [Velvet 2 VC generation refactor report](reports/velvet2-vcgen-refactor.md)
+for exact proof transformations and the comparison against `velvet2-v0`, with
+the engine and dependencies held constant.
+
 ## Profile a case
 
 Lean's ordinary profiler prints elaboration and type-checking time by

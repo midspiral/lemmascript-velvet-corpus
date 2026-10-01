@@ -294,18 +294,16 @@ theorem balanceOverSettlements_zero (settFrom settTo settAmounts : Array Int) (m
 
 prove_correct computeBalance by
   velvet_vcgen [computeBalance]
-  all_goals expose_names
-  all_goals (first
-    | (have h := balanceOverExpenses_step paidBy amounts shares ↑member i
-       simp only [Pure.expenseDelta] at h
-       grind)
-    | (have h := balanceOverSettlements_step settFrom settTo settAmounts ↑member j
-       simp only [Pure.settlementDelta] at h
-       grind)
-    | (have h := balanceOverExpenses_zero paidBy amounts shares ↑member; grind)
-    | (have h := balanceOverSettlements_zero settFrom settTo settAmounts ↑member; grind)
-    | grind
-    | omega)
+    simplifying_assumptions [balanceOverExpenses_zero, balanceOverSettlements_zero,
+      balanceOverExpenses_step, balanceOverSettlements_step]
+    with (expose_names; first
+      (finish)
+      (have h := balanceOverExpenses_step paidBy amounts shares ↑member i
+       finish [Pure.expenseDelta])
+      (have h := balanceOverSettlements_step settFrom settTo settAmounts ↑member j
+       finish [Pure.settlementDelta])
+      (have h := balanceOverExpenses_zero paidBy amounts shares ↑member; all_goals finish)
+      (have h := balanceOverSettlements_zero settFrom settTo settAmounts ↑member; all_goals finish))
 
 -- Helper: pushing a valid expense preserves allExpensesValid
 -- Key lemma: arr.push e at index < arr.size equals arr at that index
@@ -365,48 +363,44 @@ theorem allSettlementsValid_push (settlements : Array Settlement) (s : Settlemen
 section StepProof
 set_option maxHeartbeats 400000
 prove_correct step by
-  velvet_vcgen [step]
-  all_goals expose_names
-  all_goals simp only [Pure.step]
-  -- Handle each leftover VC: memberCount (rfl), !validAction → result = model, inv preservation.
-  all_goals (first
-    | rfl
-    -- ensures_2: !validAction → result = model. The action has already been split
-    -- by wpgen, and we're either in a reject sub-case (rfl) or accept sub-case
-    -- (path conditions hold, so validAction = true, contradicting h).
-    -- ensures_2: !validAction → result = model. We need an implication to introduce.
-    -- After cases + split_ifs, each reject sub-case is `model = model` (rfl) and the
-    -- accept sub-case derives False because path conditions prove validAction = true.
-    | (intro h
-       try cases action
-       all_goals dsimp only
-       all_goals (try split_ifs)
-       all_goals (first
-         | rfl
-         | (exfalso
-            apply h
-            first
-              | (simp [Pure.validAction, Pure.validExpense]
-                 refine ⟨?_, ?_, ?_, ?_, ?_⟩ <;> omega)
-              | (simp [Pure.validAction, Pure.validSettlement]
-                 refine ⟨?_, ?_, ?_, ?_, ?_, ?_⟩ <;> omega))))
-    -- ensures_3: inv preservation, per-action handling
-    | (cases action with
-       | addExpense e =>
-         simp only [Pure.inv, Pure.validExpense] at *
-         split <;> (try split) <;> (try split) <;> (try split) <;> (try split) <;> simp_all <;>
-         (rw [show model.expenses.size + 1 = (model.expenses.push e).size from by
-                simp [Array.size_push]];
-          exact allExpensesValid_push model.expenses e model.memberCount (by tauto)
-                (by simp [Pure.validExpense]; tauto))
-       | addSettlement s =>
-         simp only [Pure.inv, Pure.validSettlement] at *
-         split <;> (try split) <;> (try split) <;> (try split) <;> (try split) <;> (try split) <;>
-           simp_all <;>
-         (rw [show model.settlements.size + 1 = (model.settlements.push s).size from by
-                simp [Array.size_push]];
-          exact allSettlementsValid_push model.settlements s model.memberCount (by tauto)
-                (by simp [Pure.validSettlement]; omega))))
+  velvet_vcgen [step] with
+    (expose_names
+     tactic =>
+       simp only [Pure.step]
+       -- Preserve memberCount, reject invalid actions, and preserve the invariant.
+       first
+       | rfl
+       -- Reject sub-cases return model; accepted actions contradict invalidity.
+       | (intro h
+          try cases action
+          all_goals dsimp only
+          all_goals (try split_ifs)
+          all_goals (first
+            | rfl
+            | (exfalso
+               apply h
+               first
+                 | (simp [Pure.validAction, Pure.validExpense]
+                    refine ⟨?_, ?_, ?_, ?_, ?_⟩ <;> omega)
+                 | (simp [Pure.validAction, Pure.validSettlement]
+                    refine ⟨?_, ?_, ?_, ?_, ?_, ?_⟩ <;> omega))))
+       -- Invariant preservation needs the corresponding push lemma per action.
+       | (cases action with
+          | addExpense e =>
+            simp only [Pure.inv, Pure.validExpense] at *
+            split <;> (try split) <;> (try split) <;> (try split) <;> (try split) <;> simp_all <;>
+            (rw [show model.expenses.size + 1 = (model.expenses.push e).size from by
+                   simp [Array.size_push]];
+             exact allExpensesValid_push model.expenses e model.memberCount (by tauto)
+                   (by simp [Pure.validExpense]; tauto))
+          | addSettlement s =>
+            simp only [Pure.inv, Pure.validSettlement] at *
+            split <;> (try split) <;> (try split) <;> (try split) <;> (try split) <;> (try split) <;>
+              simp_all <;>
+            (rw [show model.settlements.size + 1 = (model.settlements.push s).size from by
+                   simp [Array.size_push]];
+             exact allSettlementsValid_push model.settlements s model.memberCount (by tauto)
+                   (by simp [Pure.validSettlement]; omega))))
 end StepProof
 
 -- ═════════════════════════════════════════════════════════════���

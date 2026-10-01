@@ -172,9 +172,8 @@ prove_correct pushEffectStep by
   velvet_vcgen [pushEffectStep] with finish [Pure.pushEffectStep]
 
 prove_correct processEffects by
-  velvet_vcgen [processEffects] with try finish
-  all_goals expose_names
-  all_goals cases h : state.done <;> grind
+  velvet_vcgen [processEffects] with
+    (expose_names; first (finish) (tactic => cases h : state.done <;> grind))
 
 
 -- ═══════════════════════════════════════════════════════════
